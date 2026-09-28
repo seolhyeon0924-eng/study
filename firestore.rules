@@ -1,0 +1,72 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- 누가 누구인지 ----------
+    function signedIn() { return request.auth != null && request.auth.token.email is string; }
+    function isAdmin() { return signedIn() && request.auth.token.email == 'admin@study-e0d2b.firebaseapp.com'; }
+    function isMember() {
+      return signedIn() && !isAdmin()
+        && request.auth.token.email.matches('^[a-z0-9_]{4,20}@study-e0d2b[.]firebaseapp[.]com$');
+    }
+    function myId() { return request.auth.token.email.split('@')[0]; }
+    function isSelf(id) { return isMember() && myId() == id; }
+
+    function path(col, id) { return /databases/$(database)/documents/$(col)/$(id); }
+    function settings() { return get(path('settings', 'main')).data; }
+
+    // 서버 시간 기준 오늘 날짜 (한국 시간, 예: 2026-09-28)
+    function kstToday() {
+      let t = request.time + duration.value(9, 'h');
+      let m = t.month();
+      let d = t.day();
+      return string(t.year()) + '-' + (m < 10 ? '0' : '') + string(m) + '-' + (d < 10 ? '0' : '') + string(d);
+    }
+
+    // 출석률이 자료 기준을 넘는지 (화면의 반올림 계산과 같은 기준)
+    function canOpen(mid) {
+      let minRate = get(path('materials', mid)).data.minRate;
+      return exists(path('users', myId())) && (
+        minRate == 0 ||
+        (exists(path('attendance', myId())) &&
+          get(path('attendance', myId())).data.days.size() * 200 >= (minRate * 2 - 1) * settings().totalDays)
+      );
+    }
+
+    // ---------- 누구나 읽기, 관리자만 쓰기 ----------
+    match /settings/{docId}  { allow read: if true; allow write: if isAdmin(); }
+    match /notices/{id}      { allow read: if true; allow write: if isAdmin(); }
+    match /materials/{id}    { allow read: if true; allow write: if isAdmin(); }
+
+    // ---------- 자료 링크: 출석률이 되는 회원만 ----------
+    match /materialLinks/{id} {
+      allow get: if isAdmin() || (isMember() && canOpen(id));
+      allow list, write: if isAdmin();
+    }
+
+    // ---------- 회원 정보: 본인과 관리자만 ----------
+    match /users/{id} {
+      allow read: if isAdmin() || isSelf(id);
+      allow create, update: if isAdmin() || (isSelf(id)
+        && request.resource.data.keys().hasOnly(['name', 'joined'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 20
+        && request.resource.data.joined is string);
+      allow delete: if isAdmin();
+    }
+
+    // ---------- 출석: 출석체크가 열려 있을 때, 오늘 날짜 하나만 ----------
+    match /attendance/{id} {
+      allow read: if isAdmin() || isSelf(id);
+      allow create: if isAdmin() || (isSelf(id) && settings().checkinOpen == true
+        && request.resource.data.keys().hasOnly(['days'])
+        && request.resource.data.days.keys().hasOnly([kstToday()])
+        && request.resource.data.days[kstToday()] == true);
+      allow update: if isAdmin() || (isSelf(id) && settings().checkinOpen == true
+        && request.resource.data.keys().hasOnly(['days'])
+        && request.resource.data.days.diff(resource.data.days).affectedKeys().hasOnly([kstToday()])
+        && request.resource.data.days[kstToday()] == true);
+      allow delete: if isAdmin();
+    }
+  }
+}

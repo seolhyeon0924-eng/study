@@ -1,0 +1,21 @@
+rules_version = '2';
+// 마음별 질문함 규칙
+// - 누구나 질문을 "보내기"만 할 수 있어요 (읽기·고치기·지우기 불가)
+// - 운영자 계정으로 로그인한 사람만 질문을 읽고, 답함 표시하고, 지울 수 있어요
+// 아래 "운영자 이메일"을 Firebase Authentication에 만든 운영자 계정 이메일로 바꿔 주세요.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /questions/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['q', 'nick', 'createdAt', 'answered'])
+        && request.resource.data.q is string
+        && request.resource.data.q.size() >= 2
+        && request.resource.data.q.size() <= 500
+        && request.resource.data.nick is string
+        && request.resource.data.nick.size() <= 20
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.answered == false;
+      allow read, update, delete: if request.auth != null
+        && request.auth.token.email == "운영자 이메일";
+    }
+  }
+}

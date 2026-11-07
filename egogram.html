@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<script>try{var t=localStorage.getItem("mb.theme");if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme="light"}</script>
+<script>try{var t=localStorage.getItem("mb.theme");if(t!=="dark"&&t!=="light")t="dark";document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme="dark"}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>이고그램 검사 | 나의 자아상태 알아보기</title>
 <meta name="description" content="교류분석 이고그램으로 알아보는 다섯 가지 자아상태 검사">
@@ -358,139 +358,75 @@ svg text{font-family:var(--sans)}
   .rsec{break-inside:avoid}
 }
 
-/* ===== 포근한 층 ===== */
-.tbar{background:var(--glass);border-bottom:0}
-.hero{border-bottom:0}
-.badge{display:inline-block;align-self:flex-start;background:var(--blue-t);color:var(--blue);padding:3px 13px;border-radius:999px;font-size:14px}
-.hero h1{letter-spacing:-.03em;line-height:1.38}
-.hero-meta{border:0;gap:8px}
-.hero-meta span,.hero-meta span + span{background:var(--elev);border:0;border-radius:var(--r-s);padding:10px 14px;box-shadow:var(--shadow)}
-.hero-art{border-radius:var(--r-l)}
-.band.soft{background:var(--mist);border-radius:var(--r-l);margin:0 12px}
-.sec-head{padding-bottom:0}
-.steps{gap:14px;border:0}
-.step,.step + .step{background:var(--elev);border:0;border-radius:var(--r-l);padding:22px 24px;box-shadow:var(--shadow)}
-.pg-h{border-bottom:0}
-.sc{border-top:0;border-radius:var(--r-l);box-shadow:var(--shadow);background:linear-gradient(var(--kc),var(--kc)) top/100% 6px no-repeat,#fff}
+/* ===== 디자인 B 층 (초록 하나 + 회색) ===== */
+html{scroll-padding-top:calc(var(--gh) + var(--hh) + 70px)}
+.tbar{top:var(--gh);background:var(--glass);border-bottom:1px solid var(--line)}
+.testbar,.rnav{top:calc(var(--gh) + var(--hh));background:var(--glass);border-bottom:1px solid var(--line)}
+.logo{font-size:16.5px;font-weight:800;color:var(--ink);letter-spacing:-.04em}
+.hero{border:0}
+.hero .in{padding-block:56px 64px}
+.badge{display:inline-flex;align-self:flex-start;align-items:center;height:30px;padding:0 13px;border-radius:999px;background:var(--soft);color:var(--green);font-size:13.5px;font-weight:700}
+.hero h1{font-size:clamp(30px,4.4vw,46px);letter-spacing:-.055em;line-height:1.3}
+.hero-meta{gap:8px;border:0}
+.hero-meta span,.hero-meta span + span{background:var(--bg2);border:0;border-radius:var(--r-s);padding:10px 14px}
+.hero-art{background:var(--bg2);border:0;border-radius:var(--r-l)}
+.band{padding-block:72px}
+.band.soft{background:var(--bg2)}
+.sec-head h2{letter-spacing:-.055em}
+.steps{gap:12px;border:0}
+.step,.step + .step{background:var(--bg2);border:0;border-radius:var(--r-l);padding:22px 24px}
+.step .n{color:var(--green)}
+.sc{border:0;border-radius:var(--r-l);background:var(--paper);box-shadow:inset 0 5px 0 var(--kc,var(--green))}
 .sc .key{border-radius:999px}
-.notice{border:0;gap:14px}
-.notice div{background:var(--elev);border:0;border-radius:var(--r-l);padding:20px 22px;box-shadow:var(--shadow)}
-.final-cta{background:var(--p-apricot);color:var(--ink);border-radius:var(--r-l)}
-.final-cta .resume{color:var(--ink2)}
-.final-cta .resume button{color:var(--blue)}
-.final-cta .btn-primary{background:var(--elev)}
-@media (hover:hover){.final-cta .btn-primary:hover{background:var(--paper)}}
-.testbar{background:var(--glass);border-bottom:0}
+.notice{gap:12px;border:0}
+.notice div{background:var(--bg2);border:0;border-radius:var(--r-l);padding:20px 22px}
+.final-cta{background:linear-gradient(120deg,#5B3FE0 0%,#7A4DF0 40%,#C460D6 75%,#F27BC4 100%);color:#fff;border-radius:34px;box-shadow:0 30px 70px rgba(110,70,230,.32)}
+.final-cta .btn-primary{background:#fff;color:#2A1A66;box-shadow:none}
+.final-cta .resume{color:rgba(255,255,255,.85)}
+.final-cta .resume button{color:#fff}
+.q{background:var(--bg2);border:0;border-radius:var(--r-l);padding:24px 26px;margin-top:12px}
+.q.flag{background:var(--warn-t);box-shadow:inset 0 0 0 2px var(--warn);padding-left:26px}
+.dot{border-radius:999px;border-color:transparent;background:var(--paper)}
+.opt[aria-checked="true"] .dot{background:var(--green);border-color:var(--green)}
 .tb-track{height:8px;border-radius:999px}
-.tb-track i{border-radius:999px}
-.q{background:var(--elev);border-bottom:0;border-radius:var(--r-l);padding:24px 26px;margin-top:14px;box-shadow:var(--shadow)}
-.q.flag{background:var(--elev);box-shadow:inset 0 0 0 2px var(--warn),var(--shadow);padding-left:26px}
-.dot{border-radius:999px;height:40px}
-.mas{background:var(--mc);color:var(--mt,#fff);border-radius:999px}
-.fcard-top .mas{background:var(--elev)}
-.manual-wrap .card{background:var(--elev);border:0;border-radius:var(--r-l);padding:8px 22px 20px;box-shadow:var(--shadow)}
-.mrow input{border-radius:var(--r-s)}
-.r-hero{border-bottom:0;border-radius:0 0 var(--r-l) var(--r-l)}
-.r-art{border-radius:var(--r-l)}
-.chip{border-radius:999px}
-.chip i,.seesaw .sc-ic,.combo .pair i{border-radius:999px}
-.rnav{background:var(--glass);border-bottom:0}
-.rnav button{border-radius:999px}
-@media (hover:hover){.rnav button:hover{background:var(--elev)}}
-.rsec h2{padding-bottom:0}
-.meters{border:0;gap:12px}
-.meters > div{background:var(--elev);border:0;border-radius:var(--r-l);padding:16px 20px 18px;box-shadow:var(--shadow)}
-.track{height:10px;border-radius:999px}
-.track i{border-radius:999px}
-.chart-card,.life-plot,.bcard,.scard,.type,.tabpanel,.fcard{background:var(--elev);border:0;border-radius:var(--r-l);box-shadow:var(--shadow)}
-.type.best{box-shadow:inset 0 0 0 2px var(--coral),var(--shadow)}
-.type svg{border-radius:var(--r-s)}
+.tb-track i{border-radius:999px;background:var(--green)}
+.pdots i.on{background:var(--green)}
+.r-hero{border:0}
+.r-art,.chart-card,.life-plot,.bcard,.scard,.type,.tabpanel,.fcard{border-radius:var(--r-l)}
+.chip,.tag,.tab,.rnav button,.sugg button,.mas,.chip i,.seesaw,.seesaw .pole,.seesaw .sc-ic,.combo .pair i{border-radius:999px}
+.tag.hi{background:var(--green);color:#fff}
+.tab[aria-selected="true"]{background:var(--green);border-color:var(--green);color:#fff}
+.type.best{border-color:var(--green);box-shadow:inset 0 0 0 1px var(--green)}
+.type .best-tag{background:var(--green);color:#fff}
+.meters{gap:10px;border:0}
+.meters > div{background:var(--bg2);border:0;border-radius:var(--r-l);padding:16px 20px 18px}
+.track,.track i{border-radius:999px}
 .side-list,.combos,.parts,.qs-list{border:0}
-.principle,.combo,.part{background:var(--elev);border:0;border-radius:var(--r-m);padding:14px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
-.qs-list li{background:var(--blue-t);border:0;border-radius:var(--r-m);padding:14px 18px 14px 44px;margin-bottom:10px}
-.qs-list li::before{left:18px}
-.tab{border-radius:999px;border-width:1.5px}
-.tab .mas{border-radius:999px;width:32px}
+.principle,.combo,.part{background:var(--bg2);border:0;border-radius:var(--r-m);padding:14px 18px;margin-bottom:8px}
+.qs-list li{background:var(--soft);border:0;border-radius:var(--r-m);padding:14px 18px 14px 44px;margin-bottom:8px}
+.qs-list li::before{left:18px;color:var(--green)}
+.plan{background:var(--bg2);border-radius:var(--r-l);padding:24px}
+.field input{border-color:transparent;background:var(--paper)}
+.manual-wrap .card{background:var(--bg2);border:0;border-radius:var(--r-l);padding:8px 22px 20px}
 .tp-col,.keys,.saybox,.life-axes div,.lvl{border-radius:var(--r-m)}
-.plan{background:var(--elev);border-radius:var(--r-l);padding:24px;box-shadow:var(--shadow)}
-.field input{border-radius:var(--r-s)}
-.end-band .in{padding-top:0}
+.story-text p b{box-shadow:inset 0 -.4em 0 color-mix(in srgb,var(--green) 18%,transparent)}
 .confirm{border-radius:var(--r-l)}
-.seesaw{border-radius:999px}
-.seesaw .pole{border-radius:999px}
-.story-text p b{box-shadow:inset 0 -.4em 0 #FBD9CF}
-
-
-/* ===== 마음의 색 층 ===== */
-.tbar,.testbar,.rnav{background:var(--glass);box-shadow:none;border-bottom:1px solid var(--line)}
-.logo{font-weight:800;letter-spacing:-.04em}
-.hero{position:relative;overflow:hidden;margin:8px max(16px,env(safe-area-inset-left,0px)) 0;border-radius:36px;background:var(--tint);border:0}
-.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(46px);opacity:.85;pointer-events:none}
-.hero::before{width:420px;height:420px;right:-60px;top:-120px;background:#A8E6DA}
-.hero::after{width:320px;height:320px;left:30%;bottom:-160px;background:#B7A8FF}
-.hero > *{position:relative;z-index:1}
-
-.hero h1{font-weight:800;letter-spacing:-.055em}
-.badge{background:var(--glass);color:var(--ink2);font-weight:700;letter-spacing:0;font-size:13px}
-.hero-art{background:var(--glass);border:0;box-shadow:none;border-radius:var(--r-l)}
-.hero-meta span,.hero-meta span + span{background:var(--glass);border:0;box-shadow:none}
-.band.soft{background:none;margin:0}
-.sec-head{align-items:flex-start;text-align:left}
-.sec-head p{margin:0}
-.sec-head h2,.rsec h2{font-weight:800;letter-spacing:-.045em}
-.step .n,.qs-list li::before{font-weight:800;color:var(--blue)}
-.sc,.notice div,.step,.q,.meters > div,.chart-card,.life-plot,.bcard,.scard,.type,.tabpanel,.fcard,.principle,.combo,.part,.plan,.manual-wrap .card,.qs-list li{background:var(--card);border:0;box-shadow:none}
-.sc{background:var(--card)}
-.q.flag{background:var(--card);box-shadow:inset 0 0 0 2px var(--warn)}
-.tp-col,.keys,.saybox,.life-axes div,.seesaw,.lvl,.type svg,.r-art{background:var(--elev)}
-.fcard-top{background:var(--fs)!important}
-.final-cta{position:relative;overflow:hidden;margin:8px max(16px,env(safe-area-inset-left,0px)) 0;border-radius:36px;background:var(--tint);border:0}
-.final-cta::before,.final-cta::after{content:"";position:absolute;border-radius:50%;filter:blur(46px);opacity:.85;pointer-events:none}
-.final-cta::before{width:420px;height:420px;right:-60px;top:-120px;background:#B7A8FF}
-.final-cta::after{width:320px;height:320px;left:30%;bottom:-160px;background:#FFB8D1}
-.final-cta > *{position:relative;z-index:1}
-
-.final-cta{color:var(--ink)}
-.final-cta .btn-primary{background:var(--ink);color:var(--on-pri)}
-.final-cta .resume{color:var(--ink2)}
-.r-hero{margin:8px max(16px,env(safe-area-inset-left,0px)) 0;border-radius:36px;border:0}
-.dot{border:0;background:var(--elev)}
-.q .dot{background:var(--elev)}
-.opt[aria-checked="true"] .dot{background:var(--ink);border-color:transparent}
-.tb-track{height:6px}
-.tb-track i{background:linear-gradient(90deg,#A8E6DA,#B7A8FF)}
-.tab{border:0;background:var(--card)}
-.tab[aria-selected="true"]{background:var(--ink);color:var(--on-pri)}
-.tag.hi{background:var(--ink);color:var(--on-pri)}
-.tag.lo{background:var(--elev);color:var(--ink);border:0}
-.type .best-tag{background:var(--ink);color:var(--on-pri)}
-.type.best{box-shadow:inset 0 0 0 2px var(--ink)}
-.story-text p b{box-shadow:inset 0 -.4em 0 #E3DEFF}
-.mrow input{border:0;background:var(--elev)}
-.field input{border:0;background:var(--card)}
-.sugg button{border:0;background:var(--card)}
-.copybox{border:0;background:var(--card)}
-.confirm{background:var(--card)}
-
+body[data-view="test"] #subv,body[data-view="loading"] #subv{display:none}
 /* ===== 어두운 화면 보정 ===== */
 :root[data-theme="dark"] .sc h3,:root[data-theme="dark"] .meter-top .nm b,:root[data-theme="dark"] [style*="color:#"]{color:color-mix(in srgb,currentColor 45%,#fff)!important}
 :root[data-theme="dark"]{--cp-s:#3A2420;--np-s:#382D16;--a-s:#16302A;--fc-s:#1F2E19;--ac-s:#27223F}
 :root[data-theme="dark"] .mas{color:color-mix(in srgb,var(--mt) 40%,#fff)}
 :root[data-theme="dark"] .r-hero h1{color:color-mix(in srgb,var(--tc) 40%,#fff)}
 :root[data-theme="dark"] .fcard-top h3{color:color-mix(in srgb,var(--fc-c) 40%,#fff)}
-:root[data-theme="dark"] .hero::before,:root[data-theme="dark"] .hero::after,:root[data-theme="dark"] .final-cta::before,:root[data-theme="dark"] .final-cta::after{opacity:.35}
 :root[data-theme="dark"] .story-text p b{box-shadow:inset 0 -.4em 0 #3A3266}
+:root[data-theme="dark"] .final-cta .btn-primary{background:#fff;color:#2A1A66;box-shadow:none}
+:root[data-theme="dark"] .hero-art{background:var(--card)}
 </style>
 </head>
-<body>
-
-<header class="gh">
-  <div class="gh-in">
-    <a class="brand" href="index.html" aria-label="마음별 처음 화면"><svg viewBox="0 0 26 26" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B7A8FF"/><stop offset=".55" stop-color="#FFB8D1"/><stop offset="1" stop-color="#FFE3A8"/></linearGradient></defs><circle cx="13" cy="13" r="12" fill="url(#lg)"/><circle cx="17" cy="16" r="6" fill="#A8E6DA" opacity=".75"/><circle cx="9" cy="8.5" r="3.4" fill="#fff" opacity=".6"/></svg><span class="brand-name">마음별</span></a>
-    <nav class="gnav" aria-label="주요 메뉴"><a href="index.html#tests" aria-current="page">심리검사</a><a href="index.html#art">그림검사</a><a href="index.html#today">오늘의 기록</a><a href="index.html#ask">질문함</a><a href="index.html#notice">공지</a><a href="index.html#guide">이용 안내</a></nav>
-    <div class="gh-acts"><button class="theme-btn" type="button" data-theme-toggle aria-label="화면 밝기 바꾸기"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button><a class="btn btn-main btn-sm" href="index.html#consult">상담 신청</a></div>
-  </div>
-</header>
+<body data-page="ego">
+<a class="skip" href="#main">본문 바로가기</a>
+<header id="gh"></header>
+<div id="subv" data-sec="tests" data-title="이고그램 검사" data-desc="교류분석의 다섯 가지 자아상태로 사람을 대하는 나의 마음을 그래프로 봐요. 50문항, 약 7분."></div>
 <div class="tbar">
   <div class="in">
     <button class="logo" type="button" id="logoBtn" aria-label="이고그램 검사 처음 화면"><svg viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="11" width="3.2" height="10" fill="var(--cp)"/><rect x="5.2" y="5" width="3.2" height="16" fill="var(--np)"/><rect x="9.4" y="2" width="3.2" height="19" fill="var(--a)"/><rect x="13.6" y="7" width="3.2" height="14" fill="var(--fc)"/><rect x="17.8" y="13" width="3.2" height="8" fill="var(--ac)"/></svg>이고그램 검사</button>
@@ -506,7 +442,7 @@ svg text{font-family:var(--sans)}
   </div>
 </div>
 
-<main>
+<main id="main" tabindex="-1">
 <!-- ======================= LANDING ======================= -->
 <div id="vHome">
   <section class="hero">
@@ -776,18 +712,12 @@ svg text{font-family:var(--sans)}
 </div>
 </main>
 
-<footer class="gf">
-  <div class="gf-in">
-    <div class="gf-brand"><b><svg viewBox="0 0 26 26" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B7A8FF"/><stop offset=".55" stop-color="#FFB8D1"/><stop offset="1" stop-color="#FFE3A8"/></linearGradient></defs><circle cx="13" cy="13" r="12" fill="url(#lg)"/><circle cx="17" cy="16" r="6" fill="#A8E6DA" opacity=".75"/><circle cx="9" cy="8.5" r="3.4" fill="#fff" opacity=".6"/></svg>마음별</b><div class="gf-sns" id="gfSns"></div></div>
-    <p><b>이고그램 검사</b>는 교육·자기 이해용이며 심리 진단 도구가 아니에요. 응답과 결과는 지금 쓰는 기기의 브라우저에만 저장돼요. 채점: 자아상태별 10문항 합계(0–30점), 교류분석 자아상태 검사 50문항.</p>
-    <p class="help-line">지금 많이 힘들다면 혼자 견디지 말고 연락해 주세요. 자살예방 상담전화 <b>109</b>, 정신건강 위기상담 <b>1577-0199</b> (24시간)</p>
-    <div class="gf-links"><a href="index.html#guide">이용 안내</a><a href="index.html#my">내 상담 신청</a><a href="index.html#consult">상담 신청</a></div>
-  </div>
-</footer>
+<footer id="gf" data-note="이고그램 검사는 교육·자기 이해용이며 심리 진단 도구가 아니에요. 응답과 결과는 지금 쓰는 기기의 브라우저에만 저장돼요. 채점: 자아상태별 10문항 합계(0–30점), 교류분석 자아상태 검사 50문항."></footer>
 
 
 <script src="site-config.js"></script>
 <script src="common.js"></script>
+<script src="inbox.js"></script>
 <script>
 (function(){
 "use strict";
@@ -1002,6 +932,7 @@ function clear(svg){ while(svg.firstChild) svg.removeChild(svg.firstChild); }
 /* ---------- views ---------- */
 var VIEWS = {home:$("vHome"), test:$("vTest"), loading:$("vLoading"), manual:$("vManual"), result:$("vResult")};
 function show(name){
+  document.body.dataset.view = name;
   Object.keys(VIEWS).forEach(function(k){ VIEWS[k].hidden = k!==name; });
   $("gnb").hidden = name !== "home";
   $("hdrStart").hidden = name === "test" || name === "loading";

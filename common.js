@@ -182,6 +182,24 @@
     document.dispatchEvent(new CustomEvent("mb:theme", {detail:next}));
   });
 
+  /* ---------- 스크롤하면 천천히 나타나기 ---------- */
+  var RV_SEL = ".hero .auth, .hsec .sec-t, .orb-bnr, .tgrid > *, .gal > li, .qa-mini > li, .ask-cta, .cband, .csteps > li, .ap-prof, .ap-ask, .ap-card, .res, .about-main > .panel, .about-side > .panel, .report-b > div, .detail article, .proc > div, .faq details, .bd tbody tr, .sr-grp, .owner-bar, .bv, .auth-form .page-h, .side-card, "+
+               ".band .sec-head, .band .step, .pg, .notice > div, .final-cta, .comps > *, .types > *, .steps3 > *, .cta-band, .sec-title, .hero-art";
+  var rvIO = ("IntersectionObserver" in window) && !(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) ?
+    new IntersectionObserver(function(es){ es.forEach(function(e){ if(!e.isIntersecting) return; var el=e.target; el.classList.add("in"); rvIO.unobserve(el);
+      setTimeout(function(){ el.classList.remove("rv","in"); el.style.removeProperty("--rvd"); }, 1700); }); }, {rootMargin:"0px 0px -8% 0px", threshold:.06}) : null;
+  function reveal(scope){
+    if(!rvIO) return;
+    (scope||document).querySelectorAll(RV_SEL).forEach(function(el){
+      if(el.classList.contains("rv") || el.dataset.rvDone) return;
+      el.dataset.rvDone = "1";
+      var i = Array.prototype.indexOf.call(el.parentNode.children, el);
+      el.classList.add("rv"); el.style.setProperty("--rvd", Math.min(i,5)*90+"ms");
+      rvIO.observe(el);
+    });
+  }
+  if(!IS_INDEX){ if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", function(){ reveal(document); }); else setTimeout(function(){ reveal(document); },0); }
+
   /* ---------- 시작 ---------- */
   renderHeader();
   (function(){ var gh=document.getElementById("gh"); if(!gh) return; function f(){ gh.classList.toggle("scrolled", window.scrollY>12); } window.addEventListener("scroll", f, {passive:true}); f(); })();
@@ -191,5 +209,5 @@
   fillSns();
   label();
   window.mbThemeLabel = label;
-  window.MB = {coil:coil, orbs:ORBS_, menu:MENU, info:INFO, href:href, home:HOME, subv:subv, setCurrent:setCurrent, mark:MARK, theme:THEME, openSitemap:openSitemap, closeSitemap:closeSitemap, badge:setBadge, applyBadge:applyBadge};
+  window.MB = {reveal:reveal, coil:coil, orbs:ORBS_, menu:MENU, info:INFO, href:href, home:HOME, subv:subv, setCurrent:setCurrent, mark:MARK, theme:THEME, openSitemap:openSitemap, closeSitemap:closeSitemap, badge:setBadge, applyBadge:applyBadge};
 })();

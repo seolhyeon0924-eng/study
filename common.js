@@ -23,3 +23,26 @@
   }
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fill); else fill();
 })();
+
+/* 화면 밝기(밝게/어둡게) 바꾸기 — 고른 값은 이 브라우저에 기억해요 */
+(function(){
+  "use strict";
+  var root = document.documentElement;
+  function label(){
+    var dark = root.dataset.theme === "dark";
+    document.querySelectorAll("[data-theme-toggle]").forEach(function(b){
+      b.setAttribute("aria-label", dark ? "밝은 화면으로 바꾸기" : "어두운 화면으로 바꾸기");
+      b.setAttribute("title", dark ? "밝은 화면" : "어두운 화면");
+    });
+  }
+  document.addEventListener("click", function(e){
+    var b = e.target.closest("[data-theme-toggle]"); if(!b) return;
+    var next = root.dataset.theme === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    try{ localStorage.setItem("mb.theme", next); }catch(x){}
+    label();
+    document.dispatchEvent(new CustomEvent("mb:theme", {detail:next}));
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", label); else label();
+  window.mbThemeLabel = label;
+})();

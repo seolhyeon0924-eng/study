@@ -1,0 +1,1519 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>이고그램 검사 | 나의 자아상태 알아보기</title>
+<meta name="description" content="교류분석 이고그램으로 알아보는 다섯 가지 자아상태 검사">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="common.css">
+<style>
+/* 이고그램 — common.css 위에 이 페이지 전용 요소만 */
+:root{
+  --bg-soft:var(--mist);
+  --ink-2:#4A5470;
+  --ink-3:#7E879C;
+  --brand:var(--blue);
+  --brand-deep:var(--blue-d);
+  --brand-soft:var(--blue-t);
+  --hero:var(--p-sage);
+  --cp:#BE4E3B; --np:#C9921F; --a:#2B8571; --fc:#5A9539; --ac:#6B5BB5;
+  --cp-s:#F6E4E0; --np-s:#F5ECD6; --a-s:#DFEDE8; --fc-s:#E4EFDD; --ac-s:#E9E6F5;
+  --hh:56px;
+}
+[hidden]{display:none!important}
+html{scroll-padding-top:calc(var(--hh) + 70px)}
+.in{max-width:1080px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+
+/* 자아상태 표지(캐릭터 대신 쓰는 글자 배지) */
+.mas{display:inline-grid;place-items:center;flex:none;width:40px;height:40px;border-radius:var(--r-s);background:var(--mc);color:#fff;font-family:var(--serif);font-weight:800;font-size:15px;letter-spacing:-.02em;line-height:1}
+
+/* ---------- 검사 머리 줄 ---------- */
+.tbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tbar .in{height:var(--hh);display:flex;align-items:center;gap:20px}
+.logo{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;font-family:var(--serif);font-weight:800;font-size:18px;letter-spacing:-.03em;white-space:nowrap}
+.logo svg{flex:none;width:22px;height:22px}
+.gnb{display:flex;gap:20px;margin-left:12px}
+.gnb button{background:none;border:0;padding:6px 0;color:var(--ink2);font-weight:600;font-size:14.5px}
+@media (hover:hover){.gnb button:hover{color:var(--ink)}}
+@media (max-width:760px){.gnb{display:none}}
+.tbar .right{margin-left:auto;display:flex;gap:8px;align-items:center}
+
+/* ---------- 첫 화면 ---------- */
+.hero{border-bottom:1px solid var(--line)}
+.hero .in{display:grid;grid-template-columns:1fr;gap:32px;padding-block:44px 52px;align-items:center}
+@media (min-width:880px){.hero .in{grid-template-columns:1fr 1fr;gap:56px;padding-block:64px 72px}}
+.hero-text{display:flex;flex-direction:column;gap:18px;min-width:0}
+.badge{font-size:15px;font-weight:650;color:var(--blue)}
+.hero h1{font-family:var(--serif);font-size:clamp(32px,5vw,50px);font-weight:800;letter-spacing:-.04em;line-height:1.28}
+.hero-sub{font-size:17px;color:var(--ink2);max-width:30em}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:6px}
+.resume{font-size:15px;color:var(--ink2)}
+.resume button{background:none;border:0;padding:0;color:var(--blue);font-weight:650;text-decoration:underline;text-underline-offset:4px}
+.hero-meta{display:flex;gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);max-width:460px}
+.hero-meta span{flex:1;padding:10px 14px 10px 0;font-size:13px;color:var(--mute);line-height:1.4}
+.hero-meta span + span{padding-left:14px;border-left:1px solid var(--line)}
+.hero-meta b{display:block;font-size:16px;color:var(--ink);font-weight:650}
+.hero-art{background:var(--p-sage);border-radius:var(--r-s);padding:28px 22px 14px;min-width:0}
+.hero-art svg{display:block;width:100%;height:auto;max-width:520px;margin:0 auto}
+.hero-art figcaption{font-size:13px;color:var(--ink2);text-align:center;margin-top:6px}
+
+.band{padding-block:64px}
+.band.soft{background:var(--mist)}
+.sec-head{display:flex;flex-direction:column;gap:8px;margin:0 0 32px;padding-bottom:16px;border-bottom:0}
+.sec-head .eye{display:none}
+.sec-head h2{font-family:var(--serif);font-size:clamp(26px,4vw,34px);font-weight:800;letter-spacing:-.035em}
+.sec-head p{color:var(--ink2);font-size:16px;max-width:44em}
+
+.steps{display:grid;gap:0;grid-template-columns:1fr;border-top:1px solid var(--line)}
+@media (min-width:760px){.steps{grid-template-columns:repeat(3,1fr);border-top:0}}
+.step{padding:22px 24px 22px 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+@media (min-width:760px){.step{border-bottom:0}.step + .step{padding-left:24px;border-left:1px solid var(--line)}}
+.step .n{font-family:var(--serif);font-weight:800;font-size:28px;color:var(--blue);line-height:1.1}
+.step h3{font-size:19px;font-weight:700}
+.step p{color:var(--ink2);font-size:15px}
+
+.pac-groups{display:grid;gap:28px;grid-template-columns:1fr}
+@media (min-width:900px){.pac-groups{grid-template-columns:2fr 1fr 2fr;gap:20px}}
+.pg{display:flex;flex-direction:column;gap:12px;min-width:0}
+.pg-h{display:flex;align-items:center;gap:10px;font-weight:600;color:var(--ink2);font-size:14px;padding-bottom:10px;border-bottom:1px solid var(--line2)}
+.pg-h b{font-family:var(--serif);font-size:20px;color:var(--ink);font-weight:800}
+.pg-cards{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:560px){.pg-cards.two{grid-template-columns:1fr 1fr}}
+.sc{border-radius:var(--r-s);padding:20px;background:#fff;border-top:4px solid var(--kc,var(--ink));display:flex;flex-direction:column;gap:6px;min-width:0;height:100%}
+.sc-top{display:flex;flex-direction:column;gap:2px}
+.sc .key{align-self:flex-start;font-family:var(--serif);font-size:15px;font-weight:800;color:#fff;border-radius:3px;padding:1px 9px;margin-bottom:6px}
+.sc h3{font-size:20px;font-weight:700;letter-spacing:-.03em}
+.sc .en{font-size:13px;color:var(--mute)}
+.sc p{font-size:15px;color:var(--ink2);margin-top:6px}
+.sc .quote{font-family:var(--serif);font-size:15px;font-weight:800;color:var(--ink);margin-top:auto;padding-top:10px}
+
+.notice{display:grid;gap:0;grid-template-columns:1fr;border-top:1px solid var(--line)}
+@media (min-width:760px){.notice{grid-template-columns:repeat(3,1fr)}}
+.notice div{padding:18px 20px 18px 0;border-bottom:1px solid var(--line)}
+.notice b{display:block;margin-bottom:4px;font-size:17px;font-weight:700}
+.notice span{color:var(--ink2);font-size:15px}
+.final-cta{display:grid;gap:16px 32px;align-items:center;background:var(--ink);color:#fff;border-radius:var(--r-m);padding:36px 32px}
+@media (min-width:760px){.final-cta{grid-template-columns:1fr auto}.final-cta .resume{grid-column:1/-1}}
+.final-cta h2{font-family:var(--serif);font-size:clamp(23px,3.4vw,30px);font-weight:800;letter-spacing:-.03em}
+.final-cta .btn-primary{background:#fff;color:var(--ink)}
+@media (hover:hover){.final-cta .btn-primary:hover{background:var(--blue-t)}}
+.final-cta .resume{color:#B9C0D3}
+.final-cta .resume button{color:#fff}
+
+/* ---------- 문항 ---------- */
+.testbar{position:sticky;top:var(--hh);z-index:40;background:#fff;border-bottom:1px solid var(--line)}
+.testbar .in{max-width:820px;display:flex;align-items:center;gap:14px;height:52px}
+.tb-page{font-weight:650;font-size:14px;white-space:nowrap}
+.tb-page span{color:var(--ink2)}
+.tb-track{flex:1;height:4px;border-radius:2px;background:var(--mist2);overflow:hidden;min-width:60px}
+.tb-track i{display:block;height:100%;background:var(--coral);transition:width .3s ease}
+.tb-pct{font-weight:650;font-size:14px;min-width:3.2em;text-align:right}
+.test-wrap{max-width:820px;margin:0 auto;padding-block:24px 64px}
+.test-intro{color:var(--ink2);font-size:15px;padding-bottom:8px}
+.q{padding:30px 0 28px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:18px;transition:opacity .25s}
+.q.done{opacity:.5}
+.q.done:hover,.q.done:focus-within{opacity:1}
+.q.flag{box-shadow:inset 3px 0 0 var(--warn);padding-left:16px;background:linear-gradient(90deg,var(--warn-t),transparent 70%)}
+.q.flag .q-text::after{content:" (응답 필요)";color:var(--warn);font-family:var(--sans);font-size:.7em;font-weight:650}
+.q-no{font-size:13px;font-weight:650;color:var(--mute);margin-bottom:-12px}
+.q-text{font-family:var(--serif);font-size:clamp(19px,3.4vw,22px);font-weight:800;line-height:1.5;letter-spacing:-.02em}
+.scale{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;width:100%;max-width:520px}
+.opt{display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:0;padding:4px 0;-webkit-tap-highlight-color:transparent}
+.dot{display:block;width:100%;height:42px;border-radius:var(--r-s);border:1.5px solid var(--line2);background:#fff;transition:background-color .15s,border-color .15s}
+.opt[aria-checked="true"] .dot{background:var(--coral);border-color:var(--coral)}
+@media (hover:hover){.opt:hover .dot{border-color:var(--ink)}}
+.opt .lb{font-size:13px;color:var(--ink2);line-height:1.3;text-align:center}
+.opt[aria-checked="true"] .lb{color:var(--ink);font-weight:650}
+.pager{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:28px;flex-wrap:wrap}
+.pager .btn{min-width:120px}
+.pager .msg{flex-basis:100%;text-align:center;color:var(--warn);font-size:14px;font-weight:600;min-height:1.4em;order:3}
+.pdots{display:flex;gap:6px}
+.pdots i{width:8px;height:8px;border-radius:50%;background:var(--line2)}
+.pdots i.on{background:var(--coral);width:22px;border-radius:4px}
+.pdots i.done{background:var(--ink2)}
+
+/* ---------- 계산 중 ---------- */
+.loading{min-height:64vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding-block:60px}
+.lbars{display:flex;align-items:flex-end;gap:8px;height:90px}
+.lbars i{display:block;width:22px;height:90px;transform-origin:bottom;animation:grow 1.2s ease-in-out infinite alternate}
+.lbars i:nth-child(2){animation-delay:.15s}.lbars i:nth-child(3){animation-delay:.3s}.lbars i:nth-child(4){animation-delay:.45s}.lbars i:nth-child(5){animation-delay:.6s}
+@keyframes grow{from{transform:scaleY(.25)}to{transform:scaleY(1)}}
+.loading h2{font-family:var(--serif);font-size:24px;font-weight:800}
+.loading p{color:var(--ink2)}
+
+/* ---------- 점수 입력 ---------- */
+.manual-wrap{max-width:600px;margin:0 auto;padding-block:44px 72px;display:flex;flex-direction:column;gap:24px}
+.card{border-top:1px solid var(--line)}
+.mrow{display:grid;grid-template-columns:auto 1fr 96px;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.mrow label{line-height:1.35;font-weight:650}
+.mrow label small{display:block;font-weight:400;color:var(--mute);font-size:12px}
+.mrow input{height:46px;width:100%;border:1.5px solid var(--line2);border-radius:var(--r-s);background:#fff;color:var(--ink);text-align:center;font:600 18px var(--sans)}
+.mrow input:focus{border-color:var(--blue);outline:none;box-shadow:0 0 0 3px var(--blue-t)}
+.err{color:var(--warn);font-size:14px;font-weight:600;min-height:1.4em;margin-top:6px}
+
+/* ---------- 결과 머리 ---------- */
+.r-hero{background:var(--tbg,var(--mist));border-bottom:1px solid var(--line)}
+.r-hero .in{display:grid;grid-template-columns:1fr;gap:28px;padding-block:40px 44px;align-items:center}
+@media (min-width:880px){.r-hero .in{grid-template-columns:1.05fr .95fr;gap:48px;padding-block:56px}}
+.r-hero .head{display:flex;flex-direction:column;align-items:flex-start}
+.r-hero .eye{font-weight:650;color:var(--ink2);font-size:14px}
+#rMas{display:none}
+.r-hero h1{font-family:var(--serif);font-size:clamp(34px,6vw,54px);font-weight:800;letter-spacing:-.045em;margin-top:6px;color:var(--tc,var(--ink));line-height:1.2}
+.r-hero h1 small{display:block;font-family:var(--sans);font-size:.32em;font-weight:600;color:var(--ink2);letter-spacing:-.01em;margin-top:10px}
+.r-hero .desc{margin-top:14px;font-size:17px;color:var(--ink);max-width:28em}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{display:inline-flex;align-items:center;gap:8px;background:#fff;border-radius:var(--r-s);padding:5px 12px 5px 5px;font-size:14px;font-weight:600}
+.chip i{width:30px;height:24px;border-radius:3px;display:grid;place-items:center;color:#fff;font-style:normal;font-family:var(--serif);font-size:11.5px;font-weight:800}
+.r-art{background:#fff;border-radius:var(--r-s);padding:18px 14px 10px;min-width:0}
+.r-art svg{display:block;width:100%;height:auto}
+
+.rnav{position:sticky;top:var(--hh);z-index:40;background:#fff;border-bottom:1px solid var(--line)}
+.rnav .in{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;height:50px;align-items:center}
+.rnav .in::-webkit-scrollbar{display:none}
+.rnav button{flex:none;background:none;border:0;padding:7px 12px;border-radius:var(--r-s);font-weight:600;color:var(--ink2);font-size:14px}
+@media (hover:hover){.rnav button:hover{color:var(--ink);background:var(--mist)}}
+
+.rsec{padding-block:56px 8px;max-width:960px;margin:0 auto}
+.rsec h2{font-family:var(--serif);font-size:clamp(24px,3.6vw,30px);font-weight:800;letter-spacing:-.035em;margin-bottom:8px;padding-bottom:12px;border-bottom:0}
+.rsec .lead{color:var(--ink2);margin:14px 0 24px;max-width:44em}
+
+.meters{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.meters > div{padding:16px 0 18px;border-bottom:1px solid var(--line)}
+.meter-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.meter-top .nm{flex:1;min-width:0;line-height:1.35}
+.meter-top .nm b{font-size:17px;font-weight:700}
+.meter-top .nm span{display:block;font-size:13.5px;color:var(--ink2)}
+.meter-top .val{font-family:var(--serif);font-weight:800;font-size:26px;white-space:nowrap}
+.meter-top .val small{font-family:var(--sans);font-size:13px;color:var(--ink2);font-weight:500}
+.tag{font-size:12.5px;font-weight:650;padding:2px 10px;border-radius:999px;white-space:nowrap;background:var(--mist);color:var(--ink2)}
+.tag.hi{background:var(--pri);color:#fff}
+.tag.lo{background:#fff;color:var(--ink);border:1px solid var(--ink)}
+@media (max-width:480px){.meter-top{flex-wrap:wrap}.meter-top .nm{flex-basis:calc(100% - 56px)}.meter-top .tag{margin-left:52px}.meter-top .val{margin-left:auto}}
+.track{position:relative;height:10px;border-radius:2px;background:var(--mist2);overflow:hidden}
+.track i{position:absolute;inset:0 auto 0 0;border-radius:2px;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.track .avg{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.45}
+.meters-note{font-size:13.5px;color:var(--mute);margin-top:10px}
+
+.two-col{display:grid;grid-template-columns:1fr;gap:20px}
+@media (min-width:880px){.two-col{grid-template-columns:1.3fr .7fr;align-items:start}}
+.chart-card{border:1px solid var(--line);border-radius:var(--r-m);padding:16px 14px 14px;min-width:0}
+.chart-card svg{display:block;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink2);padding:12px 8px 0}
+.legend i{display:inline-block;width:20px;border-top:3px solid var(--ink);vertical-align:middle;margin-right:6px}
+.legend i.dash{border-top:2px dashed var(--ink-3)}
+.legend i.ring{width:12px;height:12px;border:2.5px solid var(--blue);border-radius:50%}
+.chk{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;padding:10px 8px 0}
+.chk input{width:18px;height:18px;accent-color:var(--blue)}
+.side-list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.principle{padding:14px 0;border-bottom:1px solid var(--line)}
+.principle b{display:block;margin-bottom:2px;font-weight:700}
+.principle span{color:var(--ink2);font-size:15px}
+
+.types{display:grid;gap:14px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (min-width:880px){.types{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}}
+.type{border:1px solid var(--line);border-radius:var(--r-m);padding:16px 14px;display:flex;flex-direction:column;gap:8px;min-width:0;position:relative}
+.type.best{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.type .best-tag{position:absolute;top:10px;right:10px;background:var(--pri);color:#fff;font-size:11.5px;font-weight:650;padding:1px 9px;border-radius:999px}
+.type h3{font-size:17px;font-weight:700}
+.type h3 small{display:block;font-weight:500;color:var(--ink2);font-size:13px;margin:2px 0 0;letter-spacing:0}
+.type svg{display:block;width:100%;height:auto;background:var(--mist);border-radius:var(--r-s)}
+.type p{font-size:14px;color:var(--ink2);line-height:1.6}
+.type .m{font-size:13px;font-weight:650;color:var(--ink2)}
+.type.best .m{color:var(--blue)}
+.mbar{height:6px;border-radius:2px;background:var(--mist2);overflow:hidden}
+.mbar i{display:block;height:100%;background:var(--ink-3)}
+.type.best .mbar i{background:var(--coral)}
+
+.focus{display:grid;gap:18px;grid-template-columns:1fr}
+@media (min-width:880px){.focus{grid-template-columns:1fr 1fr}}
+.fcard{border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden;min-width:0}
+.fcard-top{padding:18px 20px;display:flex;gap:14px;align-items:center;background:var(--fs)!important;color:var(--ink)}
+.fcard-top .mas{width:48px;height:48px;font-size:17px}
+.fcard-top .k{font-size:13px;font-weight:600;color:var(--ink2)}
+.fcard-top h3{font-size:20px;font-weight:700;color:var(--fc-c)}
+.fcard-top .pts{margin-left:auto;font-family:var(--serif);font-size:30px;font-weight:800;white-space:nowrap}
+.fcard-top .pts small{font-family:var(--sans);font-size:14px;font-weight:500;color:var(--ink2)}
+.fcard-body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:16px}
+.fcard-body h4{margin:0 0 6px;font-size:14.5px;font-weight:700}
+.ticks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.ticks li{position:relative;padding-left:20px;font-size:15px}
+.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;height:5px;border-left:2px solid var(--c,var(--blue));border-bottom:2px solid var(--c,var(--blue));transform:rotate(-45deg)}
+.ticks.warn li::before{border:0;width:6px;height:6px;border-radius:50%;background:var(--ink-3);top:.7em;left:3px;transform:none}
+.cols2{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:520px){.cols2{grid-template-columns:1fr 1fr}}
+.saybox{background:var(--mist);border-radius:var(--r-s);padding:12px 16px;font-family:var(--serif);font-weight:800;display:flex;flex-direction:column;gap:2px}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tab{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 14px 0 5px;border-radius:var(--r-s);border:1.5px solid var(--line2);background:#fff;font-weight:600;font-size:14.5px}
+.tab .mas{width:34px;height:32px;font-size:13px;border-radius:3px}
+.tab[aria-selected="true"]{background:var(--pri);border-color:var(--pri);color:#fff}
+.tabpanel{border:1px solid var(--line);border-radius:var(--r-m);padding:22px;display:flex;flex-direction:column;gap:18px}
+.tp-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
+.tp-head .mas{width:48px;height:48px;font-size:17px}
+.tp-head h3{font-family:var(--serif);font-size:24px;font-weight:800}
+.tp-head span{color:var(--ink2);font-size:14px}
+.tp-cols{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:760px){.tp-cols{grid-template-columns:repeat(3,1fr)}}
+.tp-col{background:var(--mist);border-radius:var(--r-s);padding:16px;min-width:0}
+.tp-col h4{margin:0 0 8px;font-size:14.5px;font-weight:700}
+.tp-items{font-size:13px;color:var(--ink-3)}
+
+.plan{display:flex;flex-direction:column;gap:20px;max-width:720px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font-weight:650}
+.field input{height:50px;border:1.5px solid var(--line2);border-radius:var(--r-s);background:#fff;color:var(--ink);font:inherit;font-size:16px;padding:0 14px;width:100%}
+.field input:focus{border-color:var(--blue);outline:none;box-shadow:0 0 0 3px var(--blue-t)}
+.sugg{display:flex;flex-wrap:wrap;gap:8px}
+.sugg button{border:1.5px solid var(--line2);background:#fff;border-radius:999px;padding:5px 13px;font-size:14px}
+@media (hover:hover){.sugg button:hover{border-color:var(--ink)}}
+
+.end-band{padding-block:56px 0}
+.end-band .in{display:flex;flex-direction:column;align-items:flex-start;gap:16px;border-top:0;padding-top:28px;max-width:960px}
+.end-band h2{font-family:var(--serif);font-size:clamp(22px,3.4vw,28px);font-weight:800;letter-spacing:-.03em}
+.end-actions{display:flex;flex-wrap:wrap;gap:10px}
+.toast{min-height:1.4em;font-size:14.5px;color:var(--blue);font-weight:600}
+.copybox{width:100%;max-width:560px;min-height:150px;border-radius:var(--r-s);border:1.5px solid var(--line2);background:#fff;color:var(--ink);padding:14px;font:14px/1.6 var(--sans)}
+.confirm{background:var(--mist);border-radius:var(--r-m);padding:18px 20px;max-width:560px;display:flex;flex-direction:column;gap:12px;font-weight:500}
+
+/* ---------- 해석 ---------- */
+.story{display:grid;grid-template-columns:1fr;gap:24px}
+@media (min-width:880px){.story{grid-template-columns:1.4fr .6fr;align-items:start}}
+.story-text{display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.85;max-width:40em}
+.story-text p b{font-weight:700;box-shadow:inset 0 -.4em 0 var(--blue-t)}
+.story-text .q1{font-family:var(--serif);font-size:22px;font-weight:800;line-height:1.6;letter-spacing:-.025em}
+.keys{background:var(--mist);border-radius:var(--r-m);padding:20px;display:flex;flex-direction:column;gap:12px}
+.keys h3{font-size:14px;font-weight:650;color:var(--ink2)}
+.kw{display:flex;flex-wrap:wrap;gap:6px}
+.kw span{background:#fff;border-radius:999px;padding:4px 12px;font-weight:600;font-size:14px}
+.kv{display:flex;justify-content:space-between;gap:10px;font-size:14.5px;border-top:1px solid var(--line);padding-top:12px}
+.kv b{font-weight:700;text-align:right}
+
+.bal{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:880px){.bal{grid-template-columns:repeat(3,1fr)}}
+.bcard{border:1px solid var(--line);border-radius:var(--r-m);padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.bcard .k{font-size:13px;font-weight:600;color:var(--ink2)}
+.bcard h3{font-size:18px;font-weight:700}
+.bcard p{color:var(--ink2);font-size:15px}
+.seesaw{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font-weight:700;font-size:15px;background:var(--mist);border-radius:var(--r-s);padding:6px 10px}
+.seesaw .sc-ic{display:inline-grid;place-items:center;width:30px;height:24px;border-radius:3px;color:#fff;font-family:var(--serif);font-size:11.5px;font-weight:800}
+.seesaw .pole{position:relative;height:8px;border-radius:2px;background:#fff;overflow:hidden}
+.seesaw .pole i{position:absolute;top:0;bottom:0}
+.seesaw .pole .mid{position:absolute;left:50%;top:-2px;bottom:-2px;width:2px;background:var(--ink-3)}
+.seesaw .lab{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.seesaw .lab em{font-style:normal;color:var(--ink2);font-weight:500}
+.combos{margin-top:22px;display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.combo{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;padding:16px 0;border-bottom:1px solid var(--line)}
+.combo .pair{display:flex;gap:4px;padding-top:2px}
+.combo .pair i{width:32px;height:26px;border-radius:3px;display:grid;place-items:center;color:#fff;font-style:normal;font-family:var(--serif);font-size:11.5px;font-weight:800}
+.combo b{display:block;font-size:16.5px;font-weight:700;margin-bottom:2px}
+.combo span{color:var(--ink2);font-size:15px}
+
+.life{display:grid;grid-template-columns:1fr;gap:24px;align-items:center}
+@media (min-width:880px){.life{grid-template-columns:.9fr 1.1fr}}
+.life-plot{border:1px solid var(--line);border-radius:var(--r-m);padding:14px;min-width:0}
+.life-plot svg{display:block;width:100%;height:auto;max-width:440px;margin:0 auto}
+.life-text{display:flex;flex-direction:column;gap:12px;min-width:0}
+.life-text .tagline{font-size:14px;font-weight:650;color:var(--blue)}
+.life-text h3{font-family:var(--serif);font-size:28px;font-weight:800}
+.life-text h3 small{display:block;font-family:var(--sans);font-size:14px;color:var(--mute);font-weight:500;margin-top:2px;letter-spacing:0}
+.life-text p{color:var(--ink2)}
+.life-axes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.life-axes div{background:var(--mist);border-radius:var(--r-s);padding:12px 14px;font-size:14px}
+.life-axes b{display:block;font-family:var(--serif);font-size:20px;font-weight:800}
+.small-note{font-size:13px;color:var(--mute)}
+
+.situ{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:760px){.situ{grid-template-columns:repeat(2,1fr)}}
+.scard{border:1px solid var(--line);border-radius:var(--r-m);padding:20px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.scard .ic{display:none}
+.scard h3{font-size:18px;font-weight:700}
+.scard p{color:var(--ink2);font-size:15px}
+.scard p + p{border-top:1px solid var(--line);padding-top:8px}
+.scard p b{color:var(--ink)}
+
+.lvl{background:#fff;border-radius:var(--r-s);padding:12px 16px;border-left:4px solid var(--c)}
+.lvl b{display:block;margin-bottom:2px;font-weight:700}
+.lvl span{color:var(--ink2)}
+
+.think{display:grid;gap:20px;grid-template-columns:1fr}
+@media (min-width:880px){.think{grid-template-columns:1fr 1fr}}
+.parts{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.part{padding:14px 0;border-bottom:1px solid var(--line)}
+.part b{display:block;font-weight:700}
+.part span{color:var(--ink2);font-size:15px}
+.qs-list{counter-reset:qq;display:flex;flex-direction:column;margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.qs-list li{counter-increment:qq;padding:14px 0 14px 36px;position:relative;font-weight:500;border-bottom:1px solid var(--line)}
+.qs-list li::before{content:counter(qq);position:absolute;left:4px;top:12px;font-family:var(--serif);font-size:18px;font-weight:800;color:var(--blue)}
+
+svg text{font-family:var(--sans)}
+.fade{animation:fade .35s ease both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media print{
+  .gh,.tbar,.rnav,.end-band,.gf{display:none!important}
+  .r-hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rsec{break-inside:avoid}
+}
+
+/* ===== 포근한 층 ===== */
+.tbar{background:rgba(255,255,255,.9);border-bottom:0}
+.hero{border-bottom:0}
+.badge{display:inline-block;align-self:flex-start;background:var(--blue-t);color:var(--blue);padding:3px 13px;border-radius:999px;font-size:14px}
+.hero h1{letter-spacing:-.03em;line-height:1.38}
+.hero-meta{border:0;gap:8px}
+.hero-meta span,.hero-meta span + span{background:#fff;border:0;border-radius:var(--r-s);padding:10px 14px;box-shadow:var(--shadow)}
+.hero-art{border-radius:var(--r-l)}
+.band.soft{background:var(--mist);border-radius:var(--r-l);margin:0 12px}
+.sec-head{padding-bottom:0}
+.steps{gap:14px;border:0}
+.step,.step + .step{background:#fff;border:0;border-radius:var(--r-l);padding:22px 24px;box-shadow:var(--shadow)}
+.pg-h{border-bottom:0}
+.sc{border-top:0;border-radius:var(--r-l);box-shadow:var(--shadow);background:linear-gradient(var(--kc),var(--kc)) top/100% 6px no-repeat,#fff}
+.sc .key{border-radius:999px}
+.notice{border:0;gap:14px}
+.notice div{background:#fff;border:0;border-radius:var(--r-l);padding:20px 22px;box-shadow:var(--shadow)}
+.final-cta{background:var(--p-apricot);color:var(--ink);border-radius:var(--r-l)}
+.final-cta .resume{color:var(--ink2)}
+.final-cta .resume button{color:var(--blue)}
+.final-cta .btn-primary{background:#fff}
+@media (hover:hover){.final-cta .btn-primary:hover{background:var(--paper)}}
+.testbar{background:rgba(255,255,255,.9);border-bottom:0}
+.tb-track{height:8px;border-radius:999px}
+.tb-track i{border-radius:999px}
+.q{background:#fff;border-bottom:0;border-radius:var(--r-l);padding:24px 26px;margin-top:14px;box-shadow:var(--shadow)}
+.q.flag{background:#fff;box-shadow:inset 0 0 0 2px var(--warn),var(--shadow);padding-left:26px}
+.dot{border-radius:999px;height:40px}
+.mas{background:var(--mc);color:var(--mt,#fff);border-radius:999px}
+.fcard-top .mas{background:#fff}
+.manual-wrap .card{background:#fff;border:0;border-radius:var(--r-l);padding:8px 22px 20px;box-shadow:var(--shadow)}
+.mrow input{border-radius:var(--r-s)}
+.r-hero{border-bottom:0;border-radius:0 0 var(--r-l) var(--r-l)}
+.r-art{border-radius:var(--r-l)}
+.chip{border-radius:999px}
+.chip i,.seesaw .sc-ic,.combo .pair i{border-radius:999px}
+.rnav{background:rgba(255,255,255,.9);border-bottom:0}
+.rnav button{border-radius:999px}
+@media (hover:hover){.rnav button:hover{background:#fff}}
+.rsec h2{padding-bottom:0}
+.meters{border:0;gap:12px}
+.meters > div{background:#fff;border:0;border-radius:var(--r-l);padding:16px 20px 18px;box-shadow:var(--shadow)}
+.track{height:10px;border-radius:999px}
+.track i{border-radius:999px}
+.chart-card,.life-plot,.bcard,.scard,.type,.tabpanel,.fcard{background:#fff;border:0;border-radius:var(--r-l);box-shadow:var(--shadow)}
+.type.best{box-shadow:inset 0 0 0 2px var(--coral),var(--shadow)}
+.type svg{border-radius:var(--r-s)}
+.side-list,.combos,.parts,.qs-list{border:0}
+.principle,.combo,.part{background:#fff;border:0;border-radius:var(--r-m);padding:14px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
+.qs-list li{background:var(--blue-t);border:0;border-radius:var(--r-m);padding:14px 18px 14px 44px;margin-bottom:10px}
+.qs-list li::before{left:18px}
+.tab{border-radius:999px;border-width:1.5px}
+.tab .mas{border-radius:999px;width:32px}
+.tp-col,.keys,.saybox,.life-axes div,.lvl{border-radius:var(--r-m)}
+.plan{background:#fff;border-radius:var(--r-l);padding:24px;box-shadow:var(--shadow)}
+.field input{border-radius:var(--r-s)}
+.end-band .in{padding-top:0}
+.confirm{border-radius:var(--r-l)}
+.seesaw{border-radius:999px}
+.seesaw .pole{border-radius:999px}
+.story-text p b{box-shadow:inset 0 -.4em 0 #FBD9CF}
+
+
+/* ===== 마음의 색 층 ===== */
+.tbar,.testbar,.rnav{background:rgba(255,255,255,.94);box-shadow:none;border-bottom:1px solid var(--line)}
+.logo{font-weight:800;letter-spacing:-.04em}
+.hero{position:relative;overflow:hidden;margin:8px max(16px,env(safe-area-inset-left,0px)) 0;border-radius:36px;background:#F7F6FF;border:0}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(46px);opacity:.85;pointer-events:none}
+.hero::before{width:420px;height:420px;right:-60px;top:-120px;background:#A8E6DA}
+.hero::after{width:320px;height:320px;left:30%;bottom:-160px;background:#B7A8FF}
+.hero > *{position:relative;z-index:1}
+
+.hero h1{font-weight:800;letter-spacing:-.055em}
+.badge{background:rgba(255,255,255,.8);color:var(--ink2);font-weight:700;letter-spacing:0;font-size:13px}
+.hero-art{background:rgba(255,255,255,.8);border:0;box-shadow:none;border-radius:var(--r-l)}
+.hero-meta span,.hero-meta span + span{background:rgba(255,255,255,.8);border:0;box-shadow:none}
+.band.soft{background:none;margin:0}
+.sec-head{align-items:flex-start;text-align:left}
+.sec-head p{margin:0}
+.sec-head h2,.rsec h2{font-weight:800;letter-spacing:-.045em}
+.step .n,.qs-list li::before{font-weight:800;color:var(--blue)}
+.sc,.notice div,.step,.q,.meters > div,.chart-card,.life-plot,.bcard,.scard,.type,.tabpanel,.fcard,.principle,.combo,.part,.plan,.manual-wrap .card,.qs-list li{background:var(--card);border:0;box-shadow:none}
+.sc{background:var(--card)}
+.q.flag{background:var(--card);box-shadow:inset 0 0 0 2px var(--warn)}
+.tp-col,.keys,.saybox,.life-axes div,.seesaw,.lvl,.type svg,.r-art{background:#fff}
+.fcard-top{background:var(--fs)!important}
+.final-cta{position:relative;overflow:hidden;margin:8px max(16px,env(safe-area-inset-left,0px)) 0;border-radius:36px;background:#F7F6FF;border:0}
+.final-cta::before,.final-cta::after{content:"";position:absolute;border-radius:50%;filter:blur(46px);opacity:.85;pointer-events:none}
+.final-cta::before{width:420px;height:420px;right:-60px;top:-120px;background:#B7A8FF}
+.final-cta::after{width:320px;height:320px;left:30%;bottom:-160px;background:#FFB8D1}
+.final-cta > *{position:relative;z-index:1}
+
+.final-cta{color:var(--ink)}
+.final-cta .btn-primary{background:var(--ink);color:#fff}
+.final-cta .resume{color:var(--ink2)}
+.r-hero{margin:8px max(16px,env(safe-area-inset-left,0px)) 0;border-radius:36px;border:0}
+.dot{border:0;background:#fff}
+.q .dot{background:#fff}
+.opt[aria-checked="true"] .dot{background:var(--ink);border-color:transparent}
+.tb-track{height:6px}
+.tb-track i{background:linear-gradient(90deg,#A8E6DA,#B7A8FF)}
+.tab{border:0;background:var(--card)}
+.tab[aria-selected="true"]{background:var(--ink);color:#fff}
+.tag.hi{background:var(--ink);color:#fff}
+.tag.lo{background:#fff;color:var(--ink);border:0}
+.type .best-tag{background:var(--ink);color:#fff}
+.type.best{box-shadow:inset 0 0 0 2px var(--ink)}
+.story-text p b{box-shadow:inset 0 -.4em 0 #E3DEFF}
+.mrow input{border:0;background:#fff}
+.field input{border:0;background:var(--card)}
+.sugg button{border:0;background:var(--card)}
+.copybox{border:0;background:var(--card)}
+.confirm{background:var(--card)}
+</style>
+</head>
+<body>
+
+<header class="gh">
+  <div class="gh-in">
+    <a class="brand" href="index.html" aria-label="마음별 처음 화면"><svg viewBox="0 0 26 26" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B7A8FF"/><stop offset=".55" stop-color="#FFB8D1"/><stop offset="1" stop-color="#FFE3A8"/></linearGradient></defs><circle cx="13" cy="13" r="12" fill="url(#lg)"/><circle cx="17" cy="16" r="6" fill="#A8E6DA" opacity=".75"/><circle cx="9" cy="8.5" r="3.4" fill="#fff" opacity=".6"/></svg><span class="brand-name">마음별</span></a>
+    <nav class="gnav" aria-label="주요 메뉴"><a href="index.html#tests" aria-current="page">심리검사</a><a href="index.html#art">그림검사</a><a href="index.html#today">오늘의 기록</a><a href="index.html#ask">질문함</a><a href="index.html#notice">공지</a><a href="index.html#guide">이용 안내</a></nav>
+    <div class="gh-acts"><a class="btn btn-main btn-sm" href="index.html#consult">상담 신청</a></div>
+  </div>
+</header>
+<div class="tbar">
+  <div class="in">
+    <button class="logo" type="button" id="logoBtn" aria-label="이고그램 검사 처음 화면"><svg viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="11" width="3.2" height="10" fill="var(--cp)"/><rect x="5.2" y="5" width="3.2" height="16" fill="var(--np)"/><rect x="9.4" y="2" width="3.2" height="19" fill="var(--a)"/><rect x="13.6" y="7" width="3.2" height="14" fill="var(--fc)"/><rect x="17.8" y="13" width="3.2" height="8" fill="var(--ac)"/></svg>이고그램 검사</button>
+    <nav class="gnb" id="gnb" aria-label="검사 안내 메뉴">
+      <button type="button" data-go="how">검사 방법</button>
+      <button type="button" data-go="states">다섯 가지 자아상태</button>
+      <button type="button" data-go="notice">검사 전 안내</button>
+    </nav>
+    <div class="right">
+      <button class="btn btn-sm btn-line" type="button" id="hdrResult" hidden>내 결과</button>
+      <button class="btn btn-sm btn-primary" type="button" id="hdrStart">검사하기</button>
+    </div>
+  </div>
+</div>
+
+<main>
+<!-- ======================= LANDING ======================= -->
+<div id="vHome">
+  <section class="hero">
+    <div class="in">
+      <div class="hero-text">
+        <span class="badge">이고그램 · 교류분석 자아상태 검사</span>
+        <h1>나는 어떤 마음으로<br>사람을 대하고 있을까?</h1>
+        <p class="hero-sub">50개 문장에 답하면 다섯 가지 자아상태 점수를 이고그램 그래프로 보여 드려요. 내가 자주 쓰는 마음과 덜 쓰는 마음, 그리고 키우는 방법까지 알려 드립니다.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg" type="button" id="startBtn">검사 시작하기</button>
+        </div>
+        <p class="resume" id="resumeNote" hidden></p>
+        <div class="hero-meta">
+          <span><b>50문항</b>4점 척도</span>
+          <span><b>약 7분</b>소요 시간</span>
+          <span><b>무료</b>바로 보는 결과</span>
+        </div>
+      </div>
+      <figure class="hero-art" style="margin:0">
+        <svg id="heroArt" viewBox="0 0 520 380" role="img" aria-label="이고그램 예시: 다섯 자아상태 점수를 막대와 선으로 이은 그래프"></svg>
+        <figcaption>검사가 끝나면 내 점수로 이런 그래프를 그려 드려요.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="band" id="how">
+    <div class="in">
+      <div class="sec-head">
+        <span class="eye">검사 방법</span>
+        <h2>세 단계면 끝나요</h2>
+        <p>정답은 없어요. 바람직한 모습보다 평소의 나에 가까운 답을 고르는 것이 가장 정확합니다.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">1</span><h3>문장에 답하기</h3><p>50개 문장을 읽고 나와 얼마나 비슷한지 <b>항상 · 자주 · 가끔 · 드물다</b> 중에서 골라요. 한 페이지에 10문항씩, 모두 5페이지예요.</p></div>
+        <div class="step"><span class="n">2</span><h3>자동 채점</h3><p>다섯 자아상태마다 10문항씩 점수를 더해 0–30점으로 계산해요. 직접 더할 필요가 없어요.</p></div>
+        <div class="step"><span class="n">3</span><h3>결과 확인</h3><p>이고그램 그래프, 내 그래프 유형, 가장 높은 곳과 낮은 곳의 의미, 이번 주에 해 볼 연습까지 확인해요.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band soft" id="states">
+    <div class="in">
+      <div class="sec-head">
+        <span class="eye">세 가지 구조, 다섯 가지 기능</span>
+        <h2>다섯 가지 자아상태</h2>
+        <p>Berne의 P·A·C 구조를 Dusay가 기능별로 나누고, 각 기능에 쓰는 심리적 에너지를 그래프로 그린 것이 이고그램이에요.</p>
+      </div>
+      <div class="pac-groups" id="pacGroups"></div>
+    </div>
+  </section>
+
+  <section class="band" id="notice">
+    <div class="in">
+      <div class="sec-head">
+        <span class="eye">검사 전 안내</span>
+        <h2>이것만 알고 시작하세요</h2>
+      </div>
+      <div class="notice">
+        <div><b>좋고 나쁜 자아상태는 없어요</b><span>모두 쓰임이 다른 도구예요. 핵심은 상황에 맞게 꺼내 쓰는 유연성입니다.</span></div>
+        <div><b>점수보다 모양을 봐요</b><span>절대 점수보다 다섯 점수의 상대적 높낮이, 곧 그래프 모양이 나를 더 잘 보여 줘요.</span></div>
+        <div><b>결과는 스냅사진이에요</b><span>‘나는 이런 사람’이라는 꼬리표가 아니라 ‘지금 나는 이렇게 에너지를 쓰고 있다’는 기록이에요.</span></div>
+      </div>
+      <div class="final-cta" style="margin-top:48px">
+        <h2>지금 나의 이고그램을 그려 보세요</h2>
+        <button class="btn btn-primary btn-lg" type="button" id="startBtn2">검사 시작하기</button>
+        <p class="resume">종이 검사지로 이미 채점했다면 <button type="button" id="manualBtn">점수 입력해서 결과 보기</button></p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= TEST ======================= -->
+<div id="vTest" hidden>
+  <div class="testbar">
+    <div class="in">
+      <span class="tb-page">페이지 <span id="tbPage">1 / 5</span></span>
+      <span class="tb-track" aria-hidden="true"><i id="tbBar" style="width:0%"></i></span>
+      <span class="tb-pct tnum" id="tbPct">0%</span>
+    </div>
+  </div>
+  <div class="in">
+    <div class="test-wrap">
+      <p class="test-intro" id="testIntro">각 문장이 평소의 나와 얼마나 비슷한지 골라 주세요.</p>
+      <div id="qList"></div>
+      <div class="pager">
+        <button class="btn btn-line" type="button" id="prevBtn">이전</button>
+        <span class="pdots" id="pdots" aria-hidden="true"></span>
+        <button class="btn btn-primary" type="button" id="nextBtn">다음</button>
+        <p class="msg" id="pagerMsg" role="alert"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= LOADING ======================= -->
+<div id="vLoading" hidden>
+  <div class="in loading">
+    <div class="lbars" aria-hidden="true" id="lbars"></div>
+    <h2>결과를 분석하고 있어요</h2>
+    <p>다섯 자아상태 점수를 계산하고 이고그램을 그리는 중이에요.</p>
+  </div>
+</div>
+
+<!-- ======================= MANUAL ======================= -->
+<div id="vManual" hidden>
+  <div class="in">
+    <div class="manual-wrap">
+      <div class="sec-head" style="margin:0">
+        <span class="eye">종이 검사지 점수로 결과 보기</span>
+        <h2>척도별 합계를 입력하세요</h2>
+        <p>채점표에서 더한 다섯 개의 합계(각 0–30점)를 넣으면 같은 결과 페이지를 볼 수 있어요.</p>
+      </div>
+      <form class="card" id="manualForm" novalidate>
+        <div id="manualRows"></div>
+        <p class="err" id="manualErr" role="alert"></p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+          <button class="btn btn-primary" type="submit">결과 보기</button>
+          <button class="btn btn-line" type="button" id="manualBack">돌아가기</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= RESULT ======================= -->
+<div id="vResult" hidden>
+  <section class="r-hero">
+    <div class="in">
+      <div class="head">
+        <span class="eye" id="rEye">나의 이고그램 결과</span>
+        <div id="rMas"></div>
+        <h1 id="rTitle"></h1>
+        <p class="desc" id="rDesc"></p>
+        <div class="chips" id="rChips"></div>
+      </div>
+      <div class="r-art"><svg id="rArt" role="img" aria-label="나의 자아상태 점수 막대그래프"></svg></div>
+    </div>
+  </section>
+
+  <nav class="rnav" aria-label="결과 목차">
+    <div class="in">
+      <button type="button" data-go="rStory">종합 해석</button>
+      <button type="button" data-go="rScores">점수</button>
+      <button type="button" data-go="rChart">이고그램</button>
+      <button type="button" data-go="rBalance">균형 분석</button>
+      <button type="button" data-go="rLife">생활자세</button>
+      <button type="button" data-go="rSitu">상황별 모습</button>
+      <button type="button" data-go="rType">유형</button>
+      <button type="button" data-go="rFocus">강점·성장</button>
+      <button type="button" data-go="rDetail">자아상태별</button>
+      <button type="button" data-go="rThink">생각해 보기</button>
+      <button type="button" data-go="rPlan">실천 계획</button>
+    </div>
+  </nav>
+
+  <div class="in">
+    <section class="rsec" id="rStory">
+      <h2>종합 해석</h2>
+      <p class="lead">내 점수의 높낮이를 바탕으로 풀어 쓴 해석이에요.</p>
+      <div class="story">
+        <div class="story-text" id="storyText"></div>
+        <aside class="keys" id="storyKeys"></aside>
+      </div>
+    </section>
+
+    <section class="rsec" id="rScores">
+      <h2>자아상태별 점수</h2>
+      <p class="lead">각 자아상태는 10문항, 0–30점이에요. 세로선은 내 다섯 점수의 평균이고, 평균보다 3점 이상 높거나 낮으면 ‘높은 편’, ‘낮은 편’으로 표시했어요.</p>
+      <div class="meters" id="meters"></div>
+    </section>
+
+    <section class="rsec" id="rChart">
+      <h2>나의 이고그램</h2>
+      <p class="lead">다섯 점수를 선으로 이은 그래프예요. 가장 높은 곳과 가장 낮은 곳에 동그라미를 표시했어요.</p>
+      <div class="two-col">
+        <div class="chart-card">
+          <svg id="chart" role="img" aria-label="이고그램 그래프"></svg>
+          <div class="legend" id="legend"></div>
+          <label class="chk" id="prevWrap" hidden><input type="checkbox" id="prevChk"> <span id="prevLabel"></span></label>
+        </div>
+        <div class="side-list">
+          <div class="principle"><b>가장 높은 곳</b><span>익숙하게 쓰는 에너지예요. 나를 지켜 온 방식이기도 해요.</span></div>
+          <div class="principle"><b>가장 낮은 곳</b><span>아직 덜 써 본 에너지예요. 성장의 자리가 됩니다.</span></div>
+          <div class="principle"><b>변화의 원리</b><span>높은 것을 깎기보다 낮은 것을 키우세요. 에너지 총량은 대체로 일정해서, 낮은 곳을 자주 쓰면 높던 곳은 자연스럽게 제자리를 찾아요.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rsec" id="rBalance">
+      <h2>균형 분석</h2>
+      <p class="lead">이고그램은 하나의 점수보다 점수끼리의 관계에서 더 많은 것을 알려 줘요. 어버이 자아(CP·NP), 어린이 자아(FC·AC) 안의 균형과 어른 자아(A)의 위치를 살펴봤어요.</p>
+      <div class="bal" id="bal"></div>
+      <div class="combos" id="combos"></div>
+    </section>
+
+    <section class="rsec" id="rLife">
+      <h2>나와 타인을 대하는 태도</h2>
+      <p class="lead">교류분석의 이고그램 해석에서는 흔히 NP와 CP의 차이로 <b>타인을 대하는 태도</b>를, FC와 AC의 차이로 <b>자신을 대하는 태도</b>를 가늠해요. 이를 교류분석의 생활자세(인생태도) 네 가지에 비춰 본 결과예요.</p>
+      <div class="life">
+        <div class="life-plot"><svg id="lifePlot" role="img" aria-label="생활자세 좌표"></svg></div>
+        <div class="life-text" id="lifeText"></div>
+      </div>
+    </section>
+
+    <section class="rsec" id="rSitu">
+      <h2>상황별로 보이는 나의 모습</h2>
+      <p class="lead">가장 높은 자아상태가 일상에서 어떻게 드러나기 쉬운지, 가장 낮은 자아상태 때문에 어떤 상황이 어려울 수 있는지 정리했어요.</p>
+      <div class="situ" id="situ"></div>
+    </section>
+
+    <section class="rsec" id="rType">
+      <h2>내 그래프는 어떤 모양에 가까울까?</h2>
+      <p class="lead" id="typeLead"></p>
+      <div class="types" id="types"></div>
+      <p class="meters-note" style="margin-top:14px">일치도는 내 그래프와 각 유형의 높낮이 패턴이 얼마나 비슷한지(상관)를 나타내요. 유형 명칭은 연구자와 검사지에 따라 다를 수 있어요.</p>
+    </section>
+
+    <section class="rsec" id="rFocus">
+      <h2>나의 강점과 성장 포인트</h2>
+      <p class="lead">가장 높은 자아상태는 강점이 되지만 지나치면 부담이 되고, 가장 낮은 자아상태는 의식적으로 연습할수록 커져요.</p>
+      <div class="focus" id="focus"></div>
+    </section>
+
+    <section class="rsec" id="rDetail">
+      <h2>자아상태별 특징</h2>
+      <p class="lead">다섯 자아상태를 하나씩 눌러 보세요.</p>
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <div class="tabpanel" role="tabpanel" id="tabpanel"></div>
+    </section>
+
+    <section class="rsec" id="rThink">
+      <h2>더 생각해 보기</h2>
+      <p class="lead">높은 자아상태는 ‘고칠 대상’이 아니라 무언가를 지키고 있는 부분일 수 있어요. 결과를 보며 스스로에게 물어보세요.</p>
+      <div class="think">
+        <div class="parts" id="parts"></div>
+        <ol class="qs-list" id="reflect"></ol>
+      </div>
+    </section>
+
+    <section class="rsec" id="rPlan">
+      <h2>이번 주, 나의 실천 한 가지</h2>
+      <p class="lead">가장 낮은 자아상태 하나를 골라 행동으로 연습해 보세요. 2–3주 뒤 이 기기에서 다시 검사하면 이전 그래프와 겹쳐 볼 수 있어요.</p>
+      <form class="plan" id="planForm" onsubmit="return false">
+        <div class="field"><label for="wLow">나의 가장 낮은 자아상태</label><input id="wLow" type="text" autocomplete="off"></div>
+        <div class="field"><label for="wDo">이번 주에 해 볼 행동 한 가지</label><input id="wDo" type="text" autocomplete="off" placeholder="아래 예시를 눌러도 돼요"><div class="sugg" id="suggDo"></div></div>
+        <div class="field"><label for="wSay">하루 한 번 써 볼 말</label><input id="wSay" type="text" autocomplete="off" placeholder="아래 예시를 눌러도 돼요"><div class="sugg" id="suggSay"></div></div>
+      </form>
+    </section>
+  </div>
+
+  <section class="end-band">
+    <div class="in">
+      <h2>결과를 저장하거나 친구와 나눠 보세요</h2>
+      <div class="end-actions">
+        <button class="btn btn-primary" type="button" id="copyBtn">결과 텍스트 복사</button>
+        <button class="btn btn-line" type="button" id="editBtn">응답 수정하기</button>
+        <button class="btn btn-line" type="button" id="retakeBtn">다시 검사하기</button>
+      </div>
+      <p class="toast" id="toast" role="status"></p>
+      <textarea class="copybox" id="copyBox" readonly hidden aria-label="복사할 결과 텍스트"></textarea>
+      <div class="confirm" id="retakeConfirm" hidden>
+        <span>응답을 모두 지우고 처음부터 다시 할까요? 이번 결과는 ‘이전 검사’로 남아요.</span>
+        <span style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button class="btn btn-primary btn-sm" type="button" id="retakeYes">지우고 다시 시작</button><button class="btn btn-line btn-sm" type="button" id="retakeNo">취소</button></span>
+      </div>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer class="gf">
+  <div class="gf-in">
+    <div class="gf-brand"><b><svg viewBox="0 0 26 26" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B7A8FF"/><stop offset=".55" stop-color="#FFB8D1"/><stop offset="1" stop-color="#FFE3A8"/></linearGradient></defs><circle cx="13" cy="13" r="12" fill="url(#lg)"/><circle cx="17" cy="16" r="6" fill="#A8E6DA" opacity=".75"/><circle cx="9" cy="8.5" r="3.4" fill="#fff" opacity=".6"/></svg>마음별</b><div class="gf-sns" id="gfSns"></div></div>
+    <p><b>이고그램 검사</b>는 교육·자기 이해용이며 심리 진단 도구가 아니에요. 응답과 결과는 지금 쓰는 기기의 브라우저에만 저장돼요. 채점: 자아상태별 10문항 합계(0–30점), 교류분석 자아상태 검사 50문항.</p>
+    <p class="help-line">지금 많이 힘들다면 혼자 견디지 말고 연락해 주세요. 자살예방 상담전화 <b>109</b>, 정신건강 위기상담 <b>1577-0199</b> (24시간)</p>
+    <div class="gf-links"><a href="index.html#guide">이용 안내</a><a href="index.html#my">내 상담 신청</a><a href="index.html#consult">상담 신청</a></div>
+  </div>
+</footer>
+
+
+<script src="site-config.js"></script>
+<script src="common.js"></script>
+<script>
+(function(){
+"use strict";
+/* ---------- 자아상태 색과 글자 배지 ---------- */
+var MAS = {
+  CP:{color:"#BE4E3B", soft:"var(--cp-s)", deep:"#9C3A29"},
+  NP:{color:"#C9921F", soft:"var(--np-s)", deep:"#865C0E"},
+  A:{color:"#2B8571", soft:"var(--a-s)", deep:"#1D6253"},
+  FC:{color:"#5A9539", soft:"var(--fc-s)", deep:"#3F6E25"},
+  AC:{color:"#6B5BB5", soft:"var(--ac-s)", deep:"#4F4196"}
+};
+function stateBadge(key, cls, label){
+  return '<span class="mas'+(cls?" "+cls:"")+'" style="--mc:'+MAS[key].soft+';--mt:'+MAS[key].deep+'" '+(label?'role="img" aria-label="'+label+'"':'aria-hidden="true"')+'>'+key+'</span>';
+}
+
+var QUESTIONS = [
+"다른 사람을 헐뜯기 보다는 칭찬을 잘하는 편이다.",
+"대화에서 격언이나 속담을 잘 인용한다.",
+"“법없이도 살아갈 수 있는 사람”이라는 소리를 잘 듣는다.",
+"행동이나 말이 자유스럽고 자연스럽다.",
+"말이나 행동을 냉정하고 침착하게 하므로 안정된 분위기를 느낀다.",
+"“내가 하라는 대로 하면 된다”는 식으로 말한다.",
+"상냥하고 부드러우며 애정이 깃들어 있는 대화나 태도를 취한다.",
+"TV나 영화 등을 보면서 마음이 약해 눈물을 잘 흘리는 편이다.",
+"6하원칙에 따라서 사리를 따지거나 설명하는 편이다.",
+"호기심이 강하고 기발한(창의적인) 착상을 잘 한다.",
+"말을 할 때 상대방의 안색을 자주 살피게 된다.",
+"직장 안팎에서 사회봉사활동에 참여하기를 좋아한다.",
+"사회의 윤리, 도덕, 규칙 등을 중시하고 준수한다.",
+"다른 사람으로부터 부탁을 받으면 거절하지 못한다.",
+"태도나 자세가 바르며 여유가 있다.",
+"자기자신을 제멋대로라고 생각한다.",
+"다른 사람의 마음에 들고 싶다고 생각한다.",
+"부모나 상사가 시키는 대로 한다.",
+"타산적이며 이해득실을 생각하고 행동한다.",
+"일을 능률적으로 잘 처리한다.",
+"매사에 조심스럽고 소극적인 편이다.",
+"대화에서 감정적으로 되지 않고 이성적으로 풀어간다.",
+"상대방의 이야기를 잘 경청하고 공감하는 편이다.",
+"책임감이 강하고 약속시간을 엄수한다.",
+"부하나 아이의 실패에 대해 관대하고 격려한다.",
+"의리와 인정에 끌려서 아이나 부하, 동료 등 누군가를 마음에 걸려한다.",
+"신이 나면 도가 지나쳐서 실수를 저지른다.",
+"아이나 부하를 엄격하게 다스린다.",
+"생각하고 있는 바를 입 밖으로 내지 못하는 성질이다.",
+"아이나 부하 또는 동료에게 신체적 접촉과 같은 스킨십을 잘하는 편이다.",
+"상대의 말을 가로막고 자신의 생각을 말한다.",
+"밝고 유머가 있으며 장난을 잘 치는 편이다.",
+"어떤 일이나 사실에 근거해서 판단한다.",
+"상대의 실수를 곧잘 지적하고 정정한다.",
+"열등감이 심한 편이고 자신의 감정을 억누르는 편이다.",
+"오락이나 술 등 음식물을 만족할 때까지 섭취한다.",
+"미래의 일을 냉정하고 예리하게 예측하고 행동한다.",
+"욕심나는 것을 손에 넣지 않고는 못배긴다.",
+"자신의 생각을 관철하기 보다는 타협하는 경우가 많다.",
+"동정심이나 배려심이 강하고 어린이나 타인을 돌봐주기를 좋아한다.",
+"어떤 결정을 내릴 때 사실을 확인하거나 반대의견을 듣는다.",
+"중얼중얼하는 목소리로 말하거나 우물쭈물 사양하는 편이다.",
+"상대를 곧잘 바보 취급하거나 멸시한다.",
+"기쁨이나 화를 내는 등 희노애락을 직접적으로 표현하고 뒤끝이 없다.",
+"곤경에 처해 있는 사람을 위로하거나 북돋아 주기를 즐겨한다.",
+"현상을 잘 관찰, 분석하고 합리적으로 의사결정을 한다.",
+"“~해도 괜찮을까요?” “~할 생각이요” “이젠 됐어요” “어차피 ~를” 같은 말을 잘 쓴다.",
+"“와~ 멋있다” “굉장하군!” “아하!” 등 감탄사를 자주 쓰며 농담을 잘 한다.",
+"“당연히 ~해야 한다” “~하지 않으면 안 된다”는 식의 말투를 자주 쓴다.",
+"권리를 주장하기 전에 의무를 다 한다."
+];
+var OPTS = [{v:3,l:"항상 그렇다"},{v:2,l:"자주 그렇다"},{v:1,l:"가끔 그렇다"},{v:0,l:"드물다"}];
+var PER = 10, PAGES = 5, MAX = 30;
+
+var STATES = [
+ {key:"CP", name:"비판적 어버이", en:"Critical Parent", group:"P", c:"--cp",
+  tagline:"규범과 책임을 지키고 이끄는 마음",
+  core:"옳고 그름을 판단하고, 규칙과 이상을 지키며 타인을 지도해요.",
+  say:["당연히 ~해야 한다","내가 하라는 대로 해"],
+  high:["강한 책임감, 약속 엄수","원칙과 질서를 세운다","리더십, 추진력","윤리·도덕 의식"],
+  over:["비판적, 지배적","완고하고 융통성 부족","타인의 실수를 용납 못 함","권위적인 명령조"],
+  low:["너그럽지만 원칙이 약함","시간·약속에 느슨함","한계 설정·거절이 어려움","결정을 미루기 쉬움"],
+  items:[2,6,13,24,28,31,34,43,49,50],
+  doList:["작은 원칙 하나 정해 지키기","시간·마감 약속 지키기","필요할 때 ‘아니요’ 하기"],
+  sayList:["이건 안 됩니다","○시까지 부탁해요"]},
+ {key:"NP", name:"양육적 어버이", en:"Nurturing Parent", group:"P", c:"--np",
+  tagline:"돌보고 감싸 주는 마음",
+  core:"공감하고 보살피며, 상대를 지지하고 격려해요.",
+  say:["괜찮아, 잘했어","내가 도와줄게"],
+  high:["따뜻함, 공감 능력","타인을 수용하고 격려","배려와 봉사","편안한 관계 분위기"],
+  over:["과보호, 참견","상대의 자율성을 막음","자기희생, 소진","부탁을 거절하지 못함"],
+  low:["냉담·무관심해 보임","타인 감정에 둔감","관계가 사무적","칭찬·격려에 인색"],
+  items:[1,7,12,14,23,25,26,30,40,45],
+  doList:["하루 한 번 칭찬·감사 표현하기","상대의 감정을 먼저 알아주기"],
+  sayList:["많이 힘들었겠다","고마워, 덕분이야"]},
+ {key:"A", name:"어른", en:"Adult", group:"A", c:"--a",
+  tagline:"지금-여기의 현실을 판단하는 마음",
+  core:"사실을 모으고 분석해 합리적으로 판단해요. 감정과 규범을 조율하는 자리예요.",
+  say:["근거가 뭘까?","구체적으로 확인해 보자"],
+  high:["객관적, 사실 중심","문제해결 능력","계획적이고 능률적","감정에 휩쓸리지 않음"],
+  over:["냉정하고 계산적","정서적 교류가 부족","지나친 분석으로 지체","차갑다는 인상"],
+  low:["감정·기분으로 결정","현실 검토가 약함","계획 없이 즉흥적","같은 실수를 반복"],
+  items:[5,9,15,19,20,22,33,37,41,46],
+  doList:["결정 전에 사실 세 가지 적기","일정·지출 기록하기","육하원칙으로 말하기"],
+  sayList:["근거가 뭘까?","장단점을 따져 보자"]},
+ {key:"FC", name:"자유로운 어린이", en:"Free Child", group:"C", c:"--fc",
+  tagline:"느끼고 즐기고 탐색하는 마음",
+  core:"타고난 감정·욕구·호기심을 있는 그대로 표현해요.",
+  say:["와, 멋지다!","이거 해 보고 싶어!"],
+  high:["활력, 생동감","창의성, 호기심","유머와 놀이","솔직한 감정 표현"],
+  over:["충동적, 절제 부족","자기중심적","신나면 도가 지나침","분위기를 못 읽음"],
+  low:["위축되고 표정이 적음","즐길 줄 모름","감정을 억누름","생기가 부족해 보임"],
+  items:[4,8,10,16,27,32,36,38,44,48],
+  doList:["하루 10분 순수하게 즐기기","감정을 소리 내어 표현하기","몸을 움직이기"],
+  sayList:["와, 좋다!","이거 재밌겠다"]},
+ {key:"AC", name:"순응하는 어린이", en:"Adapted Child", group:"C", c:"--ac",
+  tagline:"상대에게 맞추는 마음",
+  core:"주변의 기대와 규칙에 맞추어 협조하고 순응해요. 때로는 반항으로 나타나기도 해요.",
+  say:["~해도 괜찮을까요?","어차피 제가 뭘…"],
+  high:["협조적, 온순함","인내심, 규칙 준수","타인을 존중","갈등을 피하고 조율"],
+  over:["눈치 보기, 의존","자기주장을 못 함","열등감, 자기비하","쌓인 감정의 폭발·우울"],
+  low:["독립적, 자기 페이스","타인 의견을 덜 들음","고집, 협조성 부족","제멋대로로 보일 수 있음"],
+  items:[3,11,17,18,21,29,35,39,42,47],
+  doList:["상대의 말을 끝까지 듣기","한 번은 먼저 양보하기","내 행동에 피드백 구하기"],
+  sayList:["당신 생각은 어때요?","제가 놓친 게 있을까요?"]}
+];
+var EXTRA = {
+ CP:{lead:"옳고 그름을 분명히 하고 맡은 일에 책임을 다하는 데 에너지를 많이 쓰는 편이에요",
+     leadLow:"규칙을 세우거나 단호하게 선을 긋는 일은 상대적으로 덜 하는 편이에요",
+     mid:"필요할 때는 원칙을 지키되 지나치게 엄격하지는 않은, 적당한 수준이에요",
+     look:"믿음직하고 원칙이 분명한", kw:["책임감","원칙","리더십"],
+     gain:"필요할 때 선을 긋고 나를 지키는 힘이 생겨요",
+     rel:"약속과 기준을 중요하게 여겨 믿음직한 사람으로 보여요. 다만 상대에게도 같은 기준을 기대해서, 상대는 평가받는다고 느낄 수 있어요.",
+     work:"목표와 규칙을 세우고 끝까지 책임지는 스타일이에요. 조별 과제나 모임에서 자연스럽게 이끄는 역할을 맡기 쉬워요.",
+     stress:"통제하려는 마음이 커져 잔소리나 지적이 늘고, 스스로에게도 ‘더 잘했어야 해’라며 엄격해지기 쉬워요.",
+     hard:"단호하게 거절하거나, 마감과 약속을 스스로 지켜야 할 때 어려움을 느끼기 쉬워요. 결정을 미루다 일이 쌓일 수 있어요."},
+ NP:{lead:"주변 사람을 살피고 돌보며 따뜻하게 격려하는 데 에너지를 많이 쓰는 편이에요",
+     leadLow:"다른 사람을 챙기고 감정을 보듬어 주는 표현은 상대적으로 덜 하는 편이에요",
+     mid:"상대를 배려하면서도 지나치게 떠안지 않는, 적당한 수준이에요",
+     look:"따뜻하고 배려 깊은", kw:["공감","배려","돌봄"],
+     gain:"관계가 한결 부드럽고 따뜻해져요",
+     rel:"상대의 감정을 먼저 알아채고 챙겨 주어, 주변에 기대려는 사람이 많아요. 다만 부탁을 거절하지 못해 혼자 짐을 떠안기 쉬워요.",
+     work:"팀 분위기를 살피고 동료를 돕는 역할에서 빛나요. 함께하는 과제나 사람을 돕는 일에서 보람을 크게 느껴요.",
+     stress:"내 일보다 남의 일을 먼저 챙기다 지치고, 도와준 만큼 알아주지 않으면 서운함이 쌓이기 쉬워요.",
+     hard:"친구가 힘들어할 때 위로의 말을 찾거나, 칭찬과 감사를 표현하는 일이 어색하게 느껴질 수 있어요. 의도와 달리 차갑다는 인상을 줄 수 있어요."},
+ A:{lead:"상황을 차분히 살피고 사실에 근거해 판단하는 데 에너지를 많이 쓰는 편이에요",
+     leadLow:"한 걸음 물러나 사실을 확인하고 따져 보는 일은 상대적으로 덜 하는 편이에요",
+     mid:"필요할 때 사실을 따져 보는 힘이 적당히 있는 수준이에요",
+     look:"차분하고 합리적인", kw:["객관성","계획","문제해결"],
+     gain:"감정과 규범 사이에서 균형 잡힌 결정을 내리기 쉬워져요",
+     rel:"감정에 휩쓸리지 않고 현실적인 조언을 해 주어 고민 상담 상대로 신뢰받아요. 다만 공감보다 해결책이 먼저 나와 서운하게 할 수 있어요.",
+     work:"계획을 세우고 정보를 정리해 효율적으로 처리하는 데 강해요. 시험 준비나 과제를 체계적으로 해내는 편이에요.",
+     stress:"생각이 많아지고 분석만 거듭하다 행동이 늦어지거나, 감정을 꺼 두고 일만 하게 되기 쉬워요.",
+     hard:"중요한 결정을 앞두고 정보를 정리하거나 계획을 세울 때 막막할 수 있어요. 기분에 따라 결정했다가 같은 실수를 반복하기 쉬워요."},
+ FC:{lead:"느끼는 대로 표현하고 호기심을 따라 즐기는 데 에너지를 많이 쓰는 편이에요",
+     leadLow:"하고 싶은 것을 솔직하게 드러내고 마음껏 즐기는 일은 상대적으로 덜 하는 편이에요",
+     mid:"즐길 때는 즐기고 절제할 때는 절제하는, 적당한 수준이에요",
+     look:"밝고 솔직한", kw:["활력","창의성","유머"],
+     gain:"생활에 활력과 즐거움이 더해지고 표정이 밝아져요",
+     rel:"밝고 솔직해서 금방 친해지고 분위기를 띄우는 역할을 해요. 다만 신이 나면 상대의 기분이나 상황을 놓칠 수 있어요.",
+     work:"아이디어가 많고 흥미 있는 일에는 깊이 몰입해요. 반복적인 일이나 흥미 없는 과제는 미루기 쉬워요.",
+     stress:"기분대로 행동하거나 먹기·놀기·쇼핑처럼 즉각적인 만족으로 스트레스를 풀려고 하기 쉬워요.",
+     hard:"쉬거나 노는 시간에도 마음껏 즐기지 못하고, 감정을 드러내야 할 때 머뭇거릴 수 있어요. 주변에서 무표정하거나 지쳐 보인다고 할 수 있어요."},
+ AC:{lead:"주변의 기대에 맞추고 협조하며 갈등을 피하는 데 에너지를 많이 쓰는 편이에요",
+     leadLow:"다른 사람에게 맞추거나 눈치를 살피는 일은 상대적으로 덜 하는 편이에요",
+     mid:"상대에게 맞출 때와 내 뜻을 지킬 때를 적당히 오가는 수준이에요",
+     look:"성실하고 협조적인", kw:["협조","인내","배려"],
+     gain:"다른 사람의 의견을 듣고 함께 맞춰 가는 여유가 생겨요",
+     rel:"배려심이 깊고 갈등을 피하며 상대에게 잘 맞춰 줘요. 다만 하고 싶은 말을 참다 보니 속마음을 알기 어렵다는 말을 듣기도 해요.",
+     work:"지시를 성실하게 따르고 규칙을 잘 지켜요. 혼자 판단해야 하는 상황에서는 ‘이래도 될까’ 망설이기 쉬워요.",
+     stress:"참고 쌓아 두다가 우울해지거나 어느 순간 갑자기 폭발하기 쉽고, 문제를 ‘내 탓’으로 돌리기 쉬워요.",
+     hard:"팀의 규칙에 맞추거나 다른 사람의 의견을 받아들여야 할 때 답답함을 느낄 수 있어요. 고집이 세다거나 제멋대로라는 오해를 받을 수 있어요."}
+};
+var LIFE = {
+ "++":{t:"자기긍정 · 타인긍정",en:"I'm OK, You're OK",d:"‘나도 괜찮고 너도 괜찮다’는 태도에 가까워요. 자신을 솔직하게 표현하면서도 상대를 존중하는 자세로, 교류분석에서 가장 건강하다고 보는 생활자세예요. 지금의 균형을 유지하되, 지치거나 갈등이 생길 때 한쪽으로 기울지 않는지 살펴보세요."},
+ "+-":{t:"자기긍정 · 타인부정",en:"I'm OK, You're not OK",d:"내 생각과 감정은 분명히 표현하지만, 상대에게는 엄격하거나 기대가 높은 편일 수 있어요. 일이 잘못되면 남의 탓을 먼저 떠올리기 쉬워요. 상대의 입장과 노력을 먼저 인정하는 말을 연습해 보세요."},
+ "-+":{t:"자기부정 · 타인긍정",en:"I'm not OK, You're OK",d:"다른 사람은 잘 존중하고 챙기지만, 나 자신은 뒤로 미루거나 낮게 보는 경향이 있어요. 비교하며 위축되거나 ‘내가 부족해서’라고 생각하기 쉬워요. 다른 사람에게 주는 관심을 내 감정과 욕구에도 나눠 주세요."},
+ "--":{t:"자기부정 · 타인부정",en:"I'm not OK, You're not OK",d:"나에게도 남에게도 만족하기 어려운 상태에 가까워요. 요즘 많이 지쳐 있다는 신호일 수 있어요. 혼자 버티기보다 믿을 수 있는 사람과 이야기를 나누거나, 학생상담센터 같은 도움을 활용해 보세요."}
+};
+var SHAPES = [
+ {name:"역N형", sub:"균형형", t:[0,1,1,0.7,-1], desc:"NP·A·FC가 높고 AC가 낮아요. 따뜻하고 합리적이며 자발적인 모습이에요."},
+ {name:"N형", sub:"헌신형", t:[-1,1,0,-1,1], desc:"NP·AC가 높고 CP·FC가 낮아요. 남을 먼저 챙기고 자기주장은 뒤로 미루는 편이에요."},
+ {name:"M형", sub:"명랑형", t:[-1,1,-0.4,1,-1], desc:"NP·FC가 높아요. 정이 많고 표현이 풍부하지만 논리·원칙은 약할 수 있어요."},
+ {name:"W형", sub:"고뇌형", t:[1,-1,1,-1,1], desc:"CP·A·AC가 높고 NP·FC가 낮아요. 완벽주의와 자기비판으로 긴장이 많은 편이에요."}
+];
+
+/* ---------- storage ---------- */
+var KEY = "egogram.web.v1";
+function load(){ try{ var s=localStorage.getItem(KEY); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){} }
+var store = load() || {};
+if(!Array.isArray(store.answers) || store.answers.length !== 50) store.answers = new Array(50).fill(null);
+if(!Array.isArray(store.history)) store.history = [];
+if(!store.weekly) store.weekly = {};
+if(typeof store.page !== "number") store.page = 0;
+
+/* ---------- helpers ---------- */
+function $(id){ return document.getElementById(id); }
+function cv(v){ return "var("+v+")"; }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];}); }
+function answered(){ return store.answers.filter(function(a){return a!==null;}).length; }
+function scoreFrom(a){ return STATES.map(function(s){ return s.items.reduce(function(t,n){return t+(a[n-1]||0);},0); }); }
+function ranks(sc){ return sc.map(function(v){ return 1+sc.filter(function(o){return o>v;}).length; }); }
+function corr(a,b){var n=a.length,ma=0,mb=0,i;for(i=0;i<n;i++){ma+=a[i];mb+=b[i];}ma/=n;mb/=n;var num=0,da=0,db=0;for(i=0;i<n;i++){num+=(a[i]-ma)*(b[i]-mb);da+=(a[i]-ma)*(a[i]-ma);db+=(b[i]-mb)*(b[i]-mb);}return (da===0||db===0)?0:num/Math.sqrt(da*db);}
+function josa(w,a,b){ var c=w.charCodeAt(w.length-1); if(c<0xAC00||c>0xD7A3) return w+b; return w+((c-0xAC00)%28?a:b); }
+function shortName(s){ return {CP:"비판적",NP:"양육적",A:"어른",FC:"자유로운",AC:"순응하는"}[s.key]; }
+function fmtDate(d){ var x=new Date(d); return x.getFullYear()+"."+String(x.getMonth()+1).padStart(2,"0")+"."+String(x.getDate()).padStart(2,"0"); }
+var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+function smooth(){ return reduce ? "auto" : "smooth"; }
+function ticks(arr, cls, color){ return "<ul class='ticks"+(cls?" "+cls:"")+"'"+(color?" style='--c:"+color+"'":"")+">"+arr.map(function(t){return "<li>"+esc(t)+"</li>";}).join("")+"</ul>"; }
+
+var NS="http://www.w3.org/2000/svg";
+function el(tag,attrs,parent,text){ var e=document.createElementNS(NS,tag); for(var k in attrs) e.setAttribute(k,attrs[k]); if(text!==undefined) e.textContent=text; if(parent) parent.appendChild(e); return e; }
+function clear(svg){ while(svg.firstChild) svg.removeChild(svg.firstChild); }
+
+/* ---------- views ---------- */
+var VIEWS = {home:$("vHome"), test:$("vTest"), loading:$("vLoading"), manual:$("vManual"), result:$("vResult")};
+function show(name){
+  Object.keys(VIEWS).forEach(function(k){ VIEWS[k].hidden = k!==name; });
+  $("gnb").hidden = name !== "home";
+  $("hdrStart").hidden = name === "test" || name === "loading";
+  $("hdrStart").textContent = name === "result" ? "처음으로" : "검사하기";
+  $("hdrResult").hidden = !(name === "home" && store.history.length && answered() === 50);
+  VIEWS[name].classList.remove("fade"); void VIEWS[name].offsetWidth; VIEWS[name].classList.add("fade");
+  window.scrollTo({top:0});
+}
+
+/* ---------- bar art (hero + result) ---------- */
+function drawBars(svg, vals, opts){
+  opts = opts || {};
+  var W=520, H=opts.h||380, base=H-(opts.labels?70:40), top=opts.labels?54:(opts.mas?96:30), bw=64, gap=(W-5*bw)/6;
+  svg.setAttribute("viewBox","0 0 "+W+" "+H);
+  clear(svg);
+  for(var g=0; g<=3; g++){
+    var gy = base - (base-top)*g/3;
+    el("line",{x1:10,x2:W-10,y1:gy,y2:gy,stroke:cv("--line"),"stroke-width":1,"stroke-dasharray":g?"4 6":""},svg);
+  }
+  var pts=[];
+  vals.forEach(function(v,i){
+    var x=gap+i*(bw+gap), h=Math.max(10,(base-top)*v/MAX), y=base-h;
+    el("rect",{x:x,y:y,width:bw,height:h,rx:12,fill:cv(STATES[i].c)},svg);
+    pts.push([x+bw/2,y]);
+    if(opts.labels){
+      el("text",{x:x+bw/2,y:y-14,"text-anchor":"middle","font-size":22,"font-weight":900,fill:cv("--ink")},svg,String(v));
+      el("text",{x:x+bw/2,y:base+28,"text-anchor":"middle","font-size":17,"font-weight":900,fill:cv(STATES[i].c)},svg,STATES[i].key);
+      el("text",{x:x+bw/2,y:base+50,"text-anchor":"middle","font-size":14,fill:cv("--ink-2")},svg,shortName(STATES[i]));
+    }else{
+      el("text",{x:x+bw/2,y:base+28,"text-anchor":"middle","font-size":17,"font-weight":900,fill:cv("--ink-2")},svg,STATES[i].key);
+    }
+  });
+  el("polyline",{points:pts.map(function(p){return p.join(",");}).join(" "),fill:"none",stroke:cv("--ink"),"stroke-width":3,"stroke-linejoin":"round","stroke-linecap":"round",opacity:.85},svg);
+  pts.forEach(function(p){ el("circle",{cx:p[0],cy:p[1],r:7,fill:"#fff",stroke:cv("--ink"),"stroke-width":3},svg); });
+}
+
+/* ---------- landing ---------- */
+function buildHome(){
+  drawBars($("heroArt"), [16,23,27,19,11], {});
+  var groups = [{g:"P",n:"어버이 자아",d:"부모에게서 배운 마음",idx:[0,1]},{g:"A",n:"어른 자아",d:"지금-여기의 판단",idx:[2]},{g:"C",n:"어린이 자아",d:"어린 시절의 감정·욕구",idx:[3,4]}];
+  $("pacGroups").innerHTML = groups.map(function(gr){
+    return "<div class='pg'><div class='pg-h'><b>"+gr.g+"</b>"+gr.n+" · "+gr.d+"</div><div class='pg-cards"+(gr.idx.length>1?" two":"")+"'>"+
+      gr.idx.map(function(i){ var s=STATES[i];
+        return "<div class='sc' style='--kc:"+MAS[s.key].color+"'><div class='sc-top'><span class='key' style='background:"+cv(s.c)+"'>"+s.key+"</span><h3 style='color:"+MAS[s.key].deep+"'>"+s.name+"</h3><span class='en'>"+s.en+"</span></div>"+
+          "<p>"+esc(s.core)+"</p><span class='quote'>“"+esc(s.say[0])+"”</span></div>";
+      }).join("")+"</div></div>";
+  }).join("");
+  $("lbars").innerHTML = STATES.map(function(s){ return "<i style='background:"+MAS[s.key].color+"'></i>"; }).join("");
+  $("testIntro").textContent = "각 문장이 평소의 나와 얼마나 비슷한지 골라 주세요. 바람직한 모습보다 평소의 나에 가까운 답이 가장 정확해요.";
+}
+function refreshHome(){
+  var n = answered(), note = $("resumeNote");
+  if(n>0 && n<50){
+    note.hidden=false;
+    note.innerHTML = "진행 중인 검사가 있어요 ("+n+"/50). <button type='button' id='resetBtn'>처음부터 새로 하기</button>";
+    $("startBtn").textContent = "이어서 검사하기";
+    $("resetBtn").onclick = function(){ store.answers=new Array(50).fill(null); store.page=0; save(); refreshHome(); };
+  }else if(n===50){
+    note.hidden=false;
+    note.innerHTML = "완료한 검사가 있어요. <button type='button' id='lastBtn'>내 결과 다시 보기</button>";
+    $("startBtn").textContent = "새로 검사하기";
+    $("lastBtn").onclick = function(){ openResult(scoreFrom(store.answers),"test",false); };
+  }else{
+    note.hidden=true;
+    $("startBtn").textContent = "무료로 검사 시작하기";
+  }
+}
+
+/* ---------- test ---------- */
+function startTest(){
+  if(answered()===50){ archive(); store.answers=new Array(50).fill(null); store.page=0; save(); }
+  else{
+    var f = store.answers.findIndex(function(a){return a===null;});
+    store.page = f>=0 ? Math.floor(f/PER) : 0;
+  }
+  renderPage(); show("test");
+}
+function renderPage(){
+  var p = store.page, start = p*PER;
+  var html = "";
+  for(var i=start;i<start+PER;i++){
+    var a = store.answers[i];
+    html += "<div class='q"+(a!==null?" done":"")+"' id='q"+i+"'><span class='q-no'>"+String(i+1).padStart(2,"0")+" / 50</span>"+
+      "<p class='q-text' id='qt"+i+"'>"+esc(QUESTIONS[i])+"</p>"+
+      "<div class='scale' role='radiogroup' aria-labelledby='qt"+i+"'>"+
+      OPTS.map(function(o){ var on=a===o.v;
+        return "<button type='button' class='opt' role='radio' data-i='"+i+"' data-v='"+o.v+"' aria-checked='"+on+"' tabindex='"+((a===null&&o.v===3)||on?0:-1)+"'><span class='dot'></span><span class='lb'>"+o.l+"</span></button>";
+      }).join("")+"</div></div>";
+  }
+  $("qList").innerHTML = html;
+  $("testIntro").hidden = p !== 0;
+  $("prevBtn").disabled = p===0;
+  $("pagerMsg").textContent = "";
+  $("pdots").innerHTML = Array.from({length:PAGES},function(_,k){
+    var full = store.answers.slice(k*PER,k*PER+PER).every(function(x){return x!==null;});
+    return "<i class='"+(k===p?"on":full?"done":"")+"'></i>";
+  }).join("");
+  updateProgress();
+}
+function updateProgress(){
+  var n=answered(), p=store.page;
+  $("tbPage").textContent = (p+1)+" / "+PAGES;
+  $("tbPct").textContent = Math.round(n/50*100)+"%";
+  $("tbBar").style.width = (n/50*100)+"%";
+  $("nextBtn").textContent = p===PAGES-1 ? "결과 보기" : "다음";
+}
+function pageMissing(){
+  var out=[]; for(var i=store.page*PER;i<store.page*PER+PER;i++) if(store.answers[i]===null) out.push(i); return out;
+}
+$("qList").addEventListener("click", function(e){
+  var b = e.target.closest(".opt"); if(!b) return;
+  var i = Number(b.dataset.i), v = Number(b.dataset.v);
+  store.answers[i] = v; save();
+  var q = $("q"+i);
+  q.classList.add("done"); q.classList.remove("flag");
+  Array.prototype.forEach.call(q.querySelectorAll(".opt"), function(o){ var on=o===b; o.setAttribute("aria-checked",on); o.tabIndex=on?0:-1; });
+  updateProgress();
+  var miss = pageMissing();
+  if(!miss.length) $("pagerMsg").textContent = "";
+  setTimeout(function(){
+    var next = miss.filter(function(k){return k>i;})[0];
+    if(next===undefined) next = miss[0];
+    if(VIEWS.test.hidden || !$("q"+i)) return;
+    if(next!==undefined){
+      var nq = $("q"+next); if(nq) nq.scrollIntoView({block:"center",behavior:smooth()});
+    }else{
+      $("nextBtn").scrollIntoView({block:"center",behavior:smooth()});
+      $("nextBtn").focus({preventScroll:true});
+    }
+  }, 180);
+});
+$("qList").addEventListener("keydown", function(e){
+  var b = e.target.closest(".opt"); if(!b) return;
+  var sib = Array.prototype.slice.call(b.parentNode.children), k = sib.indexOf(b);
+  if(e.key==="ArrowRight"||e.key==="ArrowDown"){ e.preventDefault(); sib[Math.min(3,k+1)].focus(); }
+  if(e.key==="ArrowLeft"||e.key==="ArrowUp"){ e.preventDefault(); sib[Math.max(0,k-1)].focus(); }
+});
+$("prevBtn").onclick = function(){ if(store.page>0){ store.page--; save(); renderPage(); window.scrollTo({top:0}); } };
+$("nextBtn").onclick = function(){
+  var miss = pageMissing();
+  if(miss.length){
+    miss.forEach(function(k){ $("q"+k).classList.add("flag"); });
+    $("pagerMsg").textContent = "아직 답하지 않은 문항이 "+miss.length+"개 있어요.";
+    $("q"+miss[0]).scrollIntoView({block:"center",behavior:smooth()});
+    return;
+  }
+  if(store.page < PAGES-1){ store.page++; save(); renderPage(); window.scrollTo({top:0}); }
+  else{
+    var all = store.answers.findIndex(function(a){return a===null;});
+    if(all>=0){ store.page=Math.floor(all/PER); renderPage(); window.scrollTo({top:0}); return; }
+    show("loading");
+    setTimeout(function(){ openResult(scoreFrom(store.answers),"test",true); }, reduce?300:1500);
+  }
+};
+
+/* ---------- result ---------- */
+var current = {sc:null, source:"test"};
+function pushHistory(sc){
+  var last=store.history[store.history.length-1];
+  if(last && last.s.join(",")===sc.join(",") && fmtDate(last.d)===fmtDate(Date.now())) return;
+  store.history.push({d:Date.now(),s:sc}); if(store.history.length>6) store.history=store.history.slice(-6); save();
+}
+function archive(){ if(answered()===50) pushHistory(scoreFrom(store.answers)); }
+function openResult(sc, source, record){
+  current.sc=sc; current.source=source;
+  var prev=null;
+  for(var h=store.history.length-1;h>=0;h--){ if(store.history[h].s.join(",")!==sc.join(",")){ prev=store.history[h]; break; } }
+  if(record) pushHistory(sc);
+  show("result");
+  renderResult(sc, prev);
+  requestAnimationFrame(function(){ Array.prototype.forEach.call(document.querySelectorAll("#meters .track i"), function(i){ i.style.width=i.dataset.w; }); });
+}
+
+function drawChart(svg, sc, prev){
+  var narrow = (svg.parentNode.clientWidth||600) < 520;
+  var W=narrow?400:600,H=narrow?330:380,L=narrow?34:44,R=narrow?10:20,T=24,B=58,pw=W-L-R,ph=H-T-B,cw=pw/5;
+  svg.setAttribute("viewBox","0 0 "+W+" "+H); clear(svg);
+  function x(i){return L+cw*i+cw/2;} function y(v){return T+ph-(v/MAX)*ph;}
+  for(var v=0;v<=MAX;v+=5){
+    el("line",{x1:L,x2:L+pw,y1:y(v),y2:y(v),stroke:cv("--line"),"stroke-width":1},svg);
+    el("text",{x:L-10,y:y(v)+4,"text-anchor":"end","font-size":12,fill:cv("--ink-3")},svg,String(v));
+  }
+  var mx=Math.max.apply(null,sc), mn=Math.min.apply(null,sc), flat=mx===mn;
+  STATES.forEach(function(s,i){
+    el("text",{x:x(i),y:H-B+26,"text-anchor":"middle","font-size":15,"font-weight":900,fill:cv(s.c)},svg,s.key);
+    el("text",{x:x(i),y:H-B+45,"text-anchor":"middle","font-size":12,fill:cv("--ink-2")},svg,narrow?shortName(s):s.name);
+  });
+  if(prev){
+    el("polyline",{points:prev.map(function(v,i){return x(i)+","+y(v);}).join(" "),fill:"none",stroke:cv("--ink-3"),"stroke-width":2,"stroke-dasharray":"6 6"},svg);
+    prev.forEach(function(v,i){ el("circle",{cx:x(i),cy:y(v),r:4,fill:"#fff",stroke:cv("--ink-3"),"stroke-width":2},svg); });
+  }
+  // area
+  var area = "M"+x(0)+","+y(0)+" "+sc.map(function(v,i){return "L"+x(i)+","+y(v);}).join(" ")+" L"+x(4)+","+y(0)+" Z";
+  el("path",{d:area,fill:cv("--brand"),opacity:.08},svg);
+  el("polyline",{points:sc.map(function(v,i){return x(i)+","+y(v);}).join(" "),fill:"none",stroke:cv("--ink"),"stroke-width":3,"stroke-linejoin":"round","stroke-linecap":"round"},svg);
+  sc.forEach(function(v,i){
+    if(!flat && (v===mx||v===mn)) el("circle",{cx:x(i),cy:y(v),r:17,fill:"none",stroke:cv("--brand"),"stroke-width":2.5},svg);
+    el("circle",{cx:x(i),cy:y(v),r:7.5,fill:cv(STATES[i].c),stroke:"#fff","stroke-width":3},svg);
+    var ty = y(v)-26 > T ? y(v)-26 : y(v)+36;
+    el("text",{x:x(i),y:ty,"text-anchor":"middle","font-size":17,"font-weight":900,fill:cv("--ink")},svg,String(v));
+  });
+}
+function drawMini(svg,t,best){
+  var W=200,H=80,P=16; svg.setAttribute("viewBox","0 0 "+W+" "+H); clear(svg);
+  function x(i){return P+i*(W-2*P)/4;} function y(v){return H-22-((v+1)/2)*(H-36);}
+  el("line",{x1:P,x2:W-P,y1:H-22,y2:H-22,stroke:cv("--line"),"stroke-width":1},svg);
+  el("polyline",{points:t.map(function(v,i){return x(i)+","+y(v);}).join(" "),fill:"none",stroke:best?cv("--brand"):cv("--ink-3"),"stroke-width":3,"stroke-linejoin":"round"},svg);
+  t.forEach(function(v,i){
+    el("circle",{cx:x(i),cy:y(v),r:4.5,fill:cv(STATES[i].c)},svg);
+    el("text",{x:x(i),y:H-5,"text-anchor":"middle","font-size":11,"font-weight":700,fill:cv("--ink-3")},svg,STATES[i].key);
+  });
+}
+
+function renderResult(sc, prev){
+  var mx=Math.max.apply(null,sc), mn=Math.min.apply(null,sc), flat=mx===mn;
+  var hi=[], lo=[]; sc.forEach(function(v,i){ if(v===mx) hi.push(i); if(v===mn) lo.push(i); });
+  var mean=sc.reduce(function(a,b){return a+b;},0)/5, rk=ranks(sc), spread=mx-mn;
+  var rs=SHAPES.map(function(s){return corr(sc,s.t);}), bi=0; rs.forEach(function(r,i){ if(r>rs[bi]) bi=i; });
+  var best=SHAPES[bi], matched = spread>4 && rs[bi]>=0.6;
+
+  // hero
+  $("rEye").textContent = "나의 이고그램 결과 · " + fmtDate(Date.now()) + (current.source==="manual"?" · 점수 입력":"");
+  if(spread<=4){
+    $("rTitle").innerHTML = "평탄형<small>다섯 에너지를 고르게 쓰는 프로필</small>";
+    $("rDesc").textContent = "다섯 점수의 차이가 "+spread+"점 이내예요. 특정 자아상태로 쏠리지 않았다는 뜻일 수도, 중간값 위주로 답한 결과일 수도 있어요.";
+  }else if(matched){
+    $("rTitle").innerHTML = esc(best.name)+" · "+esc(best.sub)+"<small>"+STATES[hi[0]].key+" "+josa(STATES[hi[0]].name,"이","가")+" 가장 강한 프로필</small>";
+    $("rDesc").textContent = best.desc;
+  }else{
+    var hs=STATES[hi[0]];
+    $("rTitle").innerHTML = hs.key+" 우세형<small>"+josa(hs.name,"이","가")+" 가장 강한 프로필</small>";
+    $("rDesc").textContent = "대표 유형 중 뚜렷하게 들어맞는 모양은 없어요. 가장 높은 "+josa(hs.name,"은","는")+" "+hs.tagline+"이에요.";
+  }
+  $("rChips").innerHTML = flat ? "" :
+    hi.map(function(i){ var s=STATES[i]; return "<span class='chip'><i style='background:"+cv(s.c)+"'>"+s.key+"</i>가장 높음 · "+sc[i]+"점</span>"; }).join("") +
+    lo.map(function(i){ var s=STATES[i]; return "<span class='chip'><i style='background:"+cv(s.c)+"'>"+s.key+"</i>가장 낮음 · "+sc[i]+"점</span>"; }).join("");
+  drawBars($("rArt"), sc, {labels:true, h:400});
+  var topK = flat ? "A" : STATES[hi[0]].key, rh = document.querySelector(".r-hero");
+  rh.style.setProperty("--tbg", flat ? "var(--hero)" : MAS[topK].soft);
+  rh.style.setProperty("--tc", flat ? "var(--ink)" : MAS[topK].deep);
+  $("rMas").innerHTML = "";
+
+  // meters
+  $("meters").innerHTML = STATES.map(function(s,i){
+    var tag = flat ? "" : hi.indexOf(i)>=0 ? "<span class='tag hi'>가장 높음</span>" : lo.indexOf(i)>=0 ? "<span class='tag lo'>가장 낮음</span>" :
+      (sc[i]-mean>=3 ? "<span class='tag mid'>높은 편</span>" : mean-sc[i]>=3 ? "<span class='tag mid'>낮은 편</span>" : "<span class='tag mid'>보통</span>");
+    return "<div style='--ms:"+MAS[s.key].soft+"'><div class='meter-top'>"+stateBadge(s.key)+"<div class='nm'><b style='color:"+MAS[s.key].deep+"'>"+s.key+" "+s.name+"</b><span>"+s.tagline+"</span></div>"+tag+
+      "<span class='val tnum'>"+sc[i]+"<small> / 30</small></span></div>"+
+      "<div class='track'><i data-w='"+(sc[i]/MAX*100)+"%' style='width:0;background:"+cv(s.c)+"'></i><span class='avg' style='left:"+(mean/MAX*100)+"%'></span></div></div>";
+  }).join("") + "<p class='meters-note'>순위: "+STATES.map(function(s,i){return s.key+" "+rk[i]+"위";}).join(" · ")+" · 평균 "+mean.toFixed(1)+"점</p>";
+
+  // chart
+  drawChart($("chart"), sc, null);
+  var leg = "<span><i></i>이번 검사</span><span><i class='ring'></i>가장 높은 곳·낮은 곳</span>";
+  $("legend").innerHTML = leg;
+  if(prev){
+    $("prevWrap").hidden=false; $("prevLabel").textContent="이전 검사("+fmtDate(prev.d)+")와 겹쳐 보기"; $("prevChk").checked=false;
+    $("prevChk").onchange=function(){ drawChart($("chart"),sc,this.checked?prev.s:null); $("legend").innerHTML = leg+(this.checked?"<span><i class='dash'></i>이전 검사</span>":""); };
+  }else $("prevWrap").hidden=true;
+
+  // types
+  $("typeLead").textContent = spread<=4 ? "높낮이 차이가 작아 특정 유형으로 보기 어려워요. 참고로 네 가지 대표 유형과의 일치도를 보여 드려요."
+    : matched ? "내 그래프는 "+best.name+" · "+best.sub+"과 가장 비슷해요 (일치도 "+Math.round(rs[bi]*100)+"%)."
+    : "네 가지 대표 유형 중 뚜렷하게 들어맞는 것은 없어요. 그나마 가까운 것은 "+best.name+"이에요.";
+  var tb=$("types"); tb.innerHTML="";
+  SHAPES.forEach(function(s,i){
+    var isB = i===bi && spread>4, pct=Math.round(Math.max(0,rs[i])*100);
+    var d=document.createElement("div"); d.className="type"+(isB?" best":"");
+    d.innerHTML=(isB?"<span class='best-tag'>나와 가장 비슷</span>":"")+"<h3>"+s.name+"<small>"+s.sub+"</small></h3><svg aria-hidden='true'></svg><p>"+s.desc+"</p><span class='m'>일치도 "+pct+"%</span><div class='mbar'><i style='width:"+pct+"%'></i></div>";
+    tb.appendChild(d); drawMini(d.querySelector("svg"), s.t, isB);
+  });
+
+  // focus
+  var fc=$("focus");
+  if(flat){ fc.innerHTML="<div class='principle'><b>모든 점수가 같아요</b><span>가장 높은 곳과 낮은 곳을 정할 수 없어요. 아래 자아상태별 특징을 하나씩 살펴보세요.</span></div>"; }
+  else{
+    var h=STATES[hi[0]], l=STATES[lo[0]];
+    fc.innerHTML =
+      "<article class='fcard'><div class='fcard-top' style='--fs:"+MAS[h.key].soft+";--fc-c:"+MAS[h.key].deep+"'>"+stateBadge(h.key)+"<div><span class='k'>강점 · 가장 높은 자아상태</span><h3>"+hi.map(function(i){return STATES[i].name;}).join(", ")+"</h3></div><span class='pts'>"+mx+"<small>점</small></span></div>"+
+      "<div class='fcard-body'><p>"+esc(h.core)+"</p><div class='cols2'><div><h4>이럴 때 빛나요</h4>"+ticks(h.high,"",cv(h.c))+"</div><div><h4>지나치면 이렇게 보일 수 있어요</h4>"+ticks(h.over,"warn")+"</div></div>"+
+      "<div class='saybox'><span style='font-size:13px;font-weight:500;color:var(--ink-3)'>자주 하는 말</span>“"+esc(h.say[0])+"” “"+esc(h.say[1])+"”</div></div></article>"+
+      "<article class='fcard'><div class='fcard-top' style='--fs:"+MAS[l.key].soft+";--fc-c:"+MAS[l.key].deep+"'>"+stateBadge(l.key)+"<div><span class='k'>성장 포인트 · 가장 낮은 자아상태</span><h3>"+lo.map(function(i){return STATES[i].name;}).join(", ")+"</h3></div><span class='pts'>"+mn+"<small>점</small></span></div>"+
+      "<div class='fcard-body'><p>"+esc(l.core)+"</p><div><h4>낮을 때 나타나기 쉬운 모습</h4>"+ticks(l.low,"warn")+"</div>"+
+      "<div><h4>이렇게 해 보세요</h4>"+ticks(l.doList,"",cv(l.c))+"</div>"+
+      "<div class='saybox'><span style='font-size:13px;font-weight:500;color:var(--ink-3)'>이렇게 말해 보세요</span>"+l.sayList.map(function(t){return "“"+esc(t)+"”";}).join(" ")+"</div></div></article>";
+  }
+
+  // tabs
+  var tabs=$("tabs");
+  tabs.innerHTML = STATES.map(function(s,i){ return "<button class='tab' role='tab' type='button' id='tab"+i+"' aria-controls='tabpanel' aria-selected='false' data-i='"+i+"'>"+stateBadge(s.key)+s.name+"</button>"; }).join("");
+  function sel(i){
+    Array.prototype.forEach.call(tabs.children,function(t,k){ t.setAttribute("aria-selected",k===i); t.tabIndex=k===i?0:-1; });
+    var s=STATES[i];
+    $("tabpanel").setAttribute("aria-labelledby","tab"+i);
+    $("tabpanel").innerHTML = "<div class='tp-head'>"+stateBadge(s.key)+"<h3 style='color:"+MAS[s.key].deep+"'>"+s.key+" "+s.name+"</h3><span>"+s.en+" · 내 점수 "+sc[i]+"점 ("+rk[i]+"위)</span></div>"+
+      "<p>"+esc(s.core)+" 대표 말투는 <b>“"+esc(s.say[0])+"”</b>, <b>“"+esc(s.say[1])+"”</b>예요.</p>"+
+      (function(){ var lv=lvlOf(sc[i],mean), ex=EXTRA[s.key];
+        var t = lv==="hi" ? ["나에게는 높은 편이에요 ("+sc[i]+"점)", ex.lead+". 아래 ‘높을 때’와 ‘지나칠 때’를 함께 살펴보세요."]
+              : lv==="lo" ? ["나에게는 낮은 편이에요 ("+sc[i]+"점)", ex.leadLow+". 아래 ‘낮을 때’의 모습이 익숙한지 확인해 보세요."]
+              : ["나에게는 보통 수준이에요 ("+sc[i]+"점)", ex.mid+"."];
+        return "<div class='lvl' style='--c:"+cv(s.c)+"'><b>"+t[0]+"</b><span>"+t[1]+"</span></div>"; })()+
+      "<div class='tp-cols'><div class='tp-col'><h4>높을 때 · 강점</h4>"+ticks(s.high,"",cv(s.c))+"</div><div class='tp-col'><h4>지나칠 때 · 주의</h4>"+ticks(s.over,"warn")+"</div><div class='tp-col'><h4>낮을 때</h4>"+ticks(s.low,"warn")+"</div></div>"+
+      "<p class='tp-items'>관련 문항: "+s.items.join(", ")+"</p>";
+  }
+  Array.prototype.forEach.call(tabs.children,function(t){ t.onclick=function(){ sel(Number(t.dataset.i)); }; });
+  tabs.onkeydown=function(e){ var k=Number(e.target.dataset.i); if(isNaN(k)) return; if(e.key==="ArrowRight"){ sel((k+1)%5); tabs.children[(k+1)%5].focus(); } if(e.key==="ArrowLeft"){ sel((k+4)%5); tabs.children[(k+4)%5].focus(); } };
+  sel(flat?0:hi[0]);
+
+  renderInterp(sc, {hi:hi, lo:lo, mx:mx, mn:mn, flat:flat, mean:mean,
+    typeLabel: spread<=4 ? "평탄형" : matched ? best.name+" · "+best.sub : STATES[hi[0]].key+" 우세형"});
+
+  // plan
+  var w=store.weekly||{}, ls=flat?STATES[2]:STATES[lo[0]];
+  $("wLow").value = w.low || (flat?"":ls.key+" "+ls.name);
+  $("wDo").value = w.doIt || ""; $("wSay").value = w.say || "";
+  $("suggDo").innerHTML = ls.doList.map(function(t){return "<button type='button'>"+esc(t)+"</button>";}).join("");
+  $("suggSay").innerHTML = ls.sayList.map(function(t){return "<button type='button'>“"+esc(t)+"”</button>";}).join("");
+  Array.prototype.forEach.call($("suggDo").children,function(b){ b.onclick=function(){ $("wDo").value=b.textContent; saveWeekly(); }; });
+  Array.prototype.forEach.call($("suggSay").children,function(b){ b.onclick=function(){ $("wSay").value=b.textContent; saveWeekly(); }; });
+
+  $("editBtn").hidden = current.source!=="test";
+  $("copyBox").hidden=true; $("toast").textContent=""; $("retakeConfirm").hidden=true;
+}
+function lvlOf(v, mean){ return v-mean>=3 ? "hi" : mean-v>=3 ? "lo" : "mid"; }
+function nm(i){ return STATES[i].key+"("+STATES[i].name+")"; }
+
+function renderInterp(sc, info){
+  var hi=info.hi, lo=info.lo, mx=info.mx, mn=info.mn, flat=info.flat, mean=info.mean;
+  var CP=sc[0], NP=sc[1], A=sc[2], FC=sc[3], AC=sc[4];
+  var sum = sc.reduce(function(a,b){return a+b;},0);
+  var order = sc.map(function(v,i){return i;}).sort(function(a,b){return sc[b]-sc[a];});
+
+  /* ---- 종합 해석 ---- */
+  var ps = [];
+  if(flat){
+    ps.push("<p class='q1'>다섯 자아상태 점수가 모두 "+mx+"점으로 같아요.</p>");
+    ps.push("<p>특정 마음으로 쏠리지 않은 고른 프로필이에요. 다만 문항에 비슷한 값으로 답했을 때도 이런 모양이 나와요. 최근 일주일을 떠올리며 다시 답해 보면 더 뚜렷한 모양을 볼 수 있어요.</p>");
+  }else{
+    var H=STATES[hi[0]], L=STATES[lo[0]];
+    ps.push("<p class='q1'>당신은 <b>"+josa(H.name,"의","의")+" 에너지</b>를 가장 많이 쓰고, <b>"+josa(L.name,"의","의")+" 에너지</b>를 가장 적게 쓰고 있어요.</p>");
+    ps.push("<p>"+H.name+"("+mx+"점)이 다섯 가지 중 가장 높아요. 평소 "+EXTRA[H.key].lead+". 반대로 "+L.name+"("+mn+"점)은 가장 낮아서, "+EXTRA[L.key].leadLow+".</p>");
+    // balance sentence
+    var bs=[];
+    if(NP-CP>=4) bs.push("어버이 자아에서는 엄격함보다 따뜻함이 앞서고");
+    else if(CP-NP>=4) bs.push("어버이 자아에서는 따뜻함보다 원칙과 기준이 앞서고");
+    else bs.push("어버이 자아에서는 원칙과 따뜻함이 비교적 고르게 섞여 있고");
+    if(FC-AC>=4) bs.push("어린이 자아에서는 맞추기보다 솔직하게 표현하는 쪽이 강해요");
+    else if(AC-FC>=4) bs.push("어린이 자아에서는 표현하기보다 상대에게 맞추는 쪽이 강해요");
+    else bs.push("어린이 자아에서는 표현하는 마음과 맞추는 마음이 비슷해요");
+    var aTxt = A>=mx ? "어른 자아(A)가 가장 높아 감정과 규범 사이에서 중심을 잡아 주는 힘이 든든해요."
+      : A-mean>=3 ? "어른 자아(A)도 평균보다 높아 상황을 현실적으로 판단하는 힘이 받쳐 주고 있어요."
+      : mean-A>=3 ? "다만 어른 자아(A)가 평균보다 낮아, 감정이나 ‘해야 한다’는 생각이 판단을 앞지르기 쉬워요."
+      : "어른 자아(A)는 평균 정도로, 필요할 때 사실을 따져 보는 힘이 있어요.";
+    ps.push("<p>"+bs.join(", ")+". "+aTxt+"</p>");
+    var t1=STATES[order[0]], t2=STATES[order[1]];
+    ps.push("<p>그래서 다른 사람에게는 <b>"+EXTRA[t1.key].look+"</b> 사람, 또 <b>"+EXTRA[t2.key].look+"</b> 사람으로 보이기 쉬워요. 다만 "+H.name+"의 에너지가 지나치면 ‘"+H.over[0]+"’, ‘"+H.over[1]+"’ 같은 모습으로 비칠 수 있으니 상황에 따라 강약을 조절해 보세요.</p>");
+    var tot = sum>=100 ? "전체 점수 합은 "+sum+"점(150점 만점)으로 높은 편이라, 다섯 에너지를 전반적으로 활발하게 쓰고 있어요. "
+      : sum<=60 ? "전체 점수 합은 "+sum+"점(150점 만점)으로 낮은 편이에요. 요즘 지쳐 있거나 문항에 조심스럽게 답했을 수 있어요. "
+      : "";
+    if(mx-mn<=4) ps.push("<p>다만 가장 높은 점수와 낮은 점수의 차이가 "+(mx-mn)+"점밖에 되지 않아, 다섯 에너지를 비교적 고르게 쓰는 편이에요. 위의 경향은 ‘조금 더, 조금 덜’ 정도로 받아들이세요.</p>");
+    ps.push("<p>"+tot+"성장의 열쇠는 가장 낮은 <b>"+L.name+"</b>에 있어요. 이 에너지를 조금씩 키우면 "+EXTRA[L.key].gain+". 높은 곳을 억지로 깎을 필요는 없어요.</p>");
+  }
+  $("storyText").innerHTML = ps.join("");
+  var kws=[]; if(!flat){ EXTRA[STATES[order[0]].key].kw.forEach(function(k){kws.push(k);}); kws.push(EXTRA[STATES[order[1]].key].kw[0]); }
+  $("storyKeys").innerHTML = (flat?"":"<h3>나를 나타내는 키워드</h3><div class='kw'>"+kws.map(function(k){return "<span>#"+k+"</span>";}).join("")+"</div>")+
+    "<div class='kv'><span>가장 높은 자아상태</span><b>"+(flat?"—":hi.map(function(i){return STATES[i].key;}).join(", "))+"</b></div>"+
+    "<div class='kv'><span>가장 낮은 자아상태</span><b>"+(flat?"—":lo.map(function(i){return STATES[i].key;}).join(", "))+"</b></div>"+
+    "<div class='kv'><span>그래프 유형</span><b>"+info.typeLabel+"</b></div>"+
+    "<div class='kv'><span>생활자세 경향</span><b>"+LIFE[lifeKey(sc)].t+"</b></div>"+
+    "<div class='kv'><span>전체 점수 합</span><b>"+sum+" / 150</b></div>";
+
+  /* ---- 균형 분석 ---- */
+  function seesaw(li, ri){
+    var l=sc[li], r=sc[ri], d=r-l, w=Math.min(50, Math.abs(d)/MAX*100);
+    var fill = d>=0 ? "left:50%;width:"+w+"%;background:"+cv(STATES[ri].c) : "right:50%;width:"+w+"%;background:"+cv(STATES[li].c);
+    return "<div class='seesaw'><span class='lab'><span class='sc-ic' style='width:30px;height:30px;border-radius:9px;font-size:11px;background:"+cv(STATES[li].c)+"'>"+STATES[li].key+"</span>"+l+"</span>"+
+      "<span class='pole'><i style='"+fill+"'></i><span class='mid'></span></span>"+
+      "<span class='lab'>"+r+"<span class='sc-ic' style='width:30px;height:30px;border-radius:9px;font-size:11px;background:"+cv(STATES[ri].c)+"'>"+STATES[ri].key+"</span></span></div>";
+  }
+  var pT, pD, cT, cD, aT, aD;
+  if(NP-CP>=4){ pT="따뜻함이 엄격함보다 앞서요"; pD="상대를 수용하고 격려하는 쪽에 무게가 실려 있어요. 관계는 편안하지만, 필요한 순간에 선을 긋거나 바른 소리를 하는 일은 어려울 수 있어요."; }
+  else if(CP-NP>=4){ pT="엄격함이 따뜻함보다 앞서요"; pD="기준을 세우고 바로잡는 쪽에 무게가 실려 있어요. 믿음직하지만 상대는 평가받는다고 느낄 수 있어요. 지적하기 전에 노력을 먼저 인정해 보세요."; }
+  else { pT="엄격함과 따뜻함이 균형을 이뤄요"; pD="원칙을 지키면서도 상대를 배려하는 양쪽 에너지를 고르게 쓰고 있어요. 상황에 따라 어느 쪽을 꺼낼지 고르기 쉬운 상태예요."; }
+  if(FC-AC>=4){ cT="표현하는 마음이 맞추는 마음보다 강해요"; cD="하고 싶은 것과 느끼는 것을 솔직하게 드러내는 편이에요. 활기차지만 주변의 기대나 분위기를 놓칠 때가 있을 수 있어요."; }
+  else if(AC-FC>=4){ cT="맞추는 마음이 표현하는 마음보다 강해요"; cD="주변의 기대에 맞추느라 내 감정과 욕구를 뒤로 미루기 쉬워요. 참은 감정이 쌓이지 않도록 작은 것부터 표현해 보세요."; }
+  else { cT="표현과 순응이 균형을 이뤄요"; cD="내 감정을 드러낼 때와 상대에게 맞출 때를 적절히 오가고 있어요."; }
+  var others=(CP+NP+FC+AC)/4;
+  if(A>=mx && !flat){ aT="어른 자아가 중심을 잡고 있어요"; aD="A가 가장 높아 감정(C)과 규범(P) 사이에서 현실적으로 조율하는 힘이 있어요. 다만 지나치면 계산적이거나 차갑게 보일 수 있으니 감정 표현도 함께 챙겨 보세요."; }
+  else if(A-others>=3){ aT="어른 자아가 든든하게 받쳐 줘요"; aD="A가 다른 자아상태의 평균보다 높아, 감정이나 규범에 휩쓸리기 전에 한 번 따져 보는 힘이 있어요."; }
+  else if(others-A>=3){ aT="어른 자아가 상대적으로 약해요"; aD="A가 다른 자아상태의 평균보다 낮아, 기분이나 ‘해야 한다’는 생각이 판단을 앞지르기 쉬워요. 결정 전에 사실을 세 가지 적어 보는 연습이 도움이 돼요."; }
+  else { aT="어른 자아가 평균 수준이에요"; aD="A가 다른 자아상태들과 비슷한 수준이에요. 중요한 결정 앞에서는 의식적으로 사실과 근거를 확인해 보세요."; }
+  $("bal").innerHTML =
+    "<div class='bcard'><span class='k'>어버이 자아 (P) · CP ↔ NP</span><h3>"+pT+"</h3>"+seesaw(0,1)+"<p>"+pD+"</p></div>"+
+    "<div class='bcard'><span class='k'>어린이 자아 (C) · FC ↔ AC</span><h3>"+cT+"</h3>"+seesaw(4,3)+"<p>"+cD+"</p></div>"+
+    "<div class='bcard'><span class='k'>어른 자아 (A) · 나머지 평균과 비교</span><h3>"+aT+"</h3>"+
+      "<div class='seesaw'><span class='lab'><em>평균</em>"+others.toFixed(1)+"</span><span class='pole'><i style='"+(A>=others?"left:50%;width:"+Math.min(50,(A-others)/MAX*100)+"%":"right:50%;width:"+Math.min(50,(others-A)/MAX*100)+"%")+";background:"+cv("--a")+"'></i><span class='mid'></span></span><span class='lab'>"+A+"<span class='sc-ic' style='width:30px;height:30px;border-radius:9px;font-size:11px;background:"+cv("--a")+"'>A</span></span></div>"+
+      "<p>"+aD+"</p></div>";
+
+  /* ---- 눈에 띄는 조합 ---- */
+  function H_(i){ return sc[i]-mean>=3 || (order[0]===i && mx-mn>=6); }
+  function L_(i){ return mean-sc[i]>=3 || (order[4]===i && mx-mn>=6); }
+  var combos=[];
+  if(H_(0)&&L_(1)) combos.push([[0,1],"엄격한 기준, 아끼는 칭찬","기준이 높고 칭찬에 인색해 보일 수 있어요. 결과보다 노력과 과정을 인정하는 말을 의식적으로 늘려 보세요."]);
+  if(H_(1)&&L_(0)) combos.push([[1,0],"따뜻하지만 경계가 약함","잘 품어 주지만 거절과 한계 설정이 어려워 손해를 보거나 지치기 쉬워요. ‘여기까지는 어렵다’는 말을 연습해 보세요."]);
+  if(H_(1)&&H_(4)&&L_(3)) combos.push([[1,4],"헌신형 패턴","남을 먼저 챙기고 맞추느라 나의 욕구와 즐거움은 뒤로 미루기 쉬워요. 나를 위한 시간을 일정에 먼저 넣어 보세요."]);
+  if(H_(0)&&H_(4)) combos.push([[0,4],"나에게도 엄격한 완벽주의","‘해야 한다’는 기준과 ‘잘 보여야 한다’는 마음이 함께 높아 자기비판과 긴장이 커지기 쉬워요. 80점이면 충분한 일을 골라 보세요."]);
+  if(H_(2)&&L_(3)) combos.push([[2,3],"이성은 앞서고 즐거움은 뒤로","차분하고 합리적이지만 감정 표현과 놀이가 부족해 보일 수 있어요. 하루 10분, 목적 없이 즐기는 시간을 가져 보세요."]);
+  if(H_(3)&&L_(2)) combos.push([[3,2],"에너지는 넘치고 계획은 약함","활기차고 창의적이지만 즉흥적으로 움직여 마무리가 약할 수 있어요. 시작 전에 ‘언제까지, 무엇을’만 적어 보세요."]);
+  if(H_(4)&&L_(3)) combos.push([[4,3],"감정을 눌러 두는 경향","맞추는 마음이 강하고 표현은 약해 감정이 쌓이기 쉬워요. 작은 불편함부터 ‘나는 ~해서 불편했어’라고 말해 보세요."]);
+  if(H_(3)&&L_(4)) combos.push([[3,4],"자유롭고 자기 페이스가 강함","솔직하고 독립적이지만 협조가 필요한 자리에서 고집스럽게 보일 수 있어요. 결정 전에 ‘너는 어떻게 생각해?’를 먼저 물어 보세요."]);
+  if(H_(0)&&L_(2)) combos.push([[0,2],"사실보다 ‘해야 한다’가 먼저","규범이 판단을 앞질러 상황을 충분히 확인하기 전에 결론을 내리기 쉬워요. ‘정말 그런가?’ 한 번 더 확인해 보세요."]);
+  $("combos").innerHTML = combos.length ? "<h3 style='font-size:18px;font-weight:900;margin:8px 0 2px'>눈에 띄는 점수 조합</h3>"+combos.slice(0,4).map(function(c){
+    return "<div class='combo'><span class='pair'>"+c[0].map(function(i){return "<i style='background:"+cv(STATES[i].c)+"'>"+STATES[i].key+"</i>";}).join("")+"</span><div><b>"+c[1]+"</b><span>"+c[2]+"</span></div></div>";
+  }).join("") : "";
+
+  /* ---- 생활자세 ---- */
+  var key=lifeKey(sc), lf=LIFE[key], sx=FC-AC, sy=NP-CP;
+  drawLife($("lifePlot"), sx, sy);
+  $("lifeText").innerHTML = "<span class='tagline'>나의 생활자세 경향</span><h3>"+lf.t+"<small>"+lf.en+"</small></h3><p>"+lf.d+"</p>"+
+    "<div class='life-axes'><div>자신을 대하는 태도<b>"+axisWord(sx)+" ("+(sx>0?"+":"")+sx+")</b><span class='small-note'>FC "+FC+" − AC "+AC+"</span></div>"+
+    "<div>타인을 대하는 태도<b>"+axisWord(sy)+" ("+(sy>0?"+":"")+sy+")</b><span class='small-note'>NP "+NP+" − CP "+CP+"</span></div></div>"+
+    ((Math.abs(sx)<=2||Math.abs(sy)<=2) ? "<p>차이가 ±2점 이내인 축은 어느 한쪽으로 기울지 않은 균형 상태로 보고 ‘긍정’ 쪽에 넣었어요.</p>" : "")+
+    "<p class='small-note'>이 해석은 경향을 보는 참고 자료이며, 상황에 따라 생활자세는 달라질 수 있어요.</p>";
+
+  /* ---- 상황별 ---- */
+  if(flat){ $("situ").innerHTML = "<div class='scard'><p>점수가 모두 같아 상황별 경향을 뽑기 어려워요.</p></div>"; }
+  else{
+    var h=EXTRA[STATES[hi[0]].key], l=EXTRA[STATES[lo[0]].key];
+    $("situ").innerHTML =
+      "<div class='scard'><span class='ic' aria-hidden='true'>👥</span><h3>사람들과 있을 때</h3><p>"+h.rel+"</p></div>"+
+      "<div class='scard'><span class='ic' aria-hidden='true'>📚</span><h3>공부하거나 일할 때</h3><p>"+h.work+"</p></div>"+
+      "<div class='scard'><span class='ic' aria-hidden='true'>🌧️</span><h3>스트레스를 받을 때</h3><p>"+h.stress+"</p></div>"+
+      "<div class='scard'><span class='ic' aria-hidden='true'>🧭</span><h3>어려울 수 있는 상황</h3><p>"+l.hard+"</p></div>";
+  }
+
+  /* ---- 더 생각해 보기 ---- */
+  var parts=[];
+  if(H_(0)) parts.push(["CP가 높다면 · ‘관리자’ 부분","실수와 비난을 막으려고 미리 통제하고 다그치는 부분일 수 있어요. 이 부분은 무엇이 잘못될까 봐 걱정하고 있을까요?"]);
+  if(H_(4)) parts.push(["AC가 높다면 · ‘순응하는 보호자’","거절당하지 않으려 상대에게 맞추는 부분일 수 있어요. 그 아래에서 상처받지 않으려 애쓰는 마음은 무엇일까요?"]);
+  if(H_(3)) parts.push(["FC가 높다면 · ‘소방관’이 될 때","즐거움이 충동적으로 커질 때는 올라온 불편함을 빨리 끄려는 시도일 수 있어요. 무엇을 잊고 싶었는지 살펴보세요."]);
+  if(!parts.length) parts.push(["높은 자아상태를 ‘부분’으로 보기","가장 높은 자아상태는 오랫동안 나를 지켜 온 방식이에요. “이 부분은 무엇을 걱정하고 있을까?”라고 호기심을 갖고 물어보면, 낮은 자아상태가 쓰일 공간이 생겨요."]);
+  $("parts").innerHTML = parts.map(function(p){return "<div class='part'><b>"+p[0]+"</b><span>"+p[1]+"</span></div>";}).join("")+
+    "<p class='small-note'>※ 내면가족체계(IFS)의 ‘부분(parts)’ 관점을 빌린 해석이에요. A는 IFS의 Self와 같지 않아요. A는 정보처리 기능, Self는 부분들과 관계 맺는 중심이에요.</p>";
+  var qs = flat ? ["최근 일주일 동안 가장 자주 쓴 자아상태는 무엇이었나요?","가까운 사람은 내 그래프를 어떻게 그릴까요?","다시 검사한다면 어떤 장면을 떠올리며 답하고 싶나요?"]
+    : ["‘"+STATES[hi[0]].name+"’의 에너지가 나를 도와준 순간과, 오히려 부담이 됐던 순간을 하나씩 떠올려 보세요.",
+       "최근 일주일 동안 ‘"+STATES[lo[0]].name+"’의 에너지를 써 본 순간이 있었나요? 그때 기분은 어땠나요?",
+       "이 그래프는 언제부터 이런 모양이었을까요? 가족이나 학교에서 어떤 마음이 칭찬받고, 어떤 마음이 눈치 보였는지 떠올려 보세요.",
+       "가까운 친구나 가족이 나를 평가한다면 그래프가 어떻게 달라질까요? 직접 물어봐도 좋아요."];
+  $("reflect").innerHTML = qs.map(function(q){return "<li>"+esc(q)+"</li>";}).join("");
+}
+function axisWord(d){ return d>=3 ? "긍정" : d<=-3 ? "부정" : "균형"; }
+function lifeKey(sc){ return ((sc[3]-sc[4])>=-2?"+":"-")+((sc[1]-sc[0])>=-2?"+":"-"); }
+function drawLife(svg, sx, sy){
+  var S=360, P=40, c=S/2, R=c-P;
+  svg.setAttribute("viewBox","0 0 "+S+" "+S); clear(svg);
+  var q=[["++",c,P,"자기긍정·타인긍정"],["-+",P,P,"자기부정·타인긍정"],["+-",c,c,"자기긍정·타인부정"],["--",P,c,"자기부정·타인부정"]];
+  var mine=(sx>=-2?"+":"-")+(sy>=-2?"+":"-");
+  q.forEach(function(z){
+    el("rect",{x:z[1],y:z[2],width:R,height:R,fill:z[0]===mine?cv("--brand-soft"):cv("--bg-soft"),stroke:"#fff","stroke-width":3,rx:12},svg);
+    el("text",{x:z[1]+R/2,y:z[2]+(z[2]===P?22:R-12),"text-anchor":"middle","font-size":12,"font-weight":z[0]===mine?900:500,fill:z[0]===mine?cv("--ink"):cv("--ink-3")},svg,z[3]);
+  });
+  el("line",{x1:P,x2:S-P,y1:c,y2:c,stroke:cv("--ink-3"),"stroke-width":1.2},svg);
+  el("line",{x1:c,x2:c,y1:P,y2:S-P,stroke:cv("--ink-3"),"stroke-width":1.2},svg);
+  el("text",{x:S-P,y:c-6,"text-anchor":"end","font-size":11,fill:cv("--ink-2")},svg,"자기긍정 →");
+  el("text",{x:P,y:c-6,"text-anchor":"start","font-size":11,fill:cv("--ink-2")},svg,"← 자기부정");
+  el("text",{x:c+6,y:P-10,"font-size":11,fill:cv("--ink-2")},svg,"↑ 타인긍정");
+  el("text",{x:c+6,y:S-P+20,"font-size":11,fill:cv("--ink-2")},svg,"↓ 타인부정");
+  var lim=15, px=c+Math.max(-lim,Math.min(lim,sx))/lim*(R-14), py=c-Math.max(-lim,Math.min(lim,sy))/lim*(R-14);
+  el("circle",{cx:px,cy:py,r:16,fill:cv("--brand"),opacity:.2},svg);
+  el("circle",{cx:px,cy:py,r:8,fill:cv("--brand"),stroke:"#fff","stroke-width":3},svg);
+  el("text",{x:px,y:py-20,"text-anchor":"middle","font-size":13,"font-weight":900,fill:cv("--ink")},svg,"나");
+}
+
+function saveWeekly(){ store.weekly={low:$("wLow").value,doIt:$("wDo").value,say:$("wSay").value}; save(); }
+["wLow","wDo","wSay"].forEach(function(id){ $(id).addEventListener("input",saveWeekly); });
+
+function resultText(){
+  var sc=current.sc, rk=ranks(sc), out=["[나의 이고그램 결과] "+fmtDate(Date.now())];
+  out.push($("rTitle").childNodes[0].textContent.trim());
+  STATES.forEach(function(s,i){ out.push(s.key+" "+s.name+": "+sc[i]+"점 ("+rk[i]+"위)"); });
+  var w=store.weekly||{}; if(w.doIt) out.push("이번 주 실천: "+w.doIt); if(w.say) out.push("하루 한 번 써 볼 말: "+w.say);
+  return out.join("\n");
+}
+
+/* ---------- manual ---------- */
+$("manualRows").innerHTML = STATES.map(function(s){
+  return "<div class='mrow'>"+stateBadge(s.key)+"<label for='m"+s.key+"'>"+s.key+" "+s.name+"<small>문항 "+s.items.join(", ")+"</small></label>"+
+    "<input id='m"+s.key+"' type='number' inputmode='numeric' min='0' max='30' step='1' placeholder='0–30'></div>";
+}).join("");
+$("manualForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  var sc=[],bad=[];
+  STATES.forEach(function(s){ var raw=$("m"+s.key).value.trim(), v=Number(raw); if(raw===""||!Number.isInteger(v)||v<0||v>30) bad.push(s.key); else sc.push(v); });
+  if(bad.length){ $("manualErr").textContent=bad.join(", ")+" 점수를 0부터 30 사이 정수로 입력해 주세요."; $("m"+bad[0]).focus(); return; }
+  $("manualErr").textContent=""; openResult(sc,"manual",true);
+});
+
+/* ---------- wiring ---------- */
+function goHome(){ refreshHome(); show("home"); }
+$("logoBtn").onclick = goHome;
+$("startBtn").onclick = startTest;
+$("startBtn2").onclick = startTest;
+$("hdrStart").onclick = function(){ if(!VIEWS.home.hidden || !VIEWS.manual.hidden) startTest(); else goHome(); };
+$("hdrResult").onclick = function(){ openResult(scoreFrom(store.answers),"test",false); };
+$("manualBtn").onclick = function(){ $("manualErr").textContent=""; show("manual"); };
+$("manualBack").onclick = goHome;
+Array.prototype.forEach.call(document.querySelectorAll("[data-go]"),function(b){
+  b.onclick=function(){ var t=$(b.dataset.go); if(t) t.scrollIntoView({behavior:smooth(),block:"start"}); };
+});
+$("editBtn").onclick = function(){ store.page=0; save(); renderPage(); show("test"); };
+$("retakeBtn").onclick = function(){ $("retakeConfirm").hidden=false; $("retakeYes").focus(); };
+$("retakeNo").onclick = function(){ $("retakeConfirm").hidden=true; };
+$("retakeYes").onclick = function(){ archive(); store.answers=new Array(50).fill(null); store.page=0; save(); renderPage(); show("test"); };
+$("copyBtn").onclick = function(){
+  var txt=resultText(), box=$("copyBox");
+  function fb(){ box.hidden=false; box.value=txt; box.focus(); box.select(); $("toast").textContent="자동 복사가 안 되는 환경이에요. 아래 글을 길게 눌러 복사해 주세요."; }
+  try{ navigator.clipboard.writeText(txt).then(function(){ $("toast").textContent="결과를 복사했어요. 메신저나 메모에 붙여 넣어 보세요."; },fb); }catch(err){ fb(); }
+};
+
+buildHome();
+goHome();
+})();
+</script>
+</body>
+</html>

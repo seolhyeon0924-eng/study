@@ -490,7 +490,7 @@ html{scroll-padding-top:72px}
 .mood{display:inline-flex;align-items:center;background:var(--glass);border-radius:999px;padding:1px 10px;font-size:12.5px;font-weight:700;margin-left:6px;color:var(--ink)}
 .back-row{display:flex;justify-content:center;gap:8px;margin-top:30px}
 
-/* 질문함 */
+/* ASK */
 .ask-grid{display:grid;gap:24px;align-items:start}
 @media (min-width:900px){.ask-grid{grid-template-columns:minmax(0,1fr) 320px}.ask-grid aside{position:sticky;top:20px}}
 .ask-form{position:relative;overflow:hidden;background:var(--tint);border-radius:var(--r-l);padding:26px}
@@ -743,7 +743,7 @@ html{scroll-padding-top:72px}
 .tstrip .ocard .orb{width:130px;height:130px}
 @media (max-width:560px){.tstrip{padding:10px 16px 18px}.tstrip-h{padding:16px 16px 0}.tstrip .ocard{flex-basis:168px}}
 
-/* 질문함 쓰기 칸 */
+/* ASK 쓰기 칸 */
 .mid .ask-form{margin:16px 18px 8px;border-radius:28px;background:var(--tint);padding:20px 22px 18px}
 .af-h{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .af-h b{display:block;font-size:16px;font-weight:800}
@@ -1039,8 +1039,8 @@ function openAdminModal(){
 /* ================================================================
    라우팅
    ================================================================ */
-var MENU=[["home","홈","home"],["tests","심리검사","tests"],["art","그림검사","art"],["today","오늘의 기록","today"],["ask","질문함","ask"],["notice","공지","notice"],["guide","이용 안내","guide"]];
-var TABS=[["home","홈","home"],["tests","검사","tests"],["today","기록","today"],["ask","질문함","ask"],["more","더보기","more"]];
+var MENU=[["home","홈","home"],["tests","심리검사","tests"],["art","그림검사","art"],["today","오늘의 기록","today"],["ask","ASK","ask"],["notice","공지","notice"],["guide","이용 안내","guide"]];
+var TABS=[["home","홈","home"],["tests","검사","tests"],["today","기록","today"],["ask","ASK","ask"],["more","더보기","more"]];
 function buildMenu(){
   $("#menu").innerHTML = MENU.map(function(m){ return '<button type="button" data-nav="'+m[0]+'">'+IC[m[2]]+'<span>'+m[1]+'</span></button>'; }).join("");
   $("#tabbar").innerHTML = TABS.map(function(m){ return '<button type="button" data-nav="'+m[0]+'">'+IC[m[2]]+'<span>'+m[1]+'</span></button>'; }).join("");
@@ -1817,7 +1817,7 @@ function testPcard(k){
 /* ================================================================
    피드
    ================================================================ */
-var FTABS=[["home","전체"],["today","오늘의 기록"],["ask","질문함"],["notice","공지"]];
+var FTABS=[["home","전체"],["today","오늘의 기록"],["ask","ASK"],["notice","공지"]];
 function feedShell(active,inner){
   return '<div class="ftabs" role="tablist" aria-label="피드 보기">'+FTABS.map(function(t){ return '<button type="button" role="tab" data-nav="'+t[0]+'" aria-selected="'+(t[0]===active)+'">'+t[1]+'</button>'; }).join("")+'</div>'+inner;
 }
@@ -1902,7 +1902,7 @@ function viewNotice(id){
 }
 
 /* ================================================================
-   질문함
+   ASK
    ================================================================ */
 function myAsks(){ var l=store("mb.asks"); return Array.isArray(l)?l:[]; }
 function viewAsk(focusId){
@@ -1929,7 +1929,7 @@ function viewAsk(focusId){
     var link=base+"#ask-answer/"+id+"/"+encodeURIComponent(text)+(nick?"/"+encodeURIComponent(nick):"");
     var btn=this.querySelector("button[type=submit]"); btn.disabled=true; err.textContent="보내는 중이에요…";
     try{
-      var r=await fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({access_key:CFG.web3formsKey,subject:"[마음별 질문함] 새 질문이 왔어요",from_name:"마음별 질문함",botcheck:false,message:"새 질문\n\n"+text+"\n\n보낸 사람: "+(nick||"익명")+"\n질문 번호: "+id+"\n\n아래 링크를 누르면 관리자 화면에서 바로 답변을 쓸 수 있어요.\n"+link})});
+      var r=await fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({access_key:CFG.web3formsKey,subject:"[마음별 ASK] 새 질문이 왔어요",from_name:"마음별 ASK",botcheck:false,message:"새 질문\n\n"+text+"\n\n보낸 사람: "+(nick||"익명")+"\n질문 번호: "+id+"\n\n아래 링크를 누르면 관리자 화면에서 바로 답변을 쓸 수 있어요.\n"+link})});
       var j=await r.json().catch(function(){return {};});
       if(!r.ok||j.success===false) throw new Error("send");
       mine.unshift({id:id,q:text,nick:nick,date:Date.now()}); store("mb.asks",mine.slice(0,30));

@@ -729,6 +729,34 @@ body.is-home #view{padding-top:8px}
 .ap-mine small button{border:0;background:none;padding:0;color:var(--tone-ink);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .ap-mine .help{margin-top:10px}
 @media (max-width:560px){.ap-prof{padding:0 18px 18px}.ap-cover{margin:0 -18px;height:90px}.ap-ava{width:70px;height:70px}.ap-who{padding-top:40px}.ap-who h1{font-size:19px}.ap-row .btn{display:none}.ap-q,.ap-a{padding-left:18px;padding-right:18px}.ap-foot input[type=text]{width:120px}}
+
+/* ---------- 왼쪽 카드: 올린 사진 미리보기 ---------- */
+.hero-card.media{padding:0;justify-content:stretch}
+.hero-card.media::before{display:none}
+.hm{position:relative;display:block;width:100%;height:100%;min-height:540px;padding:0;border:0;background:#000;color:#fff;text-align:left;border-radius:inherit;overflow:hidden;cursor:pointer}
+.hm img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+@media (hover:hover){.hm:hover img{transform:scale(1.04)}}
+.hm-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,6,40,0) 40%,rgba(10,6,40,.85) 100%),linear-gradient(135deg,rgba(63,211,255,.25),rgba(227,111,224,.25))}
+.hm-cap{position:absolute;left:30px;right:30px;bottom:28px;display:flex;flex-direction:column;gap:4px}
+.hm-cap small{font-size:13px;font-weight:600;opacity:.85}
+.hm-cap b{font-size:clamp(24px,2.6vw,32px);font-weight:800;letter-spacing:-.045em;line-height:1.25}
+.hm-cap em{font-style:normal;align-self:flex-start;margin-top:10px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);font-size:13px;font-weight:700;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.hm-nav{position:absolute;right:18px;top:18px;display:flex;align-items:center;gap:8px;padding:4px;border-radius:999px;background:rgba(10,6,40,.45);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:#fff;font-size:12.5px;font-weight:700}
+.hm-nav button{display:grid;place-items:center;width:30px;height:30px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;padding:0}
+.hm-nav svg{width:13px;height:13px}
+@media (max-width:900px){.hm{min-height:340px}}
+/* 오른쪽 판: 열린 글 */
+.hp-in{animation:hpIn .5s cubic-bezier(.2,.7,.2,1) both}
+@keyframes hpIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.hp-post{display:flex;flex-direction:column;gap:12px;height:100%}
+.hp-back{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px 0 10px;border-radius:999px;border:1px solid var(--line);background:var(--bg2);font-size:13.5px;font-weight:600;color:var(--ink2)}
+.hp-back svg{width:13px;height:13px}
+@media (hover:hover){.hp-back:hover{color:var(--ink);border-color:var(--line2)}}
+.hp-k{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--mute);margin-top:6px}
+.hp-post h2{font-size:clamp(24px,2.4vw,30px);font-weight:800;letter-spacing:-.045em;outline:none}
+.hp-body{flex:1;max-height:330px;overflow:auto;white-space:pre-wrap;font-size:16px;line-height:1.9;color:var(--ink2);padding-right:6px}
+.hp-post .row{margin-top:6px}
+/* ---------- 스크롤하면 천천히 나타나기 ---------- */
 </style>
 </head>
 <body data-page="index">
@@ -1015,7 +1043,7 @@ document.addEventListener("click",function(e){
   var a=e.target.closest('a[href^="#"]'); if(a && a.getAttribute("href").slice(1)===location.hash.slice(1) && !e.ctrlKey && !e.metaKey){ e.preventDefault(); route(); }
 });
 window.addEventListener("hashchange",route);
-function setView(html){ cleanup(); $("#view").innerHTML=html; }
+function setView(html){ cleanup(); $("#view").innerHTML=html; if(MB.reveal) setTimeout(function(){ MB.reveal($("#view")); },0); }
 var cleaners=[]; function cleanup(){ cleaners.forEach(function(f){try{f();}catch(e){}}); cleaners=[]; }
 
 /* ================================================================
@@ -1706,6 +1734,7 @@ function pickedHtml(k){
   return plate(k)+'<div><small>추천 검사</small><h2>'+c.t+'</h2><p>'+desc+' '+spec.join(", ")+'.</p></div><div class="row">'+(k==="big5"?'<a class="btn btn-main btn-lg" href="orb.html">마음 구슬로 하기</a><a class="btn btn-line" href="#big5">기본 검사로 하기</a>':'<a class="btn btn-main btn-lg" href="'+testHref(k)+'">이 검사 하러 가기</a>')+'</div>';
 }
 function viewHome(){
+  heroOpen=null;
   var IC_GO='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
   var ARROW='<svg class="arrow" viewBox="0 0 120 70" fill="none" aria-hidden="true"><path d="M4 35h96M70 6l30 29-30 29" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var orbBnr='<section class="hsec"><div class="wrap"><a class="orb-bnr" href="orb.html"><div><small>새로 나온 검사 경험</small><h2>답할 때마다 색이 섞이는<br>나만의 마음 구슬</h2><p>Big5 성격검사 50문장에 답하면 다섯 가지 색이 섞여 나만의 구슬이 만들어져요. 결과는 스토리용 카드로 저장할 수 있어요.</p><span class="go">마음 구슬 만들기<i>'+IC_GO+'</i></span></div><span class="orb-mini" aria-hidden="true"></span></a></div></section>';
@@ -1716,17 +1745,60 @@ function viewHome(){
     '<ol class="csteps"><li><b>검사하기</b><span>원하는 검사를 하고 결과를 받아요.</span></li><li><b>상담 신청</b><span>보낼 결과와 상담 방식을 골라요.</span></li><li><b>연락 받기</b><span>적어 준 연락처로 일정이나 답변이 와요.</span></li><li><b>온라인 상담</b><span>이메일, 통화, 메신저로 이야기해요.</span></li></ol></div></div></section>';
   setView('<section class="hero"><div class="wrap"><div class="auth hero-auth">'+
     ''+
-    '<div class="g-card hero-card">'+
+    '<div class="g-card hero-card" id="heroCard">'+
       '<p class="hc-k">마음별 무료 심리검사</p><h1>요즘 어떤 마음이<br>궁금하세요?</h1><p class="hc-sub">고민을 고르면 맞는 검사를 찾아 드려요. 답변은 내 브라우저에만 남아요.</p>'+ARROW+'</div>'+
-    '<div class="auth-form"><div id="heroNote"></div><h2>고민을 골라 보세요</h2><p class="help">하나를 고르면 맞는 검사가 아래에 나와요.</p>'+
-    '<div class="chips" role="group" aria-label="고민 고르기">'+CONCERNS.map(function(c,i){ return '<button type="button" data-cc="'+i+'" aria-pressed="'+(i===concern)+'">'+c[0]+'</button>'; }).join("")+'</div>'+
-    '<div class="picked" id="picked" aria-live="polite">'+pickedHtml(CONCERNS[concern][1])+'</div>'+
-    '<p class="auth-alt"><span>또는</span></p><a class="btn btn-line" href="#tests" style="width:100%">모든 검사 둘러보기</a></div></div></div></section>'+
+    '<div class="auth-form" id="heroRight" aria-live="polite">'+heroPickerHtml()+'</div></div></div></section>'+
     orbBnr+
     '<section class="hsec"><div class="wrap"><div class="sec-t"><div><h2>모든 검사</h2><p>성격, 관계, 문장완성, 그림 네 가지 주제로 나눴어요.</p></div><a class="more-lnk" href="#tests">검사 목록'+IC_ARR+'</a></div><div class="tgrid">'+TEST_ORDER.map(testCard).join("")+'</div></div></section>'+
     story+band);
-  $$("[data-cc]").forEach(function(b){ b.onclick=function(){ concern=+b.dataset.cc; $$("[data-cc]").forEach(function(x){ x.setAttribute("aria-pressed",String(x===b)); }); $("#picked").innerHTML=pickedHtml(CONCERNS[concern][1]); }; });
+  bindPicker();
   renderHomeBoard(); renderHomeStory();
+}
+/* 오른쪽 판: 고민 고르기 */
+function heroPickerHtml(){
+  return '<div id="heroNote"></div><h2>고민을 골라 보세요</h2><p class="help">하나를 고르면 맞는 검사가 아래에 나와요.</p>'+
+    '<div class="chips" role="group" aria-label="고민 고르기">'+CONCERNS.map(function(c,i){ return '<button type="button" data-cc="'+i+'" aria-pressed="'+(i===concern)+'">'+c[0]+'</button>'; }).join("")+'</div>'+
+    '<div class="picked" id="picked">'+pickedHtml(CONCERNS[concern][1])+'</div>'+
+    '<p class="auth-alt"><span>또는</span></p><a class="btn btn-line" href="#tests" style="width:100%">모든 검사 둘러보기</a>';
+}
+function bindPicker(){
+  $$("[data-cc]").forEach(function(b){ b.onclick=function(){ concern=+b.dataset.cc; $$("[data-cc]").forEach(function(x){ x.setAttribute("aria-pressed",String(x===b)); }); $("#picked").innerHTML=pickedHtml(CONCERNS[concern][1]); }; });
+}
+/* 왼쪽 카드: 올린 사진 미리보기 → 누르면 오른쪽에 글이 열려요 */
+var heroIdx=0, heroOpen=null;
+function heroPhotos(){ return diary.filter(function(p){ return p&&p.photo; }).slice(0,6); }
+function renderHeroMedia(){
+  var c=$("#heroCard"); if(!c) return;
+  var L=heroPhotos(); if(!L.length) return;
+  if(heroIdx>=L.length) heroIdx=0;
+  var p=L[heroIdx];
+  c.classList.add("media");
+  c.innerHTML='<button class="hm" type="button" id="hmBtn" aria-controls="heroRight" aria-expanded="'+(heroOpen===p.id)+'"><img src="'+esc(p.photo)+'" alt="'+esc(p.photoAlt||p.title)+'"><span class="hm-shade" aria-hidden="true"></span>'+
+    '<span class="hm-cap"><small>오늘의 기록 · '+fmtDate(p.date)+(p.mood?' · '+esc(p.mood):'')+'</small><b>'+esc(p.title)+'</b><em>'+(heroOpen===p.id?'옆에 글이 열려 있어요':'눌러서 글 보기')+'</em></span></button>'+
+    (L.length>1?'<div class="hm-nav"><button type="button" id="hmPrev" aria-label="이전 사진">'+IC_PREV+'</button><span>'+(heroIdx+1)+' / '+L.length+'</span><button type="button" id="hmNext" aria-label="다음 사진">'+IC_ARR+'</button></div>':'');
+  $("#hmBtn").onclick=function(){ openHeroPost(p); };
+  if(L.length>1){
+    $("#hmPrev").onclick=function(){ heroIdx=(heroIdx-1+L.length)%L.length; renderHeroMedia(); if(heroOpen) openHeroPost(heroPhotos()[heroIdx],true); };
+    $("#hmNext").onclick=function(){ heroIdx=(heroIdx+1)%L.length; renderHeroMedia(); if(heroOpen) openHeroPost(heroPhotos()[heroIdx],true); };
+  }
+}
+function openHeroPost(p,keepFocus){
+  var r=$("#heroRight"); if(!r||!p) return;
+  heroOpen=p.id;
+  r.classList.remove("hp-in"); void r.offsetWidth; r.classList.add("hp-in");
+  r.innerHTML='<div class="hp-post"><button class="hp-back" type="button" id="hpBack">'+IC_PREV+'고민 고르기로 돌아가기</button>'+
+    '<p class="hp-k">오늘의 기록 · '+fmtDate(p.date)+(p.mood?'<span class="gal-mood" style="--mc:'+(MOOD_C[p.mood]||"#B7A8FF")+'">'+esc(p.mood)+'</span>':'')+'</p>'+
+    '<h2 id="hpTitle" tabindex="-1">'+esc(p.title)+'</h2><div class="hp-body">'+esc(p.body||"")+'</div>'+
+    '<div class="row"><a class="btn btn-main" href="#t-'+esc(p.id)+'">전체 글 보기</a><button class="btn btn-line" type="button" data-share="t-'+esc(p.id)+'">공유</button></div></div>';
+  var b=$("#hmBtn"); if(b){ b.setAttribute("aria-expanded","true"); var em=b.querySelector("em"); if(em) em.textContent="옆에 글이 열려 있어요"; }
+  $("#hpBack").onclick=closeHeroPost;
+  if(!keepFocus){ var t=$("#hpTitle"); if(t) t.focus({preventScroll:true}); if(window.innerWidth<900) r.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"}); }
+}
+function closeHeroPost(){
+  var r=$("#heroRight"); if(!r) return;
+  heroOpen=null; r.classList.remove("hp-in"); void r.offsetWidth; r.classList.add("hp-in");
+  r.innerHTML=heroPickerHtml(); bindPicker(); renderHomeBoard();
+  var b=$("#hmBtn"); if(b){ b.setAttribute("aria-expanded","false"); var em=b.querySelector("em"); if(em) em.textContent="눌러서 글 보기"; b.focus({preventScroll:true}); }
 }
 /* 맨 위 공지 한 줄 */
 function renderHomeBoard(){
@@ -1740,6 +1812,7 @@ function galItem(p){
 }
 function renderHomeStory(){
   var g=$("#hsGal"), q=$("#hsQa"); if(!g) return;
+  if(!heroOpen) renderHeroMedia();
   g.innerHTML = diaryState==="ok"&&diary.length ? diary.slice(0,2).map(galItem).join("") : '<li style="grid-column:1/-1"><div class="fempty">'+msgRow(diaryState,"기록","아직 올라온 기록이 없어요.")+'</div></li>';
   q.innerHTML = askState==="ok"&&asks.length ? asks.slice(0,3).map(function(a){ return '<li><a href="#ask-'+esc(a.id)+'"><span class="qm" aria-hidden="true">Q</span><b>'+esc(a.q)+'</b><small>'+esc(a.a)+'</small></a></li>'; }).join("") : '<li class="msg">'+msgRow(askState,"답변","아직 답변한 질문이 없어요. 첫 질문을 남겨 주세요!")+'</li>';
 }

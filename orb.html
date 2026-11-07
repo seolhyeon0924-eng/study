@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#09080F">
+<title>마음 구슬 — 마음별</title>
+<meta name="description" content="50개 문장에 답하면, 답할 때마다 색이 섞이며 나만의 마음 구슬이 만들어져요. Big5 성격검사.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --bg:#09080F;
+  --ink:#F3F1F8;
+  --ink2:rgba(243,241,248,.66);
+  --mute:rgba(243,241,248,.42);
+  --glass:rgba(255,255,255,.06);
+  --glass2:rgba(255,255,255,.10);
+  --edge:rgba(255,255,255,.12);
+  --c-o:#9B7BFF; --c-c:#4C8DFF; --c-e:#FF9A4C; --c-a:#3FE0C5; --c-n:#FF6FB1;
+  --glow:#9B7BFF;
+  --font:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:999px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* 배경: 은은한 빛 + 아주 옅은 점 */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg::before{content:"";position:absolute;inset:-20%;background:
+  radial-gradient(40% 35% at 18% 12%,rgba(120,80,255,.22),transparent 70%),
+  radial-gradient(35% 30% at 85% 85%,rgba(255,110,170,.14),transparent 70%),
+  radial-gradient(30% 30% at 90% 10%,rgba(60,140,255,.12),transparent 70%)}
+.bg::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(70% 60% at 50% 50%,#000,transparent)}
+
+/* 머리글 */
+.top{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:22px max(28px,env(safe-area-inset-left,0px))}
+.logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:18px;letter-spacing:-.03em;text-decoration:none}
+.logo svg{width:22px;height:22px}
+.pill{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--edge);background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);font-size:14px;font-weight:600;text-decoration:none;color:var(--ink);transition:background-color .2s,border-color .2s}
+@media (hover:hover){.pill:hover{background:var(--glass2);border-color:rgba(255,255,255,.24)}}
+.pill svg{width:14px;height:14px}
+
+/* 구슬 */
+.stage{position:fixed;inset:0;z-index:0;pointer-events:none}
+.orb-wrap{position:absolute;left:50%;top:50%;width:var(--os);height:var(--os);transform:translate(-50%,-50%) scale(var(--sc,1));transition:transform 1.1s cubic-bezier(.7,0,.2,1),top 1.1s cubic-bezier(.7,0,.2,1),left 1.1s cubic-bezier(.7,0,.2,1)}
+:root{--os:min(78vh,78vw,720px)}
+.orb-glow{position:absolute;inset:8%;border-radius:50%;background:var(--glow);filter:blur(80px);opacity:.45;transition:background-color 1.2s}
+#orb{position:absolute;inset:0;width:100%;height:100%}
+.orb-css{position:absolute;inset:9%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff8,transparent 30%),conic-gradient(from 120deg,var(--c-n),var(--c-e),var(--c-a),var(--c-c),var(--c-o),var(--c-n));filter:saturate(1.1)}
+.ring{position:absolute;inset:3%;width:94%;height:94%;transform:rotate(-90deg);opacity:0;transition:opacity .6s}
+.ring circle{fill:none;stroke-width:.5}
+.ring .tr{stroke:rgba(255,255,255,.1)}
+.ring .pr{stroke:#fff;stroke-linecap:round;transition:stroke-dashoffset .5s ease}
+body.s-intro .orb-wrap{--sc:1}
+body.s-test .orb-wrap{top:30%;--sc:.5}
+body.s-test .ring{opacity:1}
+body.s-result .orb-wrap{top:44%;--sc:.82}
+@media (min-width:1000px){body.s-result .orb-wrap{left:30%;top:50%;--sc:.86}}
+
+/* 공통 화면 */
+main{position:relative}
+.scr{min-height:100vh;min-height:100dvh}
+
+/* ---------- 처음 ---------- */
+.intro{position:relative;display:grid;place-items:center;padding:110px 24px 60px}
+.big{position:relative;margin:0;font-weight:200;font-size:clamp(46px,9.4vw,138px);line-height:1.02;letter-spacing:-.06em;text-align:center;color:rgba(255,255,255,.92);text-shadow:0 2px 40px rgba(9,8,15,.35);pointer-events:none}
+.big span{display:block}
+.big span:nth-child(1){transform:translateX(-14%)}
+.big span:nth-child(2){transform:translateX(16%)}
+.big b{font-weight:600}
+.intro-sub{position:absolute;left:max(28px,env(safe-area-inset-left,0px));bottom:48px;max-width:330px;font-size:15.5px;line-height:1.75;color:var(--ink2)}
+.intro-sub strong{display:block;color:var(--ink);font-weight:600;font-size:17px;margin-bottom:6px}
+.cta{position:absolute;right:max(28px,env(safe-area-inset-right,0px));bottom:48px;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.go{display:inline-flex;align-items:center;gap:14px;height:64px;padding:0 10px 0 28px;border-radius:999px;border:0;background:#fff;color:#0B0A12;font-size:17px;font-weight:700;letter-spacing:-.02em}
+.go i{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:#0B0A12;color:#fff;transition:transform .3s}
+.go i svg{width:18px;height:18px}
+@media (hover:hover){.go:hover i{transform:rotate(-45deg)}}
+.resume{font-size:14px;color:var(--ink2);background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:4px}
+.chip{position:absolute;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:18px;border:1px solid var(--edge);background:var(--glass);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);font-size:13.5px;color:var(--ink2);animation:float 7s ease-in-out infinite}
+.chip b{display:block;color:var(--ink);font-size:15px;font-weight:600}
+.chip.c1{left:12%;top:30%}
+.chip.c2{right:11%;top:22%;animation-delay:-2.5s}
+.chip.c3{right:16%;top:66%;animation-delay:-4.5s}
+.dots{display:flex;gap:4px}
+.dots i{width:10px;height:10px;border-radius:50%}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@media (max-width:900px){
+  .chip{display:none}
+  body.s-intro .orb-wrap{top:calc(250px + var(--os)*.31);--sc:.62}
+  .intro{align-content:start;padding-top:118px;padding-bottom:140px}
+  .big{font-size:clamp(38px,11vw,52px)}
+  .big span:nth-child(1){transform:translateX(-6%)}
+  .big span:nth-child(2){transform:translateX(6%)}
+  .intro-sub{position:static;margin-top:calc(var(--os)*.62 + 44px);text-align:center;max-width:none}
+  .cta{left:24px;right:24px;bottom:32px;align-items:stretch}
+  .go{justify-content:space-between}
+  .resume{align-self:center}
+}
+
+/* ---------- 문항 ---------- */
+.test{display:flex;flex-direction:column;align-items:center;padding:calc(30vh + min(39vh,39vw,360px)/1) 20px 48px;text-align:center}
+.test{padding-top:calc(30vh + var(--os)*.27)}
+.qmeta{display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--mute);letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.qmeta .fac{display:inline-flex;align-items:center;gap:6px;color:var(--ink2)}
+.qmeta .fac i{width:8px;height:8px;border-radius:50%}
+.qtext{margin:18px 0 0;max-width:20em;font-size:clamp(26px,3.6vw,42px);font-weight:300;letter-spacing:-.045em;line-height:1.3;min-height:2.6em;display:flex;align-items:center;justify-content:center}
+.answers{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:34px;max-width:860px}
+.ans{position:relative;display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 22px 0 16px;border-radius:999px;border:1px solid var(--edge);background:var(--glass);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);font-size:15.5px;font-weight:500;color:var(--ink);transition:background-color .2s,border-color .2s,transform .15s}
+.ans kbd{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.08);font:600 12px var(--font);color:var(--ink2)}
+@media (hover:hover){.ans:hover{background:var(--glass2);border-color:rgba(255,255,255,.28)}}
+.ans:active{transform:scale(.97)}
+.ans[aria-pressed="true"]{background:#fff;color:#0B0A12;border-color:#fff}
+.ans[aria-pressed="true"] kbd{background:#0B0A12;color:#fff}
+.qnav{display:flex;gap:10px;margin-top:30px}
+.qnav button{background:none;border:0;color:var(--mute);font-size:14px;padding:8px 10px;border-radius:999px}
+@media (hover:hover){.qnav button:hover{color:var(--ink)}}
+.qnav button[disabled]{visibility:hidden}
+.hint{margin-top:14px;font-size:12.5px;color:var(--mute)}
+@media (max-width:700px){.hint{display:none}.answers{flex-direction:column;align-items:stretch;width:100%;max-width:420px}.ans{justify-content:flex-start}.qtext{font-size:26px}}
+.swap{animation:swap .45s cubic-bezier(.2,.7,.2,1) both}
+@keyframes swap{from{opacity:0;transform:translateY(14px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+
+/* ---------- 결과 ---------- */
+.result{display:grid;grid-template-columns:1fr;padding:calc(44vh + var(--os)*.42) 20px 80px;max-width:1240px;margin:0 auto}
+@media (min-width:1000px){.result{grid-template-columns:1fr 1fr;padding:120px 40px 80px}.result .panel{grid-column:2}}
+.panel{display:flex;flex-direction:column;gap:14px}
+.r-k{font-size:14px;color:var(--ink2)}
+.r-title{margin:0;font-size:clamp(34px,4.6vw,58px);font-weight:300;letter-spacing:-.055em;line-height:1.15}
+.r-title b{font-weight:600}
+.r-sum{color:var(--ink2);font-size:16px;line-height:1.8;max-width:34em}
+.facs{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.fac-c{border-radius:20px;border:1px solid var(--edge);background:var(--glass);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);padding:16px 18px}
+.fac-h{display:flex;align-items:center;gap:10px}
+.fac-h i{width:10px;height:10px;border-radius:50%;box-shadow:0 0 12px currentColor}
+.fac-h b{font-weight:600;font-size:16px}
+.fac-h span{margin-left:auto;font-variant-numeric:tabular-nums;font-size:22px;font-weight:300;letter-spacing:-.03em}
+.bar{height:6px;border-radius:999px;background:rgba(255,255,255,.08);margin:12px 0 10px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;width:0;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.fac-c p{margin:0;font-size:14px;line-height:1.7;color:var(--ink2)}
+.acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.acts .go{height:56px;font-size:15.5px}
+.acts .go i{width:40px;height:40px}
+.note{font-size:13px;color:var(--mute);line-height:1.7;margin-top:8px}
+.care{border-radius:18px;padding:14px 16px;background:rgba(255,111,177,.10);border:1px solid rgba(255,111,177,.25);font-size:14px;line-height:1.7;color:var(--ink)}
+.care b{color:#FF9CCB}
+.reveal > *{opacity:0;transform:translateY(16px);animation:rv .8s cubic-bezier(.2,.7,.2,1) forwards}
+.reveal > *:nth-child(1){animation-delay:1s}.reveal > *:nth-child(2){animation-delay:1.15s}.reveal > *:nth-child(3){animation-delay:1.3s}.reveal > *:nth-child(4){animation-delay:1.45s}.reveal > *:nth-child(5){animation-delay:1.6s}.reveal > *:nth-child(6){animation-delay:1.75s}.reveal > *:nth-child(7){animation-delay:1.9s}
+@keyframes rv{to{opacity:1;transform:none}}
+
+/* 진행 줄 */
+.prog{position:fixed;left:0;top:0;height:2px;z-index:30;background:linear-gradient(90deg,var(--c-o),var(--c-c),var(--c-a),var(--c-e),var(--c-n));width:0;transition:width .5s ease}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body class="s-intro">
+<div class="bg" aria-hidden="true"></div>
+<div class="prog" id="prog" aria-hidden="true"></div>
+
+<header class="top">
+  <a class="logo" href="index.html" aria-label="마음별 처음 화면"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.9 6.4 3.6 9.1 10 10-6.4.9-9.1 3.6-10 10-.9-6.4-3.6-9.1-10-10 6.4-.9 9.1-3.6 10-10z" fill="#fff"/></svg>마음별</a>
+  <a class="pill" href="index.html#tests">다른 검사<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6"/></svg></a>
+</header>
+
+<div class="stage" aria-hidden="true">
+  <div class="orb-wrap" id="orbWrap">
+    <div class="orb-glow" id="glow"></div>
+    <canvas id="orb"></canvas>
+    <svg class="ring" viewBox="0 0 100 100"><circle class="tr" cx="50" cy="50" r="49"/><circle class="pr" id="ring" cx="50" cy="50" r="49" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"/></svg>
+  </div>
+</div>
+
+<main>
+  <!-- 처음 -->
+  <section class="scr intro" id="sIntro" aria-labelledby="introH">
+    <h1 class="big" id="introH"><span>당신의 <b>마음</b>은</span><span>어떤 <b>색</b>일까</span></h1>
+    <div class="chip c1"><span class="dots"><i style="background:var(--c-o)"></i><i style="background:var(--c-c)"></i><i style="background:var(--c-a)"></i><i style="background:var(--c-e)"></i><i style="background:var(--c-n)"></i></span><span><b>다섯 가지 색</b>성격의 다섯 요인</span></div>
+    <div class="chip c2"><span><b>50문장 · 약 7분</b>답할 때마다 구슬이 변해요</span></div>
+    <div class="chip c3"><span><b>내 브라우저에만 저장</b>회원가입 없이 바로</span></div>
+    <p class="intro-sub"><strong>마음 구슬 만들기</strong>50개 문장에 답하면, 답할 때마다 색이 섞이며 나만의 마음 구슬이 만들어져요. 성격 5요인(Big5) 검사를 바탕으로 해요.</p>
+    <div class="cta">
+      <button class="go" type="button" id="start">시작하기<i><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></i></button>
+      <button class="resume" type="button" id="resume" hidden></button>
+    </div>
+  </section>
+
+  <!-- 문항 -->
+  <section class="scr test" id="sTest" hidden aria-live="polite">
+    <div class="qmeta"><span id="qNum">1 / 50</span><span class="fac" id="qFac"></span></div>
+    <h2 class="qtext" id="qText"></h2>
+    <div class="answers" id="answers" role="group" aria-label="답 고르기"></div>
+    <div class="qnav"><button type="button" id="back">← 이전 문장</button><button type="button" id="quit">처음으로</button></div>
+    <p class="hint">키보드 숫자 1~5로도 답할 수 있어요</p>
+  </section>
+
+  <!-- 결과 -->
+  <section class="scr result" id="sResult" hidden>
+    <div class="panel reveal" id="panel"></div>
+  </section>
+</main>
+
+<script>
+(function(){
+"use strict";
+/* ================== 검사 데이터 (index.html과 같은 문항) ================== */
+var B5F = {
+  E:{name:"외향성",en:"EXTRAVERSION",c:"#C97C26",
+    items:[["파티나 모임에서 분위기를 띄우는 편이다",1],["말을 많이 하지 않는 편이다",-1],["사람들과 함께 있으면 편안하다",1],["눈에 띄지 않게 뒤에 있는 편이다",-1],["먼저 대화를 시작한다",1],["딱히 할 말이 별로 없다",-1],["모임에서 여러 사람과 두루 이야기한다",1],["주목받는 것을 좋아하지 않는다",-1],["관심의 중심이 되어도 괜찮다",1],["낯선 사람 앞에서는 조용해진다",-1]],
+    hi:"사람들과 어울리며 에너지를 얻어요. 대화를 먼저 시작하고 모임의 분위기를 이끄는 편이에요.",
+    mid:"상황에 따라 사교적이기도 하고, 혼자만의 시간을 즐기기도 해요. 필요할 때 적당히 어울리는 균형형이에요.",
+    lo:"조용하고 차분한 환경에서 에너지를 채워요. 많은 사람보다 소수와 깊이 있는 관계를 좋아해요."},
+  A:{name:"친화성",en:"AGREEABLENESS",c:"#2B8571",
+    items:[["다른 사람에게 별로 마음을 쓰지 않는다",-1],["사람들에게 관심이 많다",1],["남에게 상처 주는 말을 하곤 한다",-1],["다른 사람의 감정에 공감한다",1],["남의 고민에는 별로 관심이 없다",-1],["마음이 여린 편이다",1],["다른 사람에게 그다지 흥미가 없다",-1],["다른 사람을 위해 시간을 낸다",1],["다른 사람의 감정을 함께 느낀다",1],["사람들을 편안하게 해 준다",1]],
+    hi:"다른 사람의 마음에 공감하고 배려해요. 협력적이고 따뜻한 관계를 중요하게 여겨요.",
+    mid:"배려하면서도 필요할 때는 내 의견을 분명히 말해요.",
+    lo:"솔직하고 객관적으로 판단하는 편이에요. 경쟁적인 상황에 강하지만 때로는 차갑게 보일 수 있어요."},
+  C:{name:"성실성",en:"CONSCIENTIOUSNESS",c:"#2F6DB0",
+    items:[["항상 미리 준비해 둔다",1],["물건을 여기저기 늘어놓는다",-1],["세부적인 것까지 신경 쓴다",1],["일을 엉망으로 만들곤 한다",-1],["해야 할 일을 바로 처리한다",1],["물건을 제자리에 두는 것을 자주 잊는다",-1],["정리정돈된 것을 좋아한다",1],["맡은 일을 미루거나 피한다",-1],["계획표대로 움직인다",1],["일을 꼼꼼하고 정확하게 한다",1]],
+    hi:"계획을 세우고 꼼꼼하게 해내요. 책임감이 강하고 목표를 끝까지 밀고 나가요.",
+    mid:"필요할 때는 계획적으로, 때로는 유연하게 움직여요.",
+    lo:"즉흥적이고 유연한 편이에요. 정해진 틀보다 흐름을 따르지만, 마감이나 정리에서 어려움을 느낄 수 있어요."},
+  N:{name:"신경성",en:"NEUROTICISM",c:"#BC4769",
+    items:[["쉽게 스트레스를 받는다",1],["대부분의 시간 동안 느긋하다",-1],["이런저런 걱정을 많이 한다",1],["우울한 기분이 드는 일이 드물다",-1],["작은 일에도 쉽게 마음이 흔들린다",1],["쉽게 속상해한다",1],["기분이 자주 바뀐다",1],["감정 기복이 심한 편이다",1],["쉽게 짜증이 난다",1],["자주 우울하다",1]],
+    hi:"감정을 예민하게 느끼는 편이에요. 걱정이나 스트레스를 쉽게 느끼고 기분 변화가 있을 수 있어요.",
+    mid:"대체로 안정적이지만, 부담이 큰 상황에서는 긴장하거나 걱정하기도 해요.",
+    lo:"정서적으로 안정적이고 침착해요. 스트레스 상황에서도 비교적 평정을 유지해요."},
+  O:{name:"개방성",en:"OPENNESS",c:"#6B5BB5",
+    items:[["어휘력이 풍부한 편이다",1],["추상적인 개념을 이해하기 어렵다",-1],["상상력이 풍부하다",1],["추상적인 생각에는 관심이 없다",-1],["좋은 아이디어를 잘 낸다",1],["상상력이 부족한 편이다",-1],["무엇이든 이해가 빠르다",1],["어려운 단어를 즐겨 쓴다",1],["생각에 잠겨 시간을 보내곤 한다",1],["아이디어가 넘친다",1]],
+    hi:"새로운 생각과 경험에 열려 있어요. 상상력이 풍부하고 예술, 아이디어, 추상적인 주제에 흥미를 느껴요.",
+    mid:"익숙한 것과 새로운 것 사이에서 균형을 잡아요. 관심 있는 분야에서는 호기심이 커요.",
+    lo:"검증된 방식과 구체적인 것을 좋아해요. 현실적이고 실용적인 판단에 강해요."}
+};
+var B5ORDER=["O","C","E","A","N"];
+var B5ITEMS=[];
+(function(){ for(var i=0;i<10;i++){ ["E","A","C","N","O"].forEach(function(f){ var it=B5F[f].items[i]; B5ITEMS.push({f:f,t:it[0],k:it[1]}); }); } })();
+var B5LAB=["전혀 아니다","아니다","보통","그렇다","매우 그렇다"];
+
+var KEY="mb.big5";
+var COL={O:"#9B7BFF",C:"#4C8DFF",E:"#FF9A4C",A:"#3FE0C5",N:"#FF6FB1"};
+var ORDER=["O","C","E","A","N"];
+var MOOD={O:["호기심이 반짝이는","보랏빛"],C:["단단하게 빛나는","푸른빛"],E:["따뜻하게 타오르는","주황빛"],A:["포근하게 감싸는","민트빛"],N:["섬세하게 일렁이는","분홍빛"]};
+var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+function $(s){return document.querySelector(s);}
+function store(v){ try{ if(v===undefined){ var x=localStorage.getItem(KEY); return x?JSON.parse(x):null; } localStorage.setItem(KEY,JSON.stringify(v)); }catch(e){ return null; } }
+function hex(c){ c=c.replace("#",""); return [parseInt(c.slice(0,2),16)/255,parseInt(c.slice(2,4),16)/255,parseInt(c.slice(4,6),16)/255]; }
+
+/* ================== 점수 ================== */
+function scores(ans){
+  var sum={E:0,A:0,C:0,N:0,O:0}, n={E:0,A:0,C:0,N:0,O:0};
+  B5ITEMS.forEach(function(it,i){ var v=ans[i]; if(!v) return; sum[it.f]+= it.k>0?v:6-v; n[it.f]++; });
+  var o={}; ORDER.forEach(function(f){ o[f]= n[f]? Math.round((sum[f]/n[f]-1)/4*100) : 50; }); return o;
+}
+
+/* ================== 마음 구슬 (WebGL) ================== */
+var orb=(function(){
+  var cv=$("#orb"), gl=cv.getContext("webgl",{premultipliedAlpha:true,preserveDrawingBuffer:true,antialias:true});
+  var W={O:.2,C:.2,E:.2,A:.2,N:.2}, T={O:.2,C:.2,E:.2,A:.2,N:.2}, turb=.6, turbT=.6, t0=performance.now();
+  if(!gl){ var d=document.createElement("div"); d.className="orb-css"; cv.replaceWith(d); return {set:function(){},snap:function(){return null;}}; }
+  var vs="attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
+  var fs=[
+  "precision highp float;uniform vec2 R;uniform float t;uniform vec3 c[5];uniform float w[5];uniform float tb;",
+  "vec3 m289(vec3 x){return x-floor(x*(1./289.))*289.;}vec4 m289(vec4 x){return x-floor(x*(1./289.))*289.;}vec4 pm(vec4 x){return m289(((x*34.)+1.)*x);}vec4 ti(vec4 r){return 1.79284291400159-.85373472095314*r;}",
+  "float sn(vec3 v){const vec2 C=vec2(1./6.,1./3.);const vec4 D=vec4(0.,.5,1.,2.);vec3 i=floor(v+dot(v,C.yyy));vec3 x0=v-i+dot(i,C.xxx);vec3 g=step(x0.yzx,x0.xyz);vec3 l=1.-g;vec3 i1=min(g.xyz,l.zxy);vec3 i2=max(g.xyz,l.zxy);vec3 x1=x0-i1+C.xxx;vec3 x2=x0-i2+C.yyy;vec3 x3=x0-D.yyy;i=m289(i);",
+  "vec4 p=pm(pm(pm(i.z+vec4(0.,i1.z,i2.z,1.))+i.y+vec4(0.,i1.y,i2.y,1.))+i.x+vec4(0.,i1.x,i2.x,1.));float n_=.142857142857;vec3 ns=n_*D.wyz-D.xzx;vec4 j=p-49.*floor(p*ns.z*ns.z);vec4 x_=floor(j*ns.z);vec4 y_=floor(j-7.*x_);vec4 x=x_*ns.x+ns.yyyy;vec4 y=y_*ns.x+ns.yyyy;vec4 h=1.-abs(x)-abs(y);",
+  "vec4 b0=vec4(x.xy,y.xy);vec4 b1=vec4(x.zw,y.zw);vec4 s0=floor(b0)*2.+1.;vec4 s1=floor(b1)*2.+1.;vec4 sh=-step(h,vec4(0.));vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;vec3 p0=vec3(a0.xy,h.x);vec3 p1=vec3(a0.zw,h.y);vec3 p2=vec3(a1.xy,h.z);vec3 p3=vec3(a1.zw,h.w);",
+  "vec4 nr=ti(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));p0*=nr.x;p1*=nr.y;p2*=nr.z;p3*=nr.w;vec4 m=max(.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.);m=m*m;return 42.*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));}",
+  "void main(){vec2 uv=(gl_FragCoord.xy-.5*R)/min(R.x,R.y)*2.;float r=length(uv);float Rr=.84;",
+  "if(r>Rr+.01){gl_FragColor=vec4(0.);return;}",
+  "float z=sqrt(max(0.,1.-pow(r/Rr,2.)));vec3 n=vec3(uv/Rr,z);",
+  "vec3 nw=normalize(n+.42*tb*vec3(sn(n*1.1+vec3(0.,0.,t*.08)),sn(n*1.1+vec3(7.,0.,t*.08)),sn(n*1.1+vec3(13.,0.,t*.08))));",
+  "vec3 col=vec3(0.);float ws=0.;for(int i=0;i<5;i++){float fi=float(i);float an=fi*1.2566+t*.13;vec3 dr=normalize(vec3(cos(an),sin(an*1.0+fi)*.85,.55+.25*sin(t*.2+fi)));float k=w[i]*exp(4.2*dot(nw,dr))+.0005;col+=c[i]*k;ws+=k;}col/=ws;",
+  "float lum=dot(col,vec3(.299,.587,.114));col=mix(vec3(lum),col,1.35);",
+  "vec3 L=normalize(vec3(-.5,.6,.7));float dif=.78+.22*max(dot(n,L),0.);float sp=pow(max(dot(reflect(-L,n),vec3(0.,0.,1.)),0.),36.);float fr=pow(1.-z,2.6);",
+  "col=col*dif+vec3(1.)*sp*.32+vec3(.62,.78,1.)*fr*.38;col=clamp(col,0.,1.);",
+  "float al=smoothstep(Rr+.006,Rr-.006,r);gl_FragColor=vec4(col*al,al);}"].join("\n");
+  function sh(type,src){ var s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); return s; }
+  var pr=gl.createProgram(); gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs)); gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs)); gl.linkProgram(pr);
+  if(!gl.getProgramParameter(pr,gl.LINK_STATUS)){ var d2=document.createElement("div"); d2.className="orb-css"; cv.replaceWith(d2); return {set:function(){},snap:function(){return null;}}; }
+  gl.useProgram(pr);
+  var buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  var loc=gl.getAttribLocation(pr,"p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  var uR=gl.getUniformLocation(pr,"R"), uT=gl.getUniformLocation(pr,"t"), uC=gl.getUniformLocation(pr,"c"), uW=gl.getUniformLocation(pr,"w"), uTb=gl.getUniformLocation(pr,"tb");
+  gl.uniform3fv(uC,new Float32Array([].concat(hex(COL.O),hex(COL.C),hex(COL.E),hex(COL.A),hex(COL.N))));
+  function size(){ var r=cv.getBoundingClientRect(), s=Math.round(Math.max(r.width,r.height)/(parseFloat(getComputedStyle($("#orbWrap")).getPropertyValue("--sc"))||1)), d=Math.min(window.devicePixelRatio||1,2); cv.width=Math.round(cv.clientWidth*d); cv.height=Math.round(cv.clientHeight*d); gl.viewport(0,0,cv.width,cv.height); }
+  size(); window.addEventListener("resize",size);
+  function frame(now){
+    var k=reduce?1:.04;
+    ORDER.forEach(function(f){ W[f]+=(T[f]-W[f])*k; }); turb+=(turbT-turb)*k;
+    gl.uniform2f(uR,cv.width,cv.height); gl.uniform1f(uT,(now-t0)/1000*(reduce?.15:1)); gl.uniform1f(uTb,turb);
+    gl.uniform1fv(uW,new Float32Array(ORDER.map(function(f){ return W[f]; })));
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+  return {
+    /* 점수(0~100)에 맞춰 색 비중과 일렁임을 바꿔요 */
+    set:function(sc,neutral){
+      ORDER.forEach(function(f){ var v=neutral?.2:Math.pow(Math.max(sc[f],4)/100,4); T[f]=v; });
+      turbT = neutral ? .6 : .35 + sc.N/100*1.4;
+      var top=ORDER.slice().sort(function(a,b){ return sc[b]-sc[a]; })[0];
+      $("#glow").style.background = neutral ? "#8A6BFF" : COL[top];
+    },
+    snap:function(){ return cv; }
+  };
+})();
+
+/* ================== 화면 전환 ================== */
+var S=store(); if(!S||!Array.isArray(S.ans)||S.ans.length!==50) S={ans:new Array(50).fill(null),page:0,done:false};
+var idx=0;
+function show(name){
+  document.body.className="s-"+name;
+  $("#sIntro").hidden=name!=="intro"; $("#sTest").hidden=name!=="test"; $("#sResult").hidden=name!=="result";
+  window.scrollTo(0,0);
+}
+function answered(){ return S.ans.filter(function(x){return x;}).length; }
+function progress(){ var p=answered()/50*100; $("#prog").style.width=p+"%"; $("#ring").style.strokeDashoffset=100-p; }
+
+function intro(){
+  show("intro"); orb.set(scores(S.ans),answered()===0);
+  var r=$("#resume"), n=answered();
+  if(S.done){ r.hidden=false; r.textContent="지난 결과 다시 보기"; r.onclick=result; }
+  else if(n){ r.hidden=false; r.textContent="이어서 하기 ("+n+"/50)"; r.onclick=function(){ idx=S.ans.indexOf(null); if(idx<0) idx=49; test(); }; }
+  else r.hidden=true;
+  progress();
+}
+var B5NAME={O:"개방성",C:"성실성",E:"외향성",A:"친화성",N:"신경성"};
+function drawQ(){
+  var it=B5ITEMS[idx], v=S.ans[idx];
+  $("#qNum").textContent=(idx+1)+" / 50";
+  $("#qFac").innerHTML='<i style="background:'+COL[it.f]+'"></i>'+B5NAME[it.f];
+  $("#qText").textContent=it.t;
+  $("#answers").innerHTML=B5LAB.map(function(l,i){ return '<button class="ans" type="button" data-v="'+(i+1)+'" aria-pressed="'+(v===i+1)+'"><kbd>'+(i+1)+'</kbd>'+l+'</button>'; }).join("");
+  $("#back").disabled=idx===0;
+  ["#qText","#answers"].forEach(function(s){ var e=$(s); e.classList.remove("swap"); void e.offsetWidth; e.classList.add("swap"); });
+  progress();
+}
+var lock=false;
+function pick(v){
+  if(lock) return; lock=true;
+  S.ans[idx]=v; S.page=Math.floor(idx/10); store(S);
+  $$(".ans").forEach(function(b){ b.setAttribute("aria-pressed",String(+b.dataset.v===v)); });
+  orb.set(scores(S.ans),false); progress();
+  setTimeout(function(){
+    lock=false;
+    var next=S.ans.indexOf(null, idx+1); if(next<0) next=S.ans.indexOf(null);
+    if(next<0){ S.done=true; S.date=Date.now(); store(S); try{ var info=JSON.parse(localStorage.getItem("mb.info.big5")||"null")||{}; info.startedAt=info.startedAt||S.started||Date.now(); localStorage.setItem("mb.info.big5",JSON.stringify(info)); }catch(e){} result(); return; }
+    idx=next; drawQ();
+  }, reduce?60:280);
+}
+function $$(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); }
+function test(){
+  show("test"); if(!S.started){ S.started=Date.now(); store(S); }
+  orb.set(scores(S.ans),answered()===0); drawQ(); setTimeout(function(){ var b=$(".ans"); if(b) b.focus({preventScroll:true}); },50);
+}
+$("#answers").addEventListener("click",function(e){ var b=e.target.closest(".ans"); if(b) pick(+b.dataset.v); });
+document.addEventListener("keydown",function(e){
+  if($("#sTest").hidden) return;
+  if(/^[1-5]$/.test(e.key)){ e.preventDefault(); pick(+e.key); }
+  else if(e.key==="ArrowLeft"||e.key==="Backspace"){ if(idx>0&&!/input|textarea/i.test(e.target.tagName)){ e.preventDefault(); idx--; drawQ(); } }
+});
+$("#back").onclick=function(){ if(idx>0){ idx--; drawQ(); } };
+$("#quit").onclick=intro;
+$("#start").onclick=function(){ if(S.done){ S={ans:new Array(50).fill(null),page:0,done:false}; store(S); } idx=Math.max(0,S.ans.indexOf(null)); test(); };
+
+/* ================== 결과 ================== */
+function lvl(p){ return p>=65?"hi":p<=35?"lo":"mid"; }
+function result(){
+  show("result");
+  var sc=scores(S.ans); orb.set(sc,false); progress();
+  var rank=ORDER.filter(function(f){return f!=="N";}).sort(function(a,b){ return sc[b]-sc[a]; });
+  var top=rank[0], second=rank[1], m=MOOD[top];
+  var p=$("#panel");
+  p.classList.remove("reveal"); void p.offsetWidth; p.classList.add("reveal");
+  p.innerHTML='<p class="r-k">나의 마음 구슬</p>'+
+    '<h1 class="r-title">'+m[0]+'<br><b>'+m[1]+' 마음</b></h1>'+
+    '<p class="r-sum">다섯 가지 색 가운데 <b>'+B5NAME[top]+'</b>('+sc[top]+'점)이 가장 짙게, <b>'+B5NAME[second]+'</b>('+sc[second]+'점)이 그다음으로 섞여 있어요. '+B5F[top][lvl(sc[top])]+'</p>'+
+    '<div class="facs">'+ORDER.map(function(f){ var l=lvl(sc[f]); return '<div class="fac-c"><div class="fac-h"><i style="background:'+COL[f]+';color:'+COL[f]+'"></i><b>'+B5NAME[f]+'</b><span>'+sc[f]+'</span></div><div class="bar"><i data-w="'+sc[f]+'" style="background:linear-gradient(90deg,'+COL[f]+'55,'+COL[f]+')"></i></div><p>'+B5F[f][l]+'</p></div>'; }).join("")+'</div>'+
+    (sc.N>=65?'<div class="care"><b>요즘 마음이 많이 지쳐 있다면</b> 걱정이나 우울한 기분이 2주 이상 이어질 때는 혼자 견디지 말고 이야기해 주세요. 자살예방 상담전화 <b>109</b>, 정신건강 위기상담 <b>1577-0199</b> (24시간)</div>':'')+
+    '<div class="acts"><button class="go" type="button" id="save">구슬 카드 저장<i><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 2v9M4 7l4 4 4-4M3 14h10"/></svg></i></button>'+
+    '<a class="pill" href="index.html#big5-result">자세한 보고서</a><a class="pill" href="index.html#consult">해석 상담 신청</a><button class="pill" type="button" id="again">다시 하기</button></div>'+
+    '<p class="note">자기 이해를 돕기 위한 결과이며 의학적 진단이 아니에요. 점수는 각 요인 10문장의 평균을 0~100으로 바꾼 값이에요. 응답은 이 브라우저에만 저장돼요.</p>';
+  setTimeout(function(){ $$(".bar i").forEach(function(b){ b.style.width=b.dataset.w+"%"; }); }, reduce?0:1300);
+  $("#again").onclick=function(){ S={ans:new Array(50).fill(null),page:0,done:false}; store(S); idx=0; test(); };
+  $("#save").onclick=function(){ saveCard(sc,top,second); };
+}
+
+/* ================== 공유 카드 (1080×1920) ================== */
+function saveCard(sc,top,second){
+  var c=document.createElement("canvas"); c.width=1080; c.height=1920; var x=c.getContext("2d");
+  var g=x.createLinearGradient(0,0,0,1920); g.addColorStop(0,"#120E22"); g.addColorStop(1,"#07060C"); x.fillStyle=g; x.fillRect(0,0,1080,1920);
+  var gl2=x.createRadialGradient(540,760,40,540,760,700); gl2.addColorStop(0,COL[top]+"66"); gl2.addColorStop(1,"rgba(0,0,0,0)"); x.fillStyle=gl2; x.fillRect(0,0,1080,1920);
+  var src=orb.snap(); if(src) x.drawImage(src,90,310,900,900);
+  var F='"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Noto Sans KR",sans-serif';
+  x.fillStyle="rgba(255,255,255,.6)"; x.font="500 38px "+F; x.textAlign="center"; x.fillText("나의 마음 구슬",540,200);
+  x.fillStyle="#fff"; x.font="300 76px "+F; x.fillText(MOOD[top][0],540,1340); x.font="700 92px "+F; x.fillText(MOOD[top][1]+" 마음",540,1450);
+  var y=1560; ORDER.forEach(function(f,i){ var cx=140+i*200; x.fillStyle=COL[f]; x.beginPath(); x.arc(cx,y,14,0,7); x.fill(); x.fillStyle="#fff"; x.font="300 54px "+F; x.fillText(String(sc[f]),cx,y+80); x.fillStyle="rgba(255,255,255,.55)"; x.font="500 30px "+F; x.fillText(B5NAME[f],cx,y+126); });
+  x.fillStyle="rgba(255,255,255,.45)"; x.font="500 30px "+F; x.fillText("✦ 마음별 · Big5 성격검사",540,1840);
+  var a=document.createElement("a"); a.download="마음별-마음구슬.png"; a.href=c.toDataURL("image/png"); document.body.appendChild(a); a.click(); a.remove();
+}
+
+/* 시작 */
+if(location.hash==="#result" && S.done) result(); else intro();
+})();
+</script>
+</body>
+</html>
